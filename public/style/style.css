@@ -1,0 +1,253 @@
+body {
+  background-color: #e0e9ef;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: "Comfortaa", verdana, arial, sans-serif;
+  color: #ffffff;
+  background-color: #202822;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.Navbar {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #202822;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Navbar .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 95%;
+  width: 992px;
+}
+
+.Navbar .content .home {
+  font-size: 1.5rem;
+}
+
+.Navbar .content .links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.Navbar .content .links a {
+  line-height: 70px;
+  width: 100px;
+  display: block;
+  text-align: center;
+}
+
+.Navbar .content .links a:hover {
+  background-color: #647d6a;
+}
+
+.Navbar .content .links a.social {
+  width: 70px;
+  font-size: 1.2rem;
+}
+
+.Landing {
+  font-family: 'Comfortaa', sans-serif;
+}
+
+.Landing .title1 {
+  color: #44bbff;
+  font-size: 72pt;
+}
+
+.Landing .title2 {
+  color: #ddddee;
+  font-size: 32pt;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4pt;
+}
+
+.Landing .option {
+  width: 320px;
+  height: 340px;
+  margin: 64px 48px;
+  border: white solid 6px;
+  border-radius: 16px;
+  font-size: 24pt;
+}
+
+.Landing .option .icon {
+  font-size: 100pt;
+  padding: 54px 0 32px;
+}
+
+.Landing .btn {
+  border: #fff099 solid 3px;
+  border-radius: 16px;
+  font-size: 18pt;
+  color: #fff099;
+  padding: 8pt 36pt 10pt;
+  margin: 8px;
+}
+
+.Footer {
+  padding-bottom: 36px;
+}
+
+.Footer div {
+  width: 100%;
+  text-align: center;
+}
+
+.Footer .contact {
+  padding-bottom: 12px;
+}
+
+.NewRoom div.header {
+  background-color: rgba(20, 35, 50, 0.3);
+  margin-top: 24px;
+}
+
+.NewRoom div.header .room-code {
+  padding-top: 12pt;
+  font-size: 32pt;
+}
+
+.NewRoom div.header #code {
+  margin: -36pt 0 -18pt;
+  font-size: 84pt;
+  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
+}
+
+.NewRoom div.players {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  max-width: 1200px;
+  height: 640px;
+}
+
+.ProfileCard {
+  margin: 24px 18px;
+  width: 200px;
+}
+
+.ProfileCard img {
+  margin-bottom: 6px;
+}
+
+.ProfileCard .name {
+  font-size: 28pt;
+  text-align: center;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #f0ffff;
+  margin: 0;
+}
+
+.bg-video {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+  z-index: -2;
+  display: block;
+  min-height: 100%;
+}
+
+.center-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100vw;
+}
+
+.column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .Computer {
+    display: none;
+  }
+}
+
+.Device {
+  display: none;
+}
+
+@media (pointer: none), (pointer: coarse) {
+  .Device {
+    display: block;
+  }
+}
+/*# sourceMappingURL=style.css.map */
