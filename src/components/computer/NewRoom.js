@@ -4,6 +4,8 @@ import Card from './ProfileCard';
 
 import firebase from 'firebase';
 
+import {createNewRoom} from '../../actions';
+
 class NewRoom extends Component {
 
   constructor(props) {
@@ -24,11 +26,7 @@ class NewRoom extends Component {
 
     document.getElementById('code').innerText = roomCode;
     
-    firebase.database().ref(`rooms/${roomCode}`).set({
-      open: true, players: []
-    });
-
-    firebase.database().ref(`rooms/${roomCode}`).on('value', data => this.updatePlayers(data));
+    createNewRoom(roomCode, this.updatePlayers);
   }
 
   generateCode = ()=> {
@@ -62,19 +60,6 @@ class NewRoom extends Component {
     }
   }
 
-  // addPlayerTest = ()=> {
-  //   let names = ['Jacob','Brandon','Karen','Stephen','Jon','David','Emily','Shayla','Debra','Luis','Tasheda','Ethan','Frankie','Kevin','Adam','Amy','Catherine','Dhruv','Mia','Billy','Bob','Sally','AJ','Andrey'];
-  //   let imgs = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-  //   let name = names[Math.floor(Math.random() * names.length)];
-  //   let img = imgs[Math.floor(Math.random() * imgs.length)];
-  //   let roomCode = document.getElementById('code').innerText;
-  //   let players = this.state.players.slice();
-  //   players.push({name, img})
-
-  //   firebase.database().ref(`rooms/${roomCode}`).set({
-  //     players 
-  //   });
-  // }
 
   updatePlayers = data=> {
     let playersObj = data.toJSON().players; //players are stored as an object

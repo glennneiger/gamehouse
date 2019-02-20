@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import firebase from 'firebase';
+import {joinRoom} from '../../actions';
 
 class JoinRoom extends Component {
 
@@ -80,42 +80,14 @@ class JoinRoom extends Component {
   joinRoom = () => {
     let roomCode = document.getElementById('room-code').value.toUpperCase();
     if (!roomCode.trim()) return;
-    let roomAvailable = false;
     let nameInput = document.getElementById('player-name').value;
     if (!nameInput.trim()) return;
+
     let playerName = nameInput.trim().charAt(0).toUpperCase() + nameInput.trim().slice(1); //capitalize name
     let img = document.querySelector('.selected').dataset.imgid;
-    let players = [];
 
-    firebase.database().ref(`rooms/${roomCode}`).once('value', data => {
-
-      if (data.toJSON() === null) {return}
-      roomAvailable = data.toJSON().open; //true or false
-
-      if (roomAvailable && data.toJSON().players) {
-        let playersObj = data.toJSON().players;
-        //convert obj to arr
-        for (let i = 0; i < 10; i++) {
-          if (playersObj[i]) {
-            players.push(playersObj[i]);
-          } else {
-            i=10;
-          }
-        }
-      }
-    })
-    .then(()=>{
-      if (roomAvailable && players.length < 10) {
-        //if you're the first player in, you're the vip
-        let playerId = players.length;
-        let vip = playerId===0 ? true : false;
-        players.push({name: playerName, img});
-        firebase.database().ref(`rooms/${roomCode}`).set({
-          players, open: true 
-        });
-        this.setState({vip, entered: true, playerId});
-      }
-    });
+    joinRoom(roomCode, playerName, img);
+    
   }
 
   render() {
