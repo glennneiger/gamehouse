@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import Video from './VideoBackground';
 import Card from './ProfileCard';
 
-import firebase from 'firebase';
-
 import {createNewRoom} from '../../actions';
 
 class NewRoom extends Component {

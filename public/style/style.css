@@ -188,7 +188,14 @@ body div#DeviceDisplay {
 }
 
 .JoinRoom {
-  font-size: 24pt;
+  font-size: 20pt;
+}
+
+.JoinRoom p {
+  width: 98vw;
+  max-width: 400px;
+  font-size: 19pt;
+  padding: 6pt 0 18pt;
 }
 
 .JoinRoom input.textbox {
@@ -236,7 +243,7 @@ body div#DeviceDisplay {
 
 .JoinRoom div.title1 {
   padding-top: 20px;
-  font-size: 54pt;
+  font-size: 46pt;
   color: #44bbff;
 }
 

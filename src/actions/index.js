@@ -8,39 +8,46 @@ export function createNewRoom(roomCode, callback) {
   database.ref(`rooms/${roomCode}`).on('value', data => callback(data));
 }
 
-export function joinRoom(roomCode, name, img) {
+export async function joinRoom(roomCode, name, img) {
 
-  let roomAvailable = false;
-  let players = [];
+  let res = await database.ref(`rooms/${roomCode}`).once('value', data => {
 
-  database.ref(`rooms/${roomCode}`).once('value', data => {
+    if (data.toJSON() === null) {
 
-    if (data.toJSON() === null) {return false}
-    let room = data.toJSON();
-    roomAvailable = room.open; //true or false
+      return false
 
-    if (roomAvailable && room.players) {
-      let playersObj = room.players;
-      //convert obj to arr
-      for (let i = 0; i < 10; i++) {
-        if (playersObj[i]) {
-          players.push(playersObj[i]);
-        } else {
-          i=10;
+    } else {
+
+      let room = data.toJSON();
+
+      let players = [];
+
+      if (room.open && room.players) {
+        let playersObj = room.players;
+        //convert obj to arr
+        for (let i = 0; i < 10; i++) {
+          if (playersObj[i]) {
+            players.push(playersObj[i]);
+          } else {
+            i=10;
+          }
         }
       }
-    }
-  })
-  .then(()=>{
-    if (roomAvailable && players.length < 10) {
-      //if you're the first player in, you're the vip
-      let playerId = players.length;
-      let vip = playerId===0 ? true : false;
-      players.push({name, img});
+      
+      if (!room.open || (players.length >= 10)) {
+        return false; //room is not open, or room is maxed out
+      }
+
+
+      players.push({name, img}); // add the new player
+      let open = players.length === 10 ? false : true; //cap room at 10
+
       database.ref(`rooms/${roomCode}`).set({
-        players, open: true 
+        players, open 
       });
-      return {vip, entered: true, playerId};
+
     }
   });
+
+  return res.toJSON();
 };
