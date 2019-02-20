@@ -2,22 +2,43 @@ import React, {Component} from 'react';
 import Video from './VideoBackground';
 import Card from './ProfileCard';
 
+import firebase from 'firebase';
+
 class NewRoom extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {players: [
-      {name: 'Jacob', img: '00'},
-      {name: 'Brandon', img: '01'}
-    ]}
+    this.state = {players: []}
 
-    this.addPlayer = this.addPlayer.bind(this);
     this.goFullScreen = this.goFullScreen.bind(this);
   }
 
   componentDidMount() {
+    this.createRoom();
     this.goFullScreen();
+  }
+
+  createRoom = ()=> {
+    let roomCode = this.generateCode();
+
+    document.getElementById('code').innerText = roomCode;
+    
+    firebase.database().ref(`rooms/${roomCode}`).set({
+      open: true, players: []
+    });
+
+    firebase.database().ref(`rooms/${roomCode}`).on('value', data => this.updatePlayers(data));
+  }
+
+  generateCode = ()=> {
+    let code = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  
+    for (var i = 0; i < 4; i++)
+      code += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return code;
   }
 
   goFullScreen() {
@@ -41,26 +62,46 @@ class NewRoom extends Component {
     }
   }
 
-  addPlayer(name, img) {
-    let players = this.state.players.slice();
-    // max 10 players
-    if (players.length===10) { 
+  // addPlayerTest = ()=> {
+  //   let names = ['Jacob','Brandon','Karen','Stephen','Jon','David','Emily','Shayla','Debra','Luis','Tasheda','Ethan','Frankie','Kevin','Adam','Amy','Catherine','Dhruv','Mia','Billy','Bob','Sally','AJ','Andrey'];
+  //   let imgs = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  //   let name = names[Math.floor(Math.random() * names.length)];
+  //   let img = imgs[Math.floor(Math.random() * imgs.length)];
+  //   let roomCode = document.getElementById('code').innerText;
+  //   let players = this.state.players.slice();
+  //   players.push({name, img})
+
+  //   firebase.database().ref(`rooms/${roomCode}`).set({
+  //     players 
+  //   });
+  // }
+
+  updatePlayers = data=> {
+    let playersObj = data.toJSON().players; //players are stored as an object
+    if (!playersObj) {
       return;
     }
-    players.push({name, img});
-    this.setState({players});
+    let players = []; //convert obj to arr
+    for (let i = 0; i < 10; i++) {
+      if (playersObj[i]) {
+        players.push(playersObj[i]);
+      } else {
+        i=10;
+      }
+    }
+    this.setState({players, open: true});
   }
 
   renderCards() {
     let players = this.state.players;
     return players.map((player, i) => {
-      return <Card name={player.name} img={'0'+ i} key={i} />
+      return <Card name={player.name} img={player.img} key={i} />
     });
   }
 
   render () {
     return (
-      <div className="NewRoom" onClick={()=>this.addPlayer('Jacob','02')}>
+      <div className="NewRoom">
       <Video videoURL='bg/newroom.mp4' />
       <div className="center-screen">
         <div className="column">

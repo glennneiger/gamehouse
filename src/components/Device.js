@@ -1,13 +1,30 @@
 import React, { Component } from 'react';
 
-import Landing from './computer/Landing';
+import JoinRoom from './device/JoinRoom';
 
-class Computer extends Component {
+class Device extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state={game: 'join-room'};
+
+    this.switchGame = this.switchGame.bind(this);
+  }
+
+  switchGame(game) {
+    this.setState({game});
+  }
+
   render() {
-    return (
-      <Landing />
-    );
+    switch (this.state.game) {
+      default:
+        return (
+          <JoinRoom switchGame = {this.switchGame} />
+        );
+     }
   }
 }
 
-export default Computer;
+export default Device;
+
