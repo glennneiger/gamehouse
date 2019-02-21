@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Video from './VideoBackground';
 
+import {games} from '../../actions/games';
+
 class Landing extends Component {
 
   handleUseAsDevice = ()=> {
@@ -11,7 +13,7 @@ class Landing extends Component {
   render () {
     return (
       <div className="Landing">
-        <Video videoURL='bg/home.mp4' />
+        <Video video='home' />
         <div className="center-screen">
 
           <div className="column">
@@ -20,7 +22,7 @@ class Landing extends Component {
             <div className="title2">Game House</div>
 
             <div className="row">
-              <div className="column option" onClick={()=>this.props.switchGame('new-room')}>
+              <div className="column option" onClick={()=>this.props.switchGame(games.newRoom)}>
                 <div className="icon"><i className="fas fa-tv"></i></div>
                 <div>Display</div>
               </div>

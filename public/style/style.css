@@ -187,18 +187,11 @@ body div#DeviceDisplay {
   text-align: center;
 }
 
-.JoinRoom {
+#DeviceDisplay .JoinRoom {
   font-size: 20pt;
 }
 
-.JoinRoom p {
-  width: 98vw;
-  max-width: 400px;
-  font-size: 19pt;
-  padding: 6pt 0 18pt;
-}
-
-.JoinRoom input.textbox {
+#DeviceDisplay .JoinRoom input.textbox {
   width: 100vw;
   max-width: 300px;
   height: 64px;
@@ -208,22 +201,22 @@ body div#DeviceDisplay {
   margin: 12px 0 32px;
 }
 
-.JoinRoom input#room-code {
+#DeviceDisplay .JoinRoom input#room-code {
   font-size: 48pt;
 }
 
-.JoinRoom input#player-name {
+#DeviceDisplay .JoinRoom input#player-name {
   font-size: 40pt;
 }
 
-.JoinRoom .pictures {
+#DeviceDisplay .JoinRoom .pictures {
   width: 330px;
   height: 330px;
   margin: 8px 0 24px;
   padding: 0;
 }
 
-.JoinRoom img {
+#DeviceDisplay .JoinRoom img {
   width: 100px;
   height: 100px;
   padding: 0;
@@ -236,18 +229,18 @@ body div#DeviceDisplay {
   cursor: pointer;
 }
 
-.JoinRoom img.selected {
+#DeviceDisplay .JoinRoom img.selected {
   -webkit-filter: brightness(120%);
           filter: brightness(120%);
 }
 
-.JoinRoom div.title1 {
+#DeviceDisplay .Logo div.title1 {
   padding-top: 20px;
   font-size: 46pt;
   color: #44bbff;
 }
 
-.JoinRoom div.title2 {
+#DeviceDisplay .Logo div.title2 {
   padding-bottom: 24px;
   text-transform: uppercase;
   letter-spacing: 3pt;
@@ -270,6 +263,13 @@ body div#DeviceDisplay {
 #DeviceDisplay .btn:hover {
   background-color: #77ceff;
   cursor: pointer;
+}
+
+#DeviceDisplay p {
+  width: 95vw;
+  max-width: 400px;
+  font-size: 19pt;
+  padding: 6pt 0 18pt;
 }
 
 @media (pointer: none), (pointer: coarse) {

@@ -1,10 +1,22 @@
 import { auth, database, storage } from '../Firebase';
 
+import { games } from './games';
+
 export function createNewRoom(roomCode, callback) {
   database.ref(`rooms/${roomCode}`).set({
-    open: true, players: []
+    open: true, players: [], game: games.newRoom
   });
 
+  connectToRoom(roomCode, callback);
+}
+
+export function selectGame(roomCode, game) {
+  database.ref(`rooms/${roomCode}`).update({
+    game
+  });
+}
+
+export function connectToRoom(roomCode, callback) {
   database.ref(`rooms/${roomCode}`).on('value', data => callback(data));
 }
 
@@ -42,7 +54,7 @@ export async function joinRoom(roomCode, name, img) {
       players.push({name, img}); // add the new player
       let open = players.length === 10 ? false : true; //cap room at 10
 
-      database.ref(`rooms/${roomCode}`).set({
+      database.ref(`rooms/${roomCode}`).update({
         players, open 
       });
 

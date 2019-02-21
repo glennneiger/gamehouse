@@ -4,9 +4,9 @@ class Video extends Component {
   constructor (props) {
     super(props);
 
-    const videoURL = 'assets/video/' + this.props.videoURL;
+    const video = 'assets/video/bg/' + this.props.video + '.mp4';
     this.state = {
-      videoURL
+      video
     }
   }
 
@@ -14,8 +14,8 @@ class Video extends Component {
     return (
 
         <video className="bg-video" loop autoPlay muted>
-          <source src={this.state.videoURL} type="video/mp4" />
-          <source src={this.state.videoURL} type="video/ogg" />
+          <source src={this.state.video} type="video/mp4" />
+          <source src={this.state.video} type="video/ogg" />
           Your browser does not support the video tag.
         </video>
 

@@ -1,69 +1,28 @@
 import React, {Component} from 'react';
-import {joinRoom} from '../../actions';
+import {joinRoom, selectGame} from '../../actions';
+import {games} from '../../actions/games';
+
+import Logo from './Logo';
 
 class JoinRoom extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {entered: false, vip: false, playerId: 0, roomCode: ''}
+    this.state = {entered: false, vipName: '', playerId: 0}
+  }
+
+  startGame = () => {
+    selectGame(this.props.code, games.gameRoom);
   }
   
   renderPictures = () => {
     let indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    const altTexts = ['Cat','Dog','Parrot','Dolphin','Snake','Eagle','Horse','Penguin','Owl','Goat','Pug','Frog','Elephant','Dinosaur','Jaguar','Fox'];
     let imgs = [];
     for (let i = 0; i < 9; i++) {
       let rndX = Math.floor(Math.random() * indices.length);
-      let altText;
-      switch(indices[rndX]){
-        case 1:
-          altText = 'Dog';
-          break;
-        case 2:
-          altText = 'Parrot';
-          break;
-        case 3:
-          altText = 'Dolphin';
-          break;
-        case 4:
-          altText = 'Snake';
-          break;
-        case 5:
-          altText = 'Eagle';
-          break;
-        case 6:
-          altText = 'Horse';
-          break;
-        case 7:
-          altText = 'Penguin';
-          break;
-        case 8:
-          altText = 'Owl';
-          break;
-        case 9:
-          altText = 'Goat';
-          break;
-        case 10:
-          altText = 'Pug';
-          break;
-        case 11:
-          altText = 'Frog';
-          break;
-        case 12:
-          altText = 'Elephant';
-          break;
-        case 13:
-          altText = 'Dinosaur';
-          break;
-        case 14:
-          altText = 'Jaguar';
-          break;
-        case 15:
-          altText = 'Fox';
-          break;
-        default:
-          altText = 'Cat';
-      }
+      let altText = altTexts[indices[rndX]];
       imgs.push(
         <img alt={altText} key={i} data-imgid={indices[rndX]} id={'img-' + i} src={`./assets/img/profiles/${('0' + indices[rndX]).slice(-2)}.jpg`} className={!i ? 'selected' : ''} onClick={()=>this.selectImg(i)}></img>
       )
@@ -101,7 +60,7 @@ class JoinRoom extends Component {
     //join room
     let room = await joinRoom(roomCode, playerName, img);
     
-    let vip = '';
+    let vipName = '';
     let entered = false;
     let playerId = 0;
 
@@ -114,11 +73,16 @@ class JoinRoom extends Component {
 
       if (room.players) {
         //you're not the first player to join
-        vip = room.players['0'].name;
+        vipName = room.players['0'].name;
         playerId = room.players.length; //if there was 1 player already, your index=1, etc.
+      } else {
+        //you are the first, making you the host/VIP 
+        this.props.setVip();
       }
 
-      this.setState({entered, vip, playerId, roomCode});
+      this.setState({entered, vipName, playerId});
+      this.props.setRoomCode(roomCode);
+
     } else {
       // room is full
       alert('Sorry! This room is full!');
@@ -135,7 +99,7 @@ class JoinRoom extends Component {
             <p>Looks like you're the host!</p>
             <p>Tap Continue as soon as all the guests have arrived!</p>
             <p>(Minimum 4 Players)</p>
-            <div className="btn">Continue</div>
+            <div className="btn" onClick={this.startGame}>Continue</div>
           </div>
         )
       } else {
@@ -143,7 +107,7 @@ class JoinRoom extends Component {
           <div>
             <p>Welcome to the Party!</p>
             <p>Sit back, relax until everyone has joined!</p>
-            <p>{this.state.vip} will start the party as soon as everyone is in!</p>
+            <p>{this.state.vipName} will start the party as soon as everyone is in!</p>
           </div>
         )
       }
@@ -173,12 +137,8 @@ class JoinRoom extends Component {
     return (
       <div className="JoinRoom">
         <div className="column">
-
-          <div className="title1">Jacob's</div>
-          <div className="title2">Game House</div>
-
+          <Logo />
           {this.renderContent()}
-
         </div>
       </div>
     )
