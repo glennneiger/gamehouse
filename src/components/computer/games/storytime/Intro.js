@@ -12,7 +12,7 @@ class Intro extends Component {
 
   render() {
     return (
-      <Video video='storytime/intro' />
+      <Video video='storytime/introxx' />
     )
   }
 }

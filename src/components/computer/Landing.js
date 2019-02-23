@@ -5,11 +5,6 @@ import {games} from '../../actions/games';
 
 class Landing extends Component {
 
-  handleUseAsDevice = ()=> {
-    document.getElementById('ComputerDisplay').style.display = 'none';
-    document.getElementById('DeviceDisplay').style.display = 'block';
-  }
-
   render () {
     return (
       <div className="Landing">
@@ -26,7 +21,7 @@ class Landing extends Component {
                 <div className="icon"><i className="fas fa-tv"></i></div>
                 <div>Display</div>
               </div>
-              <div className="column option" onClick={()=>this.handleUseAsDevice()}>
+              <div className="column option" onClick={this.props.useAsDevice}>
                 <div className="icon"><i className="fas fa-tablet-alt"></i></div>
                 <div>Input</div>
               </div>

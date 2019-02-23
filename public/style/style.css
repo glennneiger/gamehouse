@@ -1,12 +1,11 @@
 body {
-  background-color: #f0f0ff;
+  background-color: #000000;
   height: 100vh;
   max-width: 100vw;
   margin: 0;
   padding: 0;
   font-family: "Comfortaa", verdana, arial, sans-serif;
   color: white;
-  background-color: white;
 }
 
 * {
@@ -107,6 +106,16 @@ body {
   text-align: center;
 }
 
+div.StoryTime div.storyText {
+  margin: 54px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  width: 80vw;
+  font-size: 24pt;
+  padding: 42px 48px 48px;
+}
+
 a {
   display: block;
   text-decoration: none;
@@ -163,35 +172,19 @@ a {
           align-items: center;
 }
 
-@media (pointer: none), (pointer: coarse) {
-  .Computer {
-    display: none;
-  }
-}
-
-.Device {
-  display: none;
-}
-
-@media (pointer: none), (pointer: coarse) {
-  .Device {
-    display: block;
-  }
-}
-
-body div#DeviceDisplay {
-  color: black;
+body.device {
   background-color: #f9fbfd;
+  color: black;
   max-width: 100vw;
   height: 100vh;
   text-align: center;
 }
 
-#DeviceDisplay .JoinRoom {
+body.device .JoinRoom {
   font-size: 20pt;
 }
 
-#DeviceDisplay .JoinRoom input.textbox {
+body.device .JoinRoom input.textbox {
   width: 100vw;
   max-width: 300px;
   height: 64px;
@@ -201,22 +194,23 @@ body div#DeviceDisplay {
   margin: 12px 0 32px;
 }
 
-#DeviceDisplay .JoinRoom input#room-code {
+body.device .JoinRoom input#room-code {
   font-size: 48pt;
 }
 
-#DeviceDisplay .JoinRoom input#player-name {
+body.device .JoinRoom input#player-name {
   font-size: 40pt;
 }
 
-#DeviceDisplay .JoinRoom .pictures {
+body.device .JoinRoom .pictures {
+  display: block;
   width: 330px;
   height: 330px;
-  margin: 8px 0 24px;
+  margin: 8px auto 24px;
   padding: 0;
 }
 
-#DeviceDisplay .JoinRoom img {
+body.device .JoinRoom img {
   width: 100px;
   height: 100px;
   padding: 0;
@@ -229,18 +223,18 @@ body div#DeviceDisplay {
   cursor: pointer;
 }
 
-#DeviceDisplay .JoinRoom img.selected {
+body.device .JoinRoom img.selected {
   -webkit-filter: brightness(120%);
           filter: brightness(120%);
 }
 
-#DeviceDisplay .Logo div.title1 {
+body.device .Logo div.title1 {
   padding-top: 20px;
   font-size: 46pt;
   color: #44bbff;
 }
 
-#DeviceDisplay .Logo div.title2 {
+body.device .Logo div.title2 {
   padding-bottom: 24px;
   text-transform: uppercase;
   letter-spacing: 3pt;
@@ -248,7 +242,7 @@ body div#DeviceDisplay {
   color: #9999aa;
 }
 
-#DeviceDisplay .btn {
+body.device .btn {
   background-color: #2bb2ff;
   line-height: 80px;
   width: 90vw;
@@ -260,31 +254,15 @@ body div#DeviceDisplay {
           transition-duration: 300ms;
 }
 
-#DeviceDisplay .btn:hover {
+body.device .btn:hover {
   background-color: #77ceff;
   cursor: pointer;
 }
 
-#DeviceDisplay p {
+body.device p {
   width: 95vw;
   max-width: 400px;
   font-size: 19pt;
   padding: 6pt 0 18pt;
-}
-
-@media (pointer: none), (pointer: coarse) {
-  .Computer {
-    display: none;
-  }
-}
-
-.Device {
-  display: none;
-}
-
-@media (pointer: none), (pointer: coarse) {
-  .Device {
-    display: block;
-  }
 }
 /*# sourceMappingURL=style.css.map */

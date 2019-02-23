@@ -12,6 +12,11 @@ class JoinRoom extends Component {
     this.state = {entered: false, vipName: '', playerId: 0}
   }
 
+  componentDidMount() {
+    //this class will turn body bg color white instead of black
+    document.querySelector('body').classList.add('device');
+  }
+
   startGame = () => {
     selectGame(this.props.code, games.gameRoom);
   }

@@ -78,7 +78,8 @@ class Computer extends Component {
     let player = '';
     if (type==='music') {
       this.setState({music: audio});
-      player = document.getElementById("musicPlayer"); 
+      player = document.getElementById("musicPlayer");
+      player.volume = .6; 
     } else {
       this.setState({sound: audio});
       player = document.getElementById("soundPlayer"); 
@@ -112,7 +113,7 @@ class Computer extends Component {
         )
       default:
         return (
-          <Landing switchGame = {this.switchGame} />
+          <Landing switchGame = {this.switchGame} useAsDevice={this.props.useAsDevice} />
         );
     }
   }

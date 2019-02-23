@@ -15,7 +15,13 @@ export const screens = {
 }
 
 const storyStarts = [
-  'there was a little boy named Chuck, who lived in a cabin in the woods with his grandmother','there was a mouse named Whiskers who loved peanut butter','there was a princess named Victoria who lived in a castle'
+  'a little boy named Chuck, who lived in a cabin in the woods with his grandmother',
+  'a mouse named Whiskers who loved peanut butter',
+  'a princess named Victoria who lived in a castle',
+  'a frog named Hopper who lived in a swamp',
+  'a fairy named Belinda who could grant wishes',
+  'a dog named Fluffy who lived in a house in the suburbs',
+  'a dog named Max who lived on a farm'
 ]
 
 class StoryTime extends Component {
@@ -30,8 +36,9 @@ class StoryTime extends Component {
   }
 
   componentDidMount(){
+    this.props.playAudio('music', 'storytime');
     let rnd = Math.floor(Math.random() * storyStarts.length);
-    let firstLine = `Once upon a time, ${storyStarts[rnd]}.`;
+    let firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
     this.setState({story:[firstLine]});
   }
 
@@ -47,7 +54,7 @@ class StoryTime extends Component {
         )
       case screens.read:
         return (
-          <Read switchScreen={this.switchScreen} story={this.state.story}/>
+          <Read switchScreen={this.switchScreen} story={this.state.story.join(' ')}/>
         )
         default:
         return (
