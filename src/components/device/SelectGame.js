@@ -11,7 +11,7 @@ class SelectGame extends Component {
       return (
         <div>
           <p>Select Game:</p>
-            <div className="btn" onClick={()=>selectGame(games.storyTime)}>Story Time</div>
+            <div className="btn" onClick={()=>selectGame(this.props.code, games.storyTime)}>Story Time</div>
         </div>
       )
     } else {
@@ -25,7 +25,7 @@ class SelectGame extends Component {
 
   render() {
     return (
-      <div className="JoinRoom">
+      <div className="SelectGame">
         <div className="column">
 
           <Logo />

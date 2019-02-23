@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
+import Audio from './computer/Audio';
 import Landing from './computer/Landing';
 import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
+import StoryTime from './computer/games/storytime/Index';
 
 import {createNewRoom} from '../actions';
 
@@ -18,13 +20,14 @@ class Computer extends Component {
       game: games.landing,
       players: [],
       open: false,
-      code: ''
+      code: '',
+      sound: '',
+      music: ''
     };
 
-    this.switchGame = this.switchGame.bind(this);
   }
 
-  switchGame(game) {
+  switchGame = game=> {
     this.setState({game});
 
     if (game===games.newRoom) {
@@ -70,21 +73,48 @@ class Computer extends Component {
     this.setState({players, open, game});
   }
 
+  playAudio = (type, audio)=> {
+    //plays music or sound fx
+    let player = '';
+    if (type==='music') {
+      this.setState({music: audio});
+      player = document.getElementById("musicPlayer"); 
+    } else {
+      this.setState({sound: audio});
+      player = document.getElementById("soundPlayer"); 
+    }
+    player.load();
+    player.play();
+  }
+
   render() {
+    return (
+      <div>
+        <Audio sound={this.state.sound} music={this.state.music} />
+        {this.renderContent()}
+      </div>
+    )
+  }
+
+  renderContent() {
     switch (this.state.game) {
       case games.newRoom:
         return (
-          <NewRoom room={this.state} />
+          <NewRoom room={this.state} playAudio={this.playAudio} />
         )
       case games.gameRoom:
         return (
-          <GameRoom room={this.state} />
+          <GameRoom room={this.state} playAudio={this.playAudio} />
+        )
+      case games.storyTime:
+        return (
+          <StoryTime room={this.state} playAudio={this.playAudio} />
         )
       default:
         return (
           <Landing switchGame = {this.switchGame} />
         );
-     }
+    }
   }
 }
 

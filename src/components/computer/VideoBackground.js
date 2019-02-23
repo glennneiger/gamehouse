@@ -4,7 +4,7 @@ class Video extends Component {
   constructor (props) {
     super(props);
 
-    const video = 'assets/video/bg/' + this.props.video + '.mp4';
+    const video = 'assets/video/' + this.props.video + '.mp4';
     this.state = {
       video
     }

@@ -6,6 +6,7 @@ import Card from './ProfileCard';
 class NewRoom extends Component {
 
   componentDidMount() {
+    this.props.playAudio('music','newroom');
     this.goFullScreen();
   }
 
@@ -44,21 +45,21 @@ class NewRoom extends Component {
   render () {
     return (
       <div className="NewRoom">
-      <Video video='newroom' />
-      <div className="center-screen">
-        <div className="column">
-          <div className="row header">
-            <div className="column">
-              <div className="room-code">Room Code:</div>
-              <div id="code">{this.props.room.code}</div>
+        <Video video='newroom' />
+        <div className="center-screen">
+          <div className="column">
+            <div className="row header">
+              <div className="column">
+                <div className="room-code">Room Code:</div>
+                <div id="code">{this.props.room.code}</div>
+              </div>
             </div>
-          </div>
 
-          <div className="row">
-            <div className="players">
-              {this.renderCards()}
+            <div className="row">
+              <div className="players">
+                {this.renderCards()}
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
