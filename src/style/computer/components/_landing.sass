@@ -1,6 +1,20 @@
 .Landing
   font-family: 'Comfortaa', sans-serif
+  p 
+    max-width: 640px
+    font-size: 18pt
+    line-height: 28pt
+    text-align: center
+    margin: 0 0 18pt
+  p.notice 
+    font-size: 20pt
+    line-height: 36pt
+    width: 450px
+    margin: 44px 0 54px
+  div.instructions 
+    margin: 44px 0 54px
   .title1
+    margin-top: 84px 
     color: $brand-blue
     font-size: 72pt
   .title2
@@ -22,10 +36,16 @@
       padding: 54px 0 32px
 
   .btn
-    border: #fff099 solid 3px 
+    border: $brand-blue solid 3px 
     border-radius: 16px
-    font-size: 18pt
-    color: #fff099
-    padding: 8pt 36pt 10pt
-    margin: 8px
+    font-size: 20pt
+    color: $brand-light
+    padding: 10pt 36pt 12pt
+    margin: 8px auto 18px
     cursor: pointer
+    width: 350px
+    text-align: center
+    transition-property: border-color
+    transition-duration: 300ms
+    &:hover
+      border-color: white
