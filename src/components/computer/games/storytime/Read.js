@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Video from '../../VideoBackground';
-import {screens} from './Index';
+import {screens} from './helpers';
 
 class Read extends Component {
 
@@ -36,15 +36,18 @@ class Read extends Component {
   }
 
   handleFinishReading = ()=> {
-    setTimeout(()=>{ 
-      this.props.switchScreen(screens.intro);
-    }, 5000);
+    const {turn} = this.props;
+    if (turn===0) {
+      setTimeout(()=>{ 
+        this.props.switchScreen(screens.next);
+      }, 5000);
+    }
   }
 
   render() {
     return (
       <div className="StoryTime">
-        <Video video='storytime/bg01' />
+        <Video video={`storytime/bg0${Math.floor(Math.random() * 3)}`} />
         <div className="row">
           <div className="storyText">
             {this.props.story}

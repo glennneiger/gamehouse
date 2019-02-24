@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Video from '../../VideoBackground';
-import {screens} from './Index';
+import {screens} from './helpers';
 
 class Intro extends Component {
 
@@ -12,7 +12,7 @@ class Intro extends Component {
 
   render() {
     return (
-      <Video video='storytime/introxx' />
+      <Video video='storytime/intro' />
     )
   }
 }
