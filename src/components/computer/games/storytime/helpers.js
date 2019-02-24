@@ -28,7 +28,7 @@ export const getWritersPerTurn = numPlayers=> {
     [2,2,3,3,3,3,3,2],
     [3,3,3,3,3,3,3,3],
     [3,3,3,3,4,4,4,3],
-    [3,4,4,4,4,4,4,3], // if there are 10 players 
+    [4,4,4,4,4,4,4,3], // if there are 10 players 
   ]
   const breakdown = breakdowns[numPlayers - 4];
 
@@ -41,4 +41,19 @@ export const shuffle = arr=> {
       [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+
+export const getPrompt = turn=> {
+  const prompts = [
+    'And every day',
+    'Until one day',
+    'Because of that',
+    'Unfortunately',
+    'And because of that',
+    'Until finally',
+    'And ever since that day',
+    'And the moral of the story is'
+  ]
+  return prompts[turn];
 }

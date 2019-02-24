@@ -40,16 +40,16 @@ class Read extends Component {
     if (turn===0) {
       setTimeout(()=>{ 
         this.props.switchScreen(screens.next);
-      }, 5000);
+      }, 4000);
     }
   }
 
   render() {
     return (
       <div className="StoryTime">
-        <Video video={`storytime/bg0${Math.floor(Math.random() * 3)}`} />
-        <div className="row">
-          <div className="storyText">
+        <Video video={`storytime/bg0${this.props.turn % 3}`} />
+        <div className="center-screen">
+          <div className="story-text">
             {this.props.story}
           </div>
         </div>

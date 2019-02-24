@@ -6,7 +6,7 @@ class Card extends Component {
     return (
       <div className="ProfileCard">
         <img src={`./assets/img/profiles/${('0' + this.props.img).slice(-2)}.jpg`} alt={this.props.name} />
-        <div className="name">{this.props.name}</div>
+        <div className="name">{this.props.hideName ? '' : this.props.name}</div>
       </div>
     )
   }

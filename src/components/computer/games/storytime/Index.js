@@ -7,18 +7,19 @@ import Write from './Write';
 
 import {shuffle} from './helpers';
 
-import {storyStarts, screens, getWritersPerTurn} from './helpers';
+import {storyStarts, screens, getWritersPerTurn, getPrompt} from './helpers';
 
 class StoryTime extends Component {
 
   constructor(props) {
     super(props);
-
+    let prompt = getPrompt(0);
     this.state=({
       screen: screens.intro,
       story: [],
       turn: 0,
-      writers: []
+      writers: [],
+      prompt
     });
   }
 
@@ -26,7 +27,7 @@ class StoryTime extends Component {
 
     this.testing();
 
-    this.props.playAudio('music', 'storytime');
+    // this.props.playAudio('music', 'storytime');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);
     const firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
@@ -45,7 +46,11 @@ class StoryTime extends Component {
       {name: 'Luis', img: 3},
       {name: 'Karen', img: 4},
       {name: 'Tasheda', img: 5},
-      {name: 'Frankie', img: 6}
+      {name: 'Frankie', img: 6},
+      {name: 'Ethan', img: 7},
+      {name: 'Amy', img: 8},
+      {name: 'Jon', img: 9},
+      {name: 'Stephen', img: 10}
     ]
   }
 
@@ -76,7 +81,6 @@ class StoryTime extends Component {
         queue = queue.slice(numWriters, queue.length);
       }
     }
-    console.log(writers);
     return writers;
   }
 
@@ -88,19 +92,35 @@ class StoryTime extends Component {
     switch (this.state.screen) {
       case screens.intro:
         return (
-          <Intro switchScreen={this.switchScreen} />
+          <Intro 
+            switchScreen={this.switchScreen} 
+          />
         )
       case screens.read:
         return (
-          <Read switchScreen={this.switchScreen} story={this.state.story.join(' ')} turn={this.state.turn}/>
+          <Read 
+            switchScreen={this.switchScreen} 
+            story={this.state.story.join(' ')} 
+            turn={this.state.turn}
+          />
         )
       case screens.next:
         return (
-          <Next switchScreen={this.switchScreen} writers={this.state.writers[this.state.turn]} />
+          <Next 
+            switchScreen={this.switchScreen} 
+            writers={this.state.writers[this.state.turn]} 
+            turn={this.state.turn} 
+            prompt={this.state.prompt}
+          />
         )
       case screens.write:
         return (
-          <Write switchScreen={this.switchScreen} writers={this.state.writers[this.state.turn]} />
+          <Write 
+            switchScreen={this.switchScreen} 
+            writers={this.state.writers[this.state.turn]} 
+            story={this.state.story.join(' ')} 
+            prompt={this.state.prompt}
+          />
         )
         default:
         return (

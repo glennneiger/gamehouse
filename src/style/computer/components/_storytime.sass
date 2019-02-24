@@ -1,10 +1,43 @@
 div.StoryTime
-  div.storyText
-    margin: 54px
+  div.story-text
+    display: block 
+    margin: 54px 54px 120px
     background-color: rgba(0,0,0,.5)
     color: white
     text-align: center 
     width: 80vw
     font-size: 24pt 
     padding: 42px 48px 48px 
+    &.prompt 
+      font-size: 30pt 
+      margin-top: 150px 
+      max-width: 800px
+  .ProfileCard
+    margin: 80px 44px 0
+  .writer-cards 
+    position: fixed 
+    bottom: 3vh
+  .WriterCard 
+    width: 22vw
+    .speech-bubble 
+      position: relative
+      background: white
+      color: black 
+      font-size: 20pt
+      border-radius: 50px
+      padding: 20px 50px
+      margin-left: 30px
+    .speech-bubble:after 
+      content: ''
+      position: absolute
+      bottom: 0
+      left: 50%
+      width: 0
+      height: 0
+      border: 20px solid transparent
+      border-top-color: white
+      border-bottom: 0
+      border-left: 0
+      margin-left: -10px
+      margin-bottom: -20px
     
