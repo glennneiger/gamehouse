@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {joinRoom, selectGame} from '../../actions';
 import {games} from '../../actions/games';
 
-import Logo from './Logo';
-
 class JoinRoom extends Component {
 
   constructor(props) {
@@ -142,7 +140,6 @@ class JoinRoom extends Component {
     return (
       <div className="JoinRoom">
         <div className="column">
-          <Logo />
           {this.renderContent()}
         </div>
       </div>

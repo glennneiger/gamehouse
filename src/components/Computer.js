@@ -17,7 +17,7 @@ class Computer extends Component {
     super(props);
 
     this.state={
-      game: games.storyTime,
+      game: games.landing,
       players: [],
       open: false,
       code: '',

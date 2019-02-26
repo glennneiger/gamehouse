@@ -2,7 +2,15 @@ import React, {Component} from 'react';
 import Video from '../../VideoBackground';
 import WriterCard from './WriterCard';
 
+import {inputRequest} from '../../../../actions';
+import {requests} from '../../../../actions/requestTypes';
+
 class Write extends Component {
+
+  componentDidMount() {
+    // sends notif to phones to request input
+    inputRequest(this.props.room.code, requests.storyTime.writeLine, this.props.prompt);
+  }
 
   renderWriterCards = ()=> {
     let cards = this.props.writers.map((writer, i) => (

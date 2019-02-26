@@ -120,6 +120,7 @@ class StoryTime extends Component {
             writers={this.state.writers[this.state.turn]} 
             story={this.state.story.join(' ')} 
             prompt={this.state.prompt}
+            room={this.props.room}
           />
         )
         default:

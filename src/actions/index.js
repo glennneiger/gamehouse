@@ -16,6 +16,12 @@ export function selectGame(roomCode, game) {
   });
 }
 
+export function inputRequest(roomCode, requestType, requestMessage) {
+  database.ref(`rooms/${roomCode}`).update({
+    request: {requestType, requestMessage}
+  });
+}
+
 export function connectToRoom(roomCode, callback) {
   database.ref(`rooms/${roomCode}`).on('value', data => callback(data));
 }
