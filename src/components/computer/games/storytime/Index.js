@@ -25,7 +25,7 @@ class StoryTime extends Component {
 
   componentDidMount(){
 
-    this.testing();
+    // this.testing();
 
     // this.props.playAudio('music', 'storytime');
 

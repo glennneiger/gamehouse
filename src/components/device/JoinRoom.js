@@ -77,14 +77,19 @@ class JoinRoom extends Component {
       if (room.players) {
         //you're not the first player to join
         vipName = room.players['0'].name;
-        playerId = room.players.length; //if there was 1 player already, your index=1, etc.
+        for (let i=1; i<10; i++) {
+          if (!room.players[i]) {
+            playerId = i;
+            break;
+          }
+        }
       } else {
         //you are the first, making you the host/VIP 
         this.props.setVip();
       }
 
       this.setState({entered, vipName, playerId});
-      this.props.setRoomCode(roomCode);
+      this.props.setRoom(roomCode, playerId);
 
     } else {
       // room is full

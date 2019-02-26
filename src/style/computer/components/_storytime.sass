@@ -17,6 +17,7 @@ div.StoryTime
   .writer-cards 
     position: fixed 
     bottom: 3vh
+    align-items: flex-end 
   .WriterCard 
     width: 22vw
     .speech-bubble 
@@ -27,6 +28,10 @@ div.StoryTime
       border-radius: 50px
       padding: 20px 50px
       margin: 0 15px 
+      transition-duration: 300ms
+      &.submitted 
+        font-weight: 900
+        font-size: 22pt
     .speech-bubble:after 
       content: ''
       position: absolute

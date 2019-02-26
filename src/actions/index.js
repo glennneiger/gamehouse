@@ -16,9 +16,24 @@ export function selectGame(roomCode, game) {
   });
 }
 
-export function inputRequest(roomCode, requestType, requestMessage) {
-  database.ref(`rooms/${roomCode}`).update({
-    request: {requestType, requestMessage}
+export function inputRequest(roomCode, requestType, requestMessage, playersToReceive) {
+  playersToReceive.forEach(playerIndex => {
+    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+      request: {requestType, requestMessage}
+    });    
+  });
+}
+
+export function sendInput(roomCode, playerIndex, input) {
+  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+    input
+  });
+}
+
+// like sendInput, but closes the request
+export function submitInput(roomCode, playerIndex, input) {
+  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+    input, request: 'submitted'
   });
 }
 
@@ -56,8 +71,8 @@ export async function joinRoom(roomCode, name, img) {
         return false; //room is not open, or room is maxed out
       }
 
-
-      players.push({name, img}); // add the new player
+      let index = players.length;
+      players.push({name, img, index}); // add the new player
       let open = players.length === 10 ? false : true; //cap room at 10
 
       database.ref(`rooms/${roomCode}`).update({

@@ -40,7 +40,7 @@ class Computer extends Component {
     
     this.setState({code});
 
-    createNewRoom(code, this.updatePlayers);
+    createNewRoom(code, this.updateRoom);
   }
 
   generateCode = ()=> {
@@ -54,7 +54,7 @@ class Computer extends Component {
   }
 
   //callback function. Called anytime a new player joins the room (is added to the database) OR VIP selects a game
-  updatePlayers = data=> {
+  updateRoom = data=> {
     let room = data.toJSON();
     let playersObj = room.players; //players are stored as an object
     let {open, game} = room;

@@ -18,6 +18,7 @@ class Device extends Component {
     this.state = {
       vip: false, 
       code: '',  //room code
+      playerIndex: 0,
       screen: games.newRoom, 
       requestMessage: '' //any special message that comes in with an input request
     }
@@ -25,17 +26,20 @@ class Device extends Component {
   }
 
   updateGame = async data=> {
-    const {game, request} = await data.toJSON();
-    if (game !== this.state.screen) {
+    const {game, players} = await data.toJSON();
+    let request = '';
+    if (players[this.state.playerIndex].request) {
+      request = players[this.state.playerIndex].request;
+    }
+    if (!request && game !== this.state.screen) {
       this.setState({screen: game});
-    } else if (request) {
+    } else if (request && request.requestType !== this.state.screen) {
       this.setState({screen: request.requestType, requestMessage: request.requestMessage});
     }
   }
 
-  setRoomCode = code=> {
-    console.log(code);
-    this.setState({code});
+  setRoom = (code, playerIndex)=> {
+    this.setState({code, playerIndex});
     connectToRoom(code, this.updateGame);
   }
 
@@ -49,7 +53,6 @@ class Device extends Component {
   }
 
   renderContent = ()=> {
-    console.log(this.state.screen)
     switch (this.state.screen) {
       case games.gameRoom:
         return (
@@ -57,11 +60,11 @@ class Device extends Component {
         )
       case games.newRoom:
         return (
-          <JoinRoom setRoomCode = {this.setRoomCode} code={this.state.code} setVip={()=>this.setState({vip:true})} />
+          <JoinRoom setRoom = {this.setRoom} code={this.state.code} setVip={()=>this.setState({vip:true})} />
         )
       case requests.storyTime.writeLine:
         return (
-          <StoryTimeWriteLine prompt={this.state.requestMessage} />
+          <StoryTimeWriteLine prompt={this.state.requestMessage} code={this.state.code} playerIndex={this.state.playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
         )
       default:
         return (

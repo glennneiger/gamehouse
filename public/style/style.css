@@ -160,6 +160,9 @@ div.StoryTime .ProfileCard {
 div.StoryTime .writer-cards {
   position: fixed;
   bottom: 3vh;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 div.StoryTime .WriterCard {
@@ -174,6 +177,13 @@ div.StoryTime .WriterCard .speech-bubble {
   border-radius: 50px;
   padding: 20px 50px;
   margin: 0 15px;
+  -webkit-transition-duration: 300ms;
+          transition-duration: 300ms;
+}
+
+div.StoryTime .WriterCard .speech-bubble.submitted {
+  font-weight: 900;
+  font-size: 22pt;
 }
 
 div.StoryTime .WriterCard .speech-bubble:after {
