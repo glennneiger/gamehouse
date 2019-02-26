@@ -6,7 +6,7 @@ import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
 import StoryTime from './computer/games/storytime/Index';
 
-import {createNewRoom} from '../actions';
+import {createNewRoom, watchForChange} from '../actions';
 
 import {games} from '../actions/games';
 
@@ -40,7 +40,8 @@ class Computer extends Component {
     
     this.setState({code});
 
-    createNewRoom(code, this.updateRoom);
+    createNewRoom(code, this.updatePlayers);
+    watchForChange(code, 'game', this.updateGame);
   }
 
   generateCode = ()=> {
@@ -53,24 +54,19 @@ class Computer extends Component {
     return code;
   }
 
-  //callback function. Called anytime a new player joins the room (is added to the database) OR VIP selects a game
-  updateRoom = data=> {
-    let room = data.toJSON();
-    let playersObj = room.players; //players are stored as an object
-    let {open, game} = room;
+  //callback function. Called anytime a new player joins the room (is added to the database) 
+  updateGame = async data=> {
+    let game = await data.toJSON();
+    this.setState({game});
+  }
 
-    if (!playersObj) {
-      return;
-    }
-    let players = []; //convert obj to arr
-    for (let i = 0; i < 10; i++) {
-      if (playersObj[i]) {
-        players.push(playersObj[i]);
-      } else {
-        i=10;
-      }
-    }
-    this.setState({players, open, game});
+  //callback function. Called anytime VIP selects a game
+  updatePlayers = async data=> {
+    let newPlayer = await data.toJSON(); //players are stored as an object
+    let {players} = this.state;
+    players.push(newPlayer);
+    console.log(players);
+    this.setState({players});
   }
 
   playAudio = (type, audio)=> {

@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import JoinRoom from './device/JoinRoom';
 import SelectGame from './device/SelectGame';
 import StoryTimeWriteLine from './device/StoryTimeWriteLine';
+import StoryTimeVote from './device/StoryTimeVote';
 
 import Logo from './device/Logo';
 
-import {connectToRoom} from '../actions';
+import {watchForChange} from '../actions';
 import {games} from '../actions/games';
 import {requests} from '../actions/requestTypes';
 
@@ -26,21 +27,22 @@ class Device extends Component {
   }
 
   updateGame = async data=> {
-    const {game, players} = await data.toJSON();
-    let request = '';
-    if (players[this.state.playerIndex].request) {
-      request = players[this.state.playerIndex].request;
+    const game = await data.toJSON();
+    this.setState({screen: game});
+  }
+
+  updateRequest = async data=> {
+    const request = await data.toJSON();
+    if (!request) {
+      return;
     }
-    if (!request && game !== this.state.screen) {
-      this.setState({screen: game});
-    } else if (request && request.requestType !== this.state.screen) {
-      this.setState({screen: request.requestType, requestMessage: request.requestMessage});
-    }
+    this.setState({screen: request.requestType, requestMessage: request.requestMessage});
   }
 
   setRoom = (code, playerIndex)=> {
     this.setState({code, playerIndex});
-    connectToRoom(code, this.updateGame);
+    watchForChange(code, 'game', this.updateGame);
+    watchForChange(code, `players/${playerIndex}/request`, this.updateRequest);
   }
 
   render() {
@@ -65,6 +67,10 @@ class Device extends Component {
       case requests.storyTime.writeLine:
         return (
           <StoryTimeWriteLine prompt={this.state.requestMessage} code={this.state.code} playerIndex={this.state.playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
+        )
+      case requests.storyTime.vote:
+        return (
+          <StoryTimeVote options={this.state.requestMessage} code={this.state.code} playerIndex={this.state.playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
         )
       default:
         return (

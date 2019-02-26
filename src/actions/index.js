@@ -7,7 +7,7 @@ export function createNewRoom(roomCode, callback) {
     open: true, players: [], game: games.newRoom
   });
 
-  connectToRoom(roomCode, callback);
+  watchForNewPlayers(roomCode, callback);
 }
 
 export function selectGame(roomCode, game) {
@@ -37,8 +37,20 @@ export function submitInput(roomCode, playerIndex, input) {
   });
 }
 
-export function connectToRoom(roomCode, callback) {
-  database.ref(`rooms/${roomCode}`).on('value', data => callback(data));
+export function receiveSubmission(roomCode, playerIndex) {
+  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+    request: null //close it out
+  });
+}
+
+
+
+export function watchForNewPlayers(roomCode, callback) {
+  database.ref(`rooms/${roomCode}/players`).on('child_added', data => callback(data));
+}
+
+export function watchForChange(roomCode, child, callback) {
+  database.ref(`rooms/${roomCode}/${child}`).on('value', data => callback(data));
 }
 
 export async function joinRoom(roomCode, name, img) {

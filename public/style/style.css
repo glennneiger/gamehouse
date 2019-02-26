@@ -158,7 +158,7 @@ div.StoryTime .ProfileCard {
 }
 
 div.StoryTime .writer-cards {
-  position: fixed;
+  position: absolute;
   bottom: 3vh;
   -webkit-box-align: end;
       -ms-flex-align: end;
@@ -199,6 +199,14 @@ div.StoryTime .WriterCard .speech-bubble:after {
   border-left: 0;
   margin-left: -10px;
   margin-bottom: -20px;
+}
+
+div.StoryTime .WriterCard img.voter-icon {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
 
 a {

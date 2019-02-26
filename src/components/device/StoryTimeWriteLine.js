@@ -16,9 +16,9 @@ export default class StoryTimeWriteLine extends Component {
 
   render() {
     return (
-      <div className="StoryTimeWriteLine">
+      <div className="StoryTime">
         <div>Fill in the blank:</div>
-        <div>{this.props.requestMessage}</div>
+        <div>{this.props.prompt}</div>
         <input type="text" className="textbox" id="write-line" maxLength="100" onChange={this.updateText}></input>
         <div className="btn" onClick={this.handleSubmit}>Submit</div>
       </div>
