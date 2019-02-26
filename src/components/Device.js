@@ -18,15 +18,15 @@ class Device extends Component {
     this.state = {
       vip: false, 
       code: '',  //room code
-      screen: games.JoinRoom, 
+      screen: games.newRoom, 
       requestMessage: '' //any special message that comes in with an input request
     }
 
   }
 
-  updateGame = data=> {
-    const {game, request} = data.toJSON();
-    if (game !== this.state.game) {
+  updateGame = async data=> {
+    const {game, request} = await data.toJSON();
+    if (game !== this.state.screen) {
       this.setState({screen: game});
     } else if (request) {
       this.setState({screen: request.requestType, requestMessage: request.requestMessage});
@@ -34,6 +34,7 @@ class Device extends Component {
   }
 
   setRoomCode = code=> {
+    console.log(code);
     this.setState({code});
     connectToRoom(code, this.updateGame);
   }
@@ -48,12 +49,13 @@ class Device extends Component {
   }
 
   renderContent = ()=> {
-    switch (this.state.game) {
+    console.log(this.state.screen)
+    switch (this.state.screen) {
       case games.gameRoom:
         return (
           <SelectGame vip={this.state.vip} code={this.state.code} />
         )
-      case games.joinRoom:
+      case games.newRoom:
         return (
           <JoinRoom setRoomCode = {this.setRoomCode} code={this.state.code} setVip={()=>this.setState({vip:true})} />
         )
