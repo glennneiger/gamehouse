@@ -65,7 +65,6 @@ class Computer extends Component {
     let newPlayer = await data.toJSON(); //players are stored as an object
     let {players} = this.state;
     players.push(newPlayer);
-    console.log(players);
     this.setState({players});
   }
 

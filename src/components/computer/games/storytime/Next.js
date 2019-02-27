@@ -5,10 +5,18 @@ import {screens} from './helpers';
 
 class Next extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {timerSet: false};
+  }
+
   componentDidMount() {
-    setTimeout(()=>{ 
-      this.props.switchScreen(screens.write);
-    }, 4000);
+    if (!this.state.timerSet) {
+      setTimeout(()=>{ 
+        this.props.switchScreen(screens.write);
+      }, 500);
+      this.setState({timerSet:true});
+    }
   }
 
 

@@ -4,6 +4,7 @@ import Intro from './Intro';
 import Read from './Read';
 import Next from './Next';
 import Write from './Write';
+import Winner from './Winner';
 
 import {shuffle} from './helpers';
 
@@ -19,7 +20,8 @@ class StoryTime extends Component {
       story: [],
       turn: 0,
       writers: [],
-      prompt
+      prompt,
+      winner: {}
     });
   }
 
@@ -27,7 +29,7 @@ class StoryTime extends Component {
 
     // this.testing();
 
-    // this.props.playAudio('music', 'storytime');
+    this.props.playAudio('music', 'storytime');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);
     const firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
@@ -84,6 +86,30 @@ class StoryTime extends Component {
     return writers;
   }
 
+  declareWinner = (winner, winningText)=> {
+    let {story, prompt} = this.state;
+
+    winningText = winningText.trim();
+
+    // add period at end if needed
+    let punctuation = ['.','!','?',';','"',];
+    if (!punctuation.includes(winningText.charAt(winningText.length-1))) {
+      winningText += '.';
+    }
+
+    let newPrompt = getPrompt(story.length);
+
+    story.push(`${prompt}, ${winningText}`);
+
+    this.setState({story, prompt: newPrompt, winner});
+  }
+
+  nextTurn = ()=> {
+    let {turn} = this.state;
+    turn++;
+    this.setState({turn});
+  };
+
   switchScreen = screen=> {
     this.setState({screen});
   }
@@ -121,6 +147,15 @@ class StoryTime extends Component {
             story={this.state.story.join(' ')} 
             prompt={this.state.prompt}
             room={this.props.room}
+            declareWinner={this.declareWinner}
+          />
+        )
+      case screens.winner:
+        return (
+          <Winner 
+            switchScreen={this.switchScreen} 
+            winner={this.state.winner}
+            nextTurn={this.nextTurn}
           />
         )
         default:

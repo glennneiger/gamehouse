@@ -4,9 +4,18 @@ import {screens} from './helpers';
 
 class Read extends Component {
 
-   componentDidMount() {
-     this.read();
-   }
+  constructor(props) {
+    super(props);
+    this.state = {reading: false};
+  }
+
+  componentDidMount() {
+    if (!this.state.reading) {
+      this.read();
+      this.setState({reading:true});
+    }
+  }
+
 
   read = ()=> {
     const speaker = {
@@ -36,12 +45,12 @@ class Read extends Component {
   }
 
   handleFinishReading = ()=> {
-    const {turn} = this.props;
-    if (turn===0) {
-      setTimeout(()=>{ 
-        this.props.switchScreen(screens.next);
-      }, 4000);
-    }
+    this.setState({reading:false});
+
+    setTimeout(()=>{ 
+      this.props.switchScreen(screens.next);
+    }, 1000);
+
   }
 
   render() {

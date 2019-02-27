@@ -4,6 +4,7 @@ import WriterCard from './WriterCard';
 
 import {inputRequest, watchForChange, receiveSubmission} from '../../../../actions';
 import {requests} from '../../../../actions/requestTypes';
+import {screens, findWinners} from './helpers';
 
 class Write extends Component {
 
@@ -14,7 +15,8 @@ class Write extends Component {
       texts: {}, // map writer index => what they're writing
       votingOpen: false, // first half is writers writing, second half is voters voting 
       voters: [], // indices of players who will be voting 
-      votes: {} // map writer indices => arr of indices of players who voted for them
+      votes: {}, // map writer indices => arr of indices of players who voted for them
+      writers: props.writers
     }
   }
 
@@ -26,26 +28,59 @@ class Write extends Component {
     for (let i = 0; i < this.props.room.players.length; i++) {
       voters.push(i);
     }
-    this.props.writers.forEach(writer=>{
+
+    let {code} = this.props.room;
+
+    this.state.writers.forEach(writer=>{
       voters.splice(voters.indexOf(writer.index), 1);
       votes[writer.index] = []; 
-      watchForChange(this.props.room.code, `players/${writer.index}/input`, data=>this.updateText(data, writer.index));
-      watchForChange(this.props.room.code, `players/${writer.index}/request`, data=>this.handleSubmissions(data, writer.index));
+      watchForChange(code, `players/${writer.index}/input`, data=>this.updateText(data, writer.index));
+      watchForChange(code, `players/${writer.index}/request`, data=>this.handleSubmissions(data, writer.index));
     });
 
-    this.setState({voters, votes});
+    voters.forEach(voter=>{
+      watchForChange(code, `players/${voter}/input`, data=>this.recordVote(data, voter));
+      watchForChange(code, `players/${voter}/request`, data=>this.handleSubmissions(data, voter));
+    });
+
+    this.setState({
+      voters,
+      votes
+    });
   }
 
   updateText = async (data, index)=> {
+    const newText = await data.toJSON();
+    if (newText===null) {
+      return;
+    }
     let {texts} = this.state;
-    texts[index] = await data.toJSON();
+    texts[index] = newText;
     this.setState({texts});
+  }
+
+  recordVote = async (data, voter)=> {
+
+    let vote = await data.toJSON();
+
+    console.log(vote);
+    if (vote === null) {
+      return;
+    } 
+
+    let {votes} = this.state;
+    if (votes[vote]===undefined) {
+      return;
+    }
+    votes[vote].push(voter);
+    console.log(votes); 
+    this.setState({votes});
   }
 
   sendWriteRequests = ()=> {
     // sends notif to phones to request input
     let playersToReceive = [];
-    this.props.writers.forEach(writer => {
+    this.state.writers.forEach(writer => {
       playersToReceive.push(writer.index);
     });
     inputRequest(this.props.room.code, requests.storyTime.writeLine, this.props.prompt, playersToReceive);
@@ -53,7 +88,7 @@ class Write extends Component {
 
   handleSubmissions = async (data, index)=> {
     let submission = await data.toJSON();
-    console.log(submission);
+
     if (submission !== 'submitted') {
       return;
     } 
@@ -80,23 +115,42 @@ class Write extends Component {
   }
 
   handleAllWritersSubmitted = ()=> {
+
     // play voice 
+
     //play voting music
-    console.log('all in')
+
     this.openVoting();
   }
 
   handleAllVotersSubmitted = ()=> {
+    let {votes, texts} = this.state;
+    console.log(votes); 
+    let {writers} = this.props;
+    let winners = findWinners(writers, votes);
+    let winner;
+    if (winners.length > 0) {
+      //handle tie 
 
+      //choose winner at random
+      winner = winners[Math.floor(Math.random()*winners.length)];
+    } else {
+      winner = winners[0];
+    }
+    console.log(winners);
+    console.log(winner);
+    let winningText = texts[winner.index];
+    this.props.declareWinner(winner, winningText);
+    this.props.switchScreen(screens.winner);
   }
 
   openVoting = ()=> {
     this.setState({votingOpen: true})
-    inputRequest(this.props.room.code, requests.storyTime.vote, this.props.writers, this.state.voters);
+    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters);
   }
 
   renderWriterCards = ()=> {
-    let cards = this.props.writers.map((writer, i) => {
+    let cards = this.state.writers.map((writer, i) => {
       let text = this.state.texts[writer.index];
       if (!text) {
         text = ' ';

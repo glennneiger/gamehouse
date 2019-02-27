@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Video from '../../VideoBackground';
+import ProfileCard from '../../ProfileCard';
 import {screens} from './helpers';
 
-class Intro extends Component {
+class Winner extends Component {
 
   constructor(props) {
     super(props);
@@ -12,17 +13,24 @@ class Intro extends Component {
   componentDidMount() {
     if (!this.state.timerSet) {
       setTimeout(()=>{ 
+        this.props.nextTurn();
         this.props.switchScreen(screens.read);
-      }, 1000);
+      }, 5000);
       this.setState({timerSet:true});
     }
   }
-  
+
+
   render() {
     return (
-      <Video video='storytime/intro' />
+      <div className="StoryTime">
+        <Video video="storytime/whosnext" />
+        <div className="center-screen">
+          <ProfileCard name={this.props.winner.name} img={this.props.winner.img} />
+        </div>
+      </div>
     )
   }
 }
 
-export default Intro;
+export default Winner;

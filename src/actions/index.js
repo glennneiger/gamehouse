@@ -38,8 +38,11 @@ export function submitInput(roomCode, playerIndex, input) {
 }
 
 export function receiveSubmission(roomCode, playerIndex) {
+  database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
+  database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
   database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-    request: null //close it out
+    request: null, //close it out
+    input: null //close it out
   });
 }
 

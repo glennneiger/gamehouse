@@ -127,7 +127,7 @@ class JoinRoom extends Component {
           
 
           <div>Name:</div>
-          <input type="text" className="textbox" id="player-name" maxLength="12"></input>
+          <input type="text" className="textbox" id="player-name" maxLength="12" value="Test"></input>
 
           <div>Picture:</div>
 

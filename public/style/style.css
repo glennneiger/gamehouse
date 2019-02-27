@@ -343,8 +343,8 @@ body.device .btn {
   border-radius: 40px;
   color: white;
   margin-bottom: 36px;
-  -webkit-transition-duration: 300ms;
-          transition-duration: 300ms;
+  -webkit-transition: background-color 300ms;
+  transition: background-color 300ms;
 }
 
 body.device .btn:hover {

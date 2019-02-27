@@ -6,7 +6,7 @@ export default class StoryTimeVote extends Component {
 
   submitVote = vote=> {
     let {code, playerIndex} = this.props;
-    submitInput(code, playerIndex, {vote, voter: playerIndex});
+    submitInput(code, playerIndex, vote);
     this.props.handleSubmit();
   }
 

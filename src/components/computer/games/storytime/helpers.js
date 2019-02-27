@@ -9,13 +9,14 @@ export const screens = {
 }
 
 export const storyStarts = [
-  'a little boy named Chuck, who lived in a cabin in the woods with his grandmother',
-  'a mouse named Whiskers who loved peanut butter',
-  'a princess named Victoria who lived in a castle',
-  'a frog named Hopper who lived in a swamp',
-  'a fairy named Belinda who could grant wishes',
-  'a dog named Fluffy who lived in a house in the suburbs',
-  'a dog named Max who lived on a farm'
+  'test'
+  // 'a little boy named Chuck, who lived in a cabin in the woods with his grandmother',
+  // 'a mouse named Whiskers who loved peanut butter',
+  // 'a princess named Victoria who lived in a castle',
+  // 'a frog named Hopper who lived in a swamp',
+  // 'a fairy named Belinda who could grant wishes',
+  // 'a dog named Fluffy who lived in a house in the suburbs',
+  // 'a dog named Max who lived on a farm'
 ]
 
 export const getWritersPerTurn = numPlayers=> {
@@ -56,4 +57,23 @@ export const getPrompt = turn=> {
     'And the moral of the story is'
   ]
   return prompts[turn];
+}
+
+export const findWinners = (writers, votes) => {
+  console.log(votes)
+  console.log(writers)
+  debugger;
+  let maxVotes = 0;
+  writers.forEach(writer => {
+    if (votes[writer.index].length > maxVotes) {
+      maxVotes = votes[writer.index].length;
+    }    
+  });
+  let winners = []; //possible more than one winners if there's a tie
+  writers.forEach(writer => {
+    if (votes[writer.index].length === maxVotes) {
+      winners.push(writer);
+    }    
+  });
+  return winners;
 }
