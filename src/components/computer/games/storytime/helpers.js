@@ -60,9 +60,6 @@ export const getPrompt = turn=> {
 }
 
 export const findWinners = (writers, votes) => {
-  console.log(votes)
-  console.log(writers)
-  debugger;
   let maxVotes = 0;
   writers.forEach(writer => {
     if (votes[writer.index].length > maxVotes) {

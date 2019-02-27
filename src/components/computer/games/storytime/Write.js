@@ -63,7 +63,6 @@ class Write extends Component {
 
     let vote = await data.toJSON();
 
-    console.log(vote);
     if (vote === null) {
       return;
     } 
@@ -73,7 +72,6 @@ class Write extends Component {
       return;
     }
     votes[vote].push(voter);
-    console.log(votes); 
     this.setState({votes});
   }
 
@@ -125,7 +123,6 @@ class Write extends Component {
 
   handleAllVotersSubmitted = ()=> {
     let {votes, texts} = this.state;
-    console.log(votes); 
     let {writers} = this.props;
     let winners = findWinners(writers, votes);
     let winner;
@@ -137,8 +134,6 @@ class Write extends Component {
     } else {
       winner = winners[0];
     }
-    console.log(winners);
-    console.log(winner);
     let winningText = texts[winner.index];
     this.props.declareWinner(winner, winningText);
     this.props.switchScreen(screens.winner);
