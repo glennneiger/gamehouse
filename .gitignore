@@ -7,7 +7,9 @@
 
 # testing
 /coverage
-# dev.js
+
+#api 
+keys.js
 
 # production
 /build
