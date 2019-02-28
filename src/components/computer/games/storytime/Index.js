@@ -30,6 +30,7 @@ class StoryTime extends Component {
     // this.testing();
 
     this.props.playAudio('music', 'storytime');
+    this.props.playVideo('storytime/intro');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);
     const firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
@@ -128,6 +129,7 @@ class StoryTime extends Component {
             switchScreen={this.switchScreen} 
             story={this.state.story.join(' ')} 
             turn={this.state.turn}
+            playVideo={this.props.playVideo}
           />
         )
       case screens.next:
@@ -137,6 +139,7 @@ class StoryTime extends Component {
             writers={this.state.writers[this.state.turn]} 
             turn={this.state.turn} 
             prompt={this.state.prompt}
+            playVideo={this.props.playVideo}
           />
         )
       case screens.write:
@@ -148,6 +151,7 @@ class StoryTime extends Component {
             prompt={this.state.prompt}
             room={this.props.room}
             declareWinner={this.declareWinner}
+            playVideo={this.props.playVideo}
           />
         )
       case screens.winner:
@@ -156,6 +160,7 @@ class StoryTime extends Component {
             switchScreen={this.switchScreen} 
             winner={this.state.winner}
             nextTurn={this.nextTurn}
+            playVideo={this.props.playVideo}
           />
         )
         default:

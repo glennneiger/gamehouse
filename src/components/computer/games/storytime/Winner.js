@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from '../../VideoBackground';
 import ProfileCard from '../../ProfileCard';
 import {screens} from './helpers';
 
@@ -11,6 +10,7 @@ class Winner extends Component {
   }
 
   componentDidMount() {
+    this.props.playVideo('storytime/winner');
     if (!this.state.timerSet) {
       setTimeout(()=>{ 
         this.props.nextTurn();
@@ -24,7 +24,6 @@ class Winner extends Component {
   render() {
     return (
       <div className="StoryTime">
-        <Video video="storytime/whosnext" />
         <div className="center-screen">
           <ProfileCard name={this.props.winner.name} img={this.props.winner.img} />
         </div>

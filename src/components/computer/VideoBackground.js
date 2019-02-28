@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 
 class Video extends Component {
-  constructor (props) {
-    super(props);
 
-    const video = 'assets/video/' + this.props.video + '.mp4';
-    this.state = {
-      video
+  componentDidUpdate(oldProps) {
+    const newProps = this.props
+    if(oldProps.video !== newProps.video) {
+      let player = document.querySelector('.bg-video');
+      let source = document.querySelector('.bg-video-src');
+      player.pause();
+      source.src=(`assets/video/${newProps.video}.mp4`);
+      player.load();
+      player.play();
     }
   }
 
@@ -14,8 +18,8 @@ class Video extends Component {
     return (
 
         <video className="bg-video" loop autoPlay muted>
-          <source src={this.state.video} type="video/mp4" />
-          <source src={this.state.video} type="video/ogg" />
+          <source className="bg-video-src" src={`assets/video/${this.props.video}.mp4`} type="video/mp4" />
+          <source className="bg-video-src" src={`assets/video/${this.props.video}.mp4`} type="video/ogg" />
           Your browser does not support the video tag.
         </video>
 

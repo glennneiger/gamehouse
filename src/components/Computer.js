@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Audio from './computer/Audio';
+import Video from './computer/VideoBackground';
+
 import Landing from './computer/Landing';
 import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
@@ -22,7 +24,8 @@ class Computer extends Component {
       open: false,
       code: '',
       sound: '',
-      music: ''
+      music: '',
+      video: 'home'
     };
 
   }
@@ -83,10 +86,15 @@ class Computer extends Component {
     player.play();
   }
 
+  playVideo = video=> {
+    this.setState({video});
+  }
+
   render() {
     return (
       <div>
         <Audio sound={this.state.sound} music={this.state.music} />
+        <Video video={this.state.video} />
         {this.renderContent()}
       </div>
     )
@@ -96,15 +104,15 @@ class Computer extends Component {
     switch (this.state.game) {
       case games.newRoom:
         return (
-          <NewRoom room={this.state} playAudio={this.playAudio} />
+          <NewRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
         )
       case games.gameRoom:
         return (
-          <GameRoom room={this.state} playAudio={this.playAudio} />
+          <GameRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
         )
       case games.storyTime:
         return (
-          <StoryTime room={this.state} playAudio={this.playAudio} />
+          <StoryTime room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
         )
       default:
         return (

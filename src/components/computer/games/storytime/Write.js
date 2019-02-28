@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from '../../VideoBackground';
 import WriterCard from './WriterCard';
 
 import {inputRequest, watchForChange, receiveSubmission} from '../../../../actions';
@@ -21,6 +20,8 @@ class Write extends Component {
   }
 
   componentDidMount() {
+    this.props.playVideo('storytime/write');
+    
     this.sendWriteRequests();
 
     let voters = [];
@@ -163,7 +164,6 @@ class Write extends Component {
   render() {
     return (
       <div className="StoryTime">
-        <Video video="storytime/write" />
 
         <div className="row">
           <div className="story-text">

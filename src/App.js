@@ -13,8 +13,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    //screen must be wider than 1000 to be used as display
-    window.screen.availWidth < 1000 ? this.setState({display:'device'}) : this.setState({display:'computer'});
+    //mobile devices will automatically be shown as device
+    if ( window.screen.availWidth < 900 || (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) ) {
+      this.setState({display:'device'}); 
+    } else { 
+      this.setState({display:'computer'}); 
+    }
   }
 
   render() {

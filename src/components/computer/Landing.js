@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from './VideoBackground';
 
 import {games} from '../../actions/games';
 
@@ -57,7 +56,6 @@ class Landing extends Component {
   render () {
     return (
       <div className="Landing">
-        <Video video='home' />
 
           <div className="column">
 

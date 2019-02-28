@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from '../../VideoBackground';
 import {screens} from './helpers';
 
 class Read extends Component {
@@ -10,6 +9,7 @@ class Read extends Component {
   }
 
   componentDidMount() {
+    this.props.playVideo('storytime/bg0' + this.props.turn % 3);
     if (!this.state.reading) {
       this.read();
       this.setState({reading:true});
@@ -56,7 +56,6 @@ class Read extends Component {
   render() {
     return (
       <div className="StoryTime">
-        <Video video={`storytime/bg0${this.props.turn % 3}`} />
         <div className="center-screen">
           <div className="story-text">
             {this.props.story}

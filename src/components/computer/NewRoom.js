@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from './VideoBackground';
 import Card from './ProfileCard';
 
 
@@ -7,9 +6,9 @@ class NewRoom extends Component {
 
   componentDidMount() {
     this.props.playAudio('music','newroom');
+    this.props.playVideo('newroom');
     this.goFullScreen();
   }
-
 
   goFullScreen = ()=> {
     if ((document.fullScreenElement && document.fullScreenElement !== null) ||    // alternative standard method
@@ -45,7 +44,6 @@ class NewRoom extends Component {
   render () {
     return (
       <div className="NewRoom">
-        <Video video='newroom' />
         <div className="center-screen">
           <div className="column">
             <div className="row header">

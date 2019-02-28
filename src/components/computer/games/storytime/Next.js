@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Video from '../../VideoBackground';
 import ProfileCard from '../../ProfileCard';
 import {screens} from './helpers';
 
@@ -11,6 +10,7 @@ class Next extends Component {
   }
 
   componentDidMount() {
+    this.props.playVideo('storytime/whosnext');
     if (!this.state.timerSet) {
       setTimeout(()=>{ 
         this.props.switchScreen(screens.write);
@@ -35,7 +35,6 @@ class Next extends Component {
   render() {
     return (
       <div className="StoryTime">
-        <Video video="storytime/whosnext" />
         <div className="row">
           <div className="story-text prompt">
             {this.props.prompt}, _________ .
