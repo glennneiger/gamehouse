@@ -6,7 +6,7 @@ class Landing extends Component {
 
   constructor(props) {
     super(props);
-    this.state=({showNotice:false, showInstructions: false});
+    this.state=({showNotice:false, showInstructions: false, showCredits: false});
   }
 
   renderContent(){
@@ -29,7 +29,20 @@ class Landing extends Component {
             <p>A device for each player<br/>(Phones work great!)</p>
             <p>Games involve music, voice, and sound effects, so make sure your volume is turned on for the best experience.</p>
           </div>
-          <div className="btn" onClick={()=>this.setState({showInstructions: false})}>Back</div>
+          <div className="btn" onClick={()=>this.setState({showInstructions: false})}>OK</div>
+        </div>
+      )
+    } else if (this.state.showCredits) {
+      return (
+        <div>
+          <div className="instructions">
+            <p>Created By:<br />Jacob Garcia</p>
+            <p>Music:<br />
+            Zazie, Local Forecast, Doobly Doo<br />
+            by Kevin MacLeod (incompetech.com)<br />
+            Licensed under the Creative Commons 3.0:<br />By Attribution license.</p>
+          </div>
+          <div className="btn" onClick={()=>this.setState({showCredits: false})}>OK</div>
         </div>
       )
     } else {
@@ -45,9 +58,9 @@ class Landing extends Component {
               <div>Input</div>
             </div>
           </div>
-          <div className="row">
-            <div className="btn" onClick={()=>this.setState({showInstructions: true})}>How to Play</div>
-          </div>
+            <div className="link" onClick={()=>this.setState({showInstructions: true})}>How to Play</div>
+            <div className="link" onClick={()=>this.setState({showCredits: true})}>Credits</div>
+
         </div>
       )
     }

@@ -24,10 +24,12 @@
     border-radius: 16px
     font-size: 24pt
     cursor: pointer
+    transition: transform 300ms
+    &:hover 
+      transform: scale(1.1)
     .icon
       font-size: 100pt
       padding: 54px 0 32px
-
   .btn
     border: $brand-blue solid 3px 
     border-radius: 16px
@@ -42,3 +44,12 @@
     transition-duration: 300ms
     &:hover
       border-color: white
+  .link
+    font-size: 18pt
+    color: $brand-light
+    padding: 10pt 0
+    margin: 8px auto 18px
+    cursor: pointer
+    text-align: center
+    &:hover
+      text-decoration: underline
