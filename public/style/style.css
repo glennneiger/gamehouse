@@ -19,6 +19,11 @@ body {
   font-family: 'Comfortaa', sans-serif;
 }
 
+.Landing img.logo {
+  margin: 80px 0 15px 0;
+  width: 250px;
+}
+
 .Landing p {
   max-width: 640px;
   font-size: 18pt;
@@ -36,20 +41,6 @@ body {
 
 .Landing div.instructions {
   margin: 44px 0 54px;
-}
-
-.Landing .title1 {
-  margin-top: 84px;
-  color: #44bbff;
-  font-size: 72pt;
-}
-
-.Landing .title2 {
-  color: #ddddee;
-  font-size: 32pt;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 4pt;
 }
 
 .Landing .option {
@@ -321,18 +312,10 @@ body.device .JoinRoom img.selected {
           filter: brightness(120%);
 }
 
-body.device .Logo div.title1 {
-  padding-top: 20px;
-  font-size: 46pt;
-  color: #44bbff;
-}
-
-body.device .Logo div.title2 {
-  padding-bottom: 24px;
-  text-transform: uppercase;
-  letter-spacing: 3pt;
-  font-weight: 900;
-  color: #9999aa;
+body.device img.logo {
+  width: 80vw;
+  max-width: 200px;
+  margin: 15px 0 25px 0;
 }
 
 body.device .btn {

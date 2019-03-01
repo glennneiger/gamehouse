@@ -13,7 +13,7 @@ class Landing extends Component {
     if (this.state.showNotice) {
       return (
         <div>
-          <p className="notice">Jacob's Game House is an interactive, multiplayer party game featuring music, voice, and sound effects.</p>
+          <p className="notice">Party House is an interactive, multiplayer party game featuring music, voice, and sound effects.</p>
           <div className="btn" onClick={()=>this.props.switchGame(games.newRoom)}>Start the Party!</div>
           <div className="btn" onClick={()=>this.setState({showNotice: false})}>Back</div>
         </div>
@@ -22,7 +22,7 @@ class Landing extends Component {
       return (
         <div>
           <div className="instructions">
-            <p>Jacob's Game House is a collection of interactive, multiplayer party games players interact with using their devices.</p>
+            <p>Party House is a collection of interactive, multiplayer party games players interact with using their devices.</p>
             <p>To play, you will need:</p>
             <p>1 Display</p>
             <p>4+ Players</p>
@@ -58,10 +58,7 @@ class Landing extends Component {
       <div className="Landing">
 
           <div className="column">
-
-            <div className="title1">Jacob's</div>
-            <div className="title2">Game House</div>
-
+            <img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
             {this.renderContent()}
           </div>
 
