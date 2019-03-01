@@ -68,7 +68,7 @@ body {
 }
 
 .Landing .btn {
-  border: #44bbff solid 3px;
+  border: #3fa9f5 solid 3px;
   border-radius: 16px;
   font-size: 20pt;
   color: #def0f3;
@@ -287,7 +287,7 @@ a {
 }
 
 body.device {
-  background-color: #f9fbfd;
+  background-color: white;
   color: black;
   max-width: 100vw;
   height: 100vh;
@@ -305,6 +305,7 @@ body.device .JoinRoom input.textbox {
   text-transform: uppercase;
   text-align: center;
   font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
+  color: #303544;
   margin: 8px 0 20px;
 }
 
@@ -349,7 +350,7 @@ body.device img.logo {
 }
 
 body.device .btn {
-  background-color: #2bb2ff;
+  background-color: #3fa9f5;
   line-height: 80px;
   width: 90vw;
   max-width: 360px;
@@ -361,7 +362,7 @@ body.device .btn {
 }
 
 body.device .btn:hover {
-  background-color: #77ceff;
+  background-color: #6fbff8;
   cursor: pointer;
 }
 

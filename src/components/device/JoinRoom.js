@@ -135,7 +135,7 @@ class JoinRoom extends Component {
             {this.renderPictures()}
           </div>
 
-          <div className="btn" onClick={this.joinRoom}>JOIN THE PARTY!</div>
+          <div className="btn" onClick={this.joinRoom}>Join the Party!</div>
         </div>
       )
     }
