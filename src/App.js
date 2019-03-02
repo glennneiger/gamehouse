@@ -14,7 +14,7 @@ class App extends Component {
 
   componentDidMount() {
     //mobile devices will automatically be shown as device
-    if ((typeof window.orientation !== "undefined" && window.screen.availWidth < 1000) || navigator.userAgent.indexOf('IEMobile') !== -1 || window.screen.availWidth < 900 ) { // Fire TV is 960 width
+    if (window.screen.availWidth < 900 ) { // Fire TV is 960 width
       this.setState({display:'device'}); 
     } else { 
       this.setState({display:'computer'}); 
