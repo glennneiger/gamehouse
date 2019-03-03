@@ -1,25 +1,41 @@
 .NewRoom
   div.header
     background-color: rgba(20,35,50,.3)
-    margin-top: 5vh
+    margin-top: 3vh
     .room-code
-      padding-top: 12pt
-      font-size: 32pt
+      padding-top: 7pt
+      font-size: 24pt
+      @media screen and (max-width: $lg) 
+        padding-top: 5pt
+        font-size: 18pt
     #code 
-      margin: -36pt 0 -18pt
-      font-size: 84pt
       font-family: $font-fun
+      font-size: 64pt
+      margin: -28pt 0 -16pt
+      @media screen and (max-width: $lg) 
+        font-size: 42pt
+        margin: -20pt 0 -14pt
   div.players
     display: flex
     justify-content: center
     flex-wrap: wrap 
     align-items: center
     align-content: center 
-    max-width: 1200px
-    height: 640px
+    height: 65vh
+    max-height: 700px
+    padding-top: 3vh
+    width: 860px
+    @media screen and (max-width: $xl)
+      height: 60vh
+      width: 785px
+    @media screen and (max-width: $lg)
+      width: 710px
   div.website
     background-color: rgba(20,35,50,.3)
-    font-size: 32pt
-    padding: 48px 0 52px
     position: fixed 
     bottom: 5vh
+    font-size: 24pt 
+    padding: 32px 0 36px
+    @media screen and (max-width: $lg) 
+      font-size: 17pt 
+      padding: 18px 0 18px

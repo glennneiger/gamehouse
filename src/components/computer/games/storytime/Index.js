@@ -27,9 +27,9 @@ class StoryTime extends Component {
 
   componentDidMount(){
 
-    // this.testing();
+    this.testing();
 
-    this.props.playAudio('music', 'storytime');
+    // this.props.playAudio('music', 'storytime');
     this.props.playVideo('storytime/intro');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);

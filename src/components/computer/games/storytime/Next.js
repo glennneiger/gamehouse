@@ -14,7 +14,7 @@ class Next extends Component {
     if (!this.state.timerSet) {
       setTimeout(()=>{ 
         this.props.switchScreen(screens.write);
-      }, 500);
+      }, 1500);
       this.setState({timerSet:true});
     }
   }

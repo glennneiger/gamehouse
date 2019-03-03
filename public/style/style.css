@@ -19,9 +19,15 @@ body {
   font-family: 'Comfortaa', sans-serif;
 }
 
+.Landing div {
+  padding-top: 0;
+}
+
 .Landing img.logo {
-  margin: 80px 0 15px 0;
-  width: 250px;
+  margin: 5vh 0 5vh 0;
+  width: 17vw;
+  max-width: 250px;
+  min-width: 150px;
 }
 
 .Landing p {
@@ -32,6 +38,14 @@ body {
   margin: 0 0 18pt;
 }
 
+@media screen and (max-width: 1040px) {
+  .Landing p {
+    font-size: 13pt;
+    line-height: 16pt;
+    margin-bottom: 9pt;
+  }
+}
+
 .Landing p.notice {
   font-size: 20pt;
   line-height: 36pt;
@@ -39,14 +53,29 @@ body {
   margin: 44px 0 54px;
 }
 
+@media screen and (max-width: 1040px) {
+  .Landing p.notice {
+    font-size: 16pt;
+    line-height: 20pt;
+    margin: 10px 0 30px;
+    width: 400px;
+  }
+}
+
 .Landing div.instructions {
   margin: 44px 0 54px;
+}
+
+@media screen and (max-width: 1040px) {
+  .Landing div.instructions {
+    margin: 0 0 20px;
+  }
 }
 
 .Landing .option {
   width: 320px;
   height: 340px;
-  margin: 64px 48px;
+  margin: 0 48px 48px;
   border: white solid 6px;
   border-radius: 16px;
   font-size: 24pt;
@@ -67,6 +96,26 @@ body {
   padding: 54px 0 32px;
 }
 
+@media screen and (max-width: 1040px) {
+  .Landing .option {
+    width: 220px;
+    height: 240px;
+    margin: 0 28px 24px;
+    border-width: 4px;
+    font-size: 16pt;
+  }
+  .Landing .option .icon {
+    font-size: 68pt;
+    padding: 40px 0 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .Landing .option {
+    margin: 0 8px 18px;
+  }
+}
+
 .Landing .btn {
   border: #3fa9f5 solid 3px;
   border-radius: 16px;
@@ -83,17 +132,32 @@ body {
           transition-duration: 300ms;
 }
 
+@media screen and (max-width: 1040px) {
+  .Landing .btn {
+    font-size: 17pt;
+    width: 300px;
+  }
+}
+
 .Landing .btn:hover {
   border-color: white;
 }
 
 .Landing .link {
   font-size: 18pt;
-  color: #def0f3;
+  color: white;
   padding: 10pt 0;
   margin: 8px auto 18px;
   cursor: pointer;
   text-align: center;
+}
+
+@media screen and (max-width: 1040px) {
+  .Landing .link {
+    font-size: 12pt;
+    padding: 0;
+    margin-top: 0;
+  }
 }
 
 .Landing .link:hover {
@@ -102,18 +166,32 @@ body {
 
 .NewRoom div.header {
   background-color: rgba(20, 35, 50, 0.3);
-  margin-top: 5vh;
+  margin-top: 3vh;
 }
 
 .NewRoom div.header .room-code {
-  padding-top: 12pt;
-  font-size: 32pt;
+  padding-top: 7pt;
+  font-size: 24pt;
+}
+
+@media screen and (max-width: 1040px) {
+  .NewRoom div.header .room-code {
+    padding-top: 5pt;
+    font-size: 18pt;
+  }
 }
 
 .NewRoom div.header #code {
-  margin: -36pt 0 -18pt;
-  font-size: 84pt;
   font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
+  font-size: 64pt;
+  margin: -28pt 0 -16pt;
+}
+
+@media screen and (max-width: 1040px) {
+  .NewRoom div.header #code {
+    font-size: 42pt;
+    margin: -20pt 0 -14pt;
+  }
 }
 
 .NewRoom div.players {
@@ -130,31 +208,88 @@ body {
           align-items: center;
   -ms-flex-line-pack: center;
       align-content: center;
-  max-width: 1200px;
-  height: 640px;
+  height: 65vh;
+  max-height: 700px;
+  padding-top: 3vh;
+  width: 860px;
+}
+
+@media screen and (max-width: 1400px) {
+  .NewRoom div.players {
+    height: 60vh;
+    width: 785px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .NewRoom div.players {
+    width: 710px;
+  }
 }
 
 .NewRoom div.website {
   background-color: rgba(20, 35, 50, 0.3);
-  font-size: 32pt;
-  padding: 48px 0 52px;
   position: fixed;
   bottom: 5vh;
+  font-size: 24pt;
+  padding: 32px 0 36px;
+}
+
+@media screen and (max-width: 1040px) {
+  .NewRoom div.website {
+    font-size: 17pt;
+    padding: 18px 0 18px;
+  }
 }
 
 .ProfileCard {
-  margin: 24px 18px;
-  width: 200px;
+  margin: 0;
+  padding: 14px 18px;
+  width: 170px;
+}
+
+@media screen and (max-width: 1400px) {
+  .ProfileCard {
+    padding: 13px 17px;
+    width: 155px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .ProfileCard {
+    padding: 12px 15px;
+    width: 140px;
+  }
 }
 
 .ProfileCard img {
   margin-bottom: 6px;
   border-radius: 24px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1040px) {
+  .ProfileCard img {
+    margin-bottom: 0;
+  }
 }
 
 .ProfileCard .name {
-  font-size: 28pt;
+  font-size: 24pt;
   text-align: center;
+}
+
+@media screen and (max-width: 1400px) {
+  .ProfileCard .name {
+    font-size: 20pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .ProfileCard .name {
+    font-size: 17pt;
+    line-height: 17pt;
+  }
 }
 
 div.StoryTime div.story-text {
@@ -164,26 +299,56 @@ div.StoryTime div.story-text {
   color: white;
   text-align: center;
   width: 80vw;
-  font-size: 24pt;
+  font-size: 20pt;
   padding: 42px 48px 48px;
 }
 
-div.StoryTime div.story-text.prompt {
-  font-size: 30pt;
-  margin-top: 150px;
-  max-width: 800px;
+@media screen and (max-width: 1400px) {
+  div.StoryTime div.story-text {
+    margin: 39px 39px 100px;
+    font-size: 16pt;
+    padding: 24px 34px 34px;
+  }
 }
 
-div.StoryTime .ProfileCard {
-  margin: 80px 44px 0;
+@media screen and (max-width: 1040px) {
+  div.StoryTime div.story-text {
+    margin: 24px 24px 80px;
+    font-size: 12pt;
+    padding: 16px 22px 22px;
+  }
+}
+
+div.StoryTime div.story-text.prompt {
+  font-size: 24pt;
+  margin-top: 150px;
+  max-width: 75vw;
+}
+
+@media screen and (max-width: 1400px) {
+  div.StoryTime div.story-text {
+    font-size: 20pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime div.story-text {
+    font-size: 16pt;
+  }
 }
 
 div.StoryTime .writer-cards {
   position: absolute;
-  bottom: 3vh;
+  bottom: 2vh;
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime .writer-cards {
+    bottom: 0;
+  }
 }
 
 div.StoryTime .WriterCard {
@@ -192,6 +357,7 @@ div.StoryTime .WriterCard {
 
 div.StoryTime .WriterCard .speech-bubble {
   position: relative;
+  bottom: 15px;
   background: white;
   color: black;
   font-size: 20pt;
@@ -202,9 +368,20 @@ div.StoryTime .WriterCard .speech-bubble {
           transition-duration: 300ms;
 }
 
-div.StoryTime .WriterCard .speech-bubble.submitted {
-  font-weight: 900;
-  font-size: 22pt;
+@media screen and (max-width: 1400px) {
+  div.StoryTime .WriterCard .speech-bubble {
+    font-size: 16pt;
+    border-radius: 35px;
+    padding: 15px 35px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime .WriterCard .speech-bubble {
+    font-size: 14pt;
+    border-radius: 20px;
+    padding: 10px 20px;
+  }
 }
 
 div.StoryTime .WriterCard .speech-bubble:after {
@@ -284,6 +461,9 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 body.device {
@@ -350,6 +530,7 @@ body.device img.logo {
 }
 
 body.device .btn {
+  font-size: 20pt;
   background-color: #3fa9f5;
   line-height: 80px;
   width: 90vw;
