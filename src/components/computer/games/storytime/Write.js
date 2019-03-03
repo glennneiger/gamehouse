@@ -116,8 +116,10 @@ class Write extends Component {
   handleAllWritersSubmitted = ()=> {
 
     // play voice 
+    this.props.playVoice('03');
 
-    //play voting music
+    // //play voting music
+    // this.props.play
 
     this.openVoting();
   }

@@ -19,15 +19,21 @@ class Computer extends Component {
     super(props);
 
     this.state={
-      game: games.storyTime,
+      game: games.landing,
       players: [],
       open: false,
       code: '',
       sound: '',
       music: '',
-      video: 'home'
+      preloadedMusic: '',
+      video: '',
+      preloadedVideo: ''
     };
 
+  }
+
+  componentDidMount() {
+    this.setState({video: 'home', preloadedMusic: 'newroom', preloadedVideo: 'newroom'});
   }
 
   switchGame = game=> {
@@ -73,28 +79,30 @@ class Computer extends Component {
 
   playAudio = (type, audio)=> {
     //plays music or sound fx
-    let player = '';
     if (type==='music') {
       this.setState({music: audio});
-      player = document.getElementById("musicPlayer");
-      player.volume = .6; 
     } else {
       this.setState({sound: audio});
-      player = document.getElementById("soundPlayer"); 
     }
-    player.load();
-    player.play();
+  }
+
+  preloadMusic = music=> {
+    this.setState({preloadedMusic: music})
   }
 
   playVideo = video=> {
     this.setState({video});
   }
 
+  preloadVideo = video=> {
+    this.setState({preloadedVideo: video})
+  }
+
   render() {
     return (
       <div>
-        <Audio sound={this.state.sound} music={this.state.music} />
-        <Video video={this.state.video} />
+        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} />
+        <Video video={this.state.video} preload={this.state.preloadedVideo} />
         {this.renderContent()}
       </div>
     )
@@ -104,15 +112,15 @@ class Computer extends Component {
     switch (this.state.game) {
       case games.newRoom:
         return (
-          <NewRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
+          <NewRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
         )
       case games.gameRoom:
         return (
-          <GameRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
+          <GameRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
         )
       case games.storyTime:
         return (
-          <StoryTime room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} />
+          <StoryTime room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
         )
       default:
         return (

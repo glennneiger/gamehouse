@@ -7,6 +7,9 @@ class NewRoom extends Component {
   componentDidMount() {
     this.props.playAudio('music','newroom');
     this.props.playVideo('newroom');
+    this.props.preloadMusic('lobby');
+    this.props.preloadVideo('lobby');
+
     this.goFullScreen();
   }
 

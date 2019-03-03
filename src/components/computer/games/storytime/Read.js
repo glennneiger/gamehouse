@@ -46,10 +46,16 @@ class Read extends Component {
 
   handleFinishReading = ()=> {
     this.setState({reading:false});
+    let {turn} = this.props;
+    let interval = 0;
+    if (turn===0) {
+      this.props.playVoice('01');
+      interval = 6000;
+    }
 
     setTimeout(()=>{ 
       this.props.switchScreen(screens.next);
-    }, 1000);
+    }, interval);
 
   }
 

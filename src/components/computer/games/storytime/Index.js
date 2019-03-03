@@ -29,7 +29,7 @@ class StoryTime extends Component {
 
     this.testing();
 
-    // this.props.playAudio('music', 'storytime');
+    this.props.playAudio('music', 'storytime');
     this.props.playVideo('storytime/intro');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);
@@ -115,12 +115,20 @@ class StoryTime extends Component {
     this.setState({screen});
   }
 
+  playVoice = filename=> {
+    this.props.playAudio('audio',`storytime/${filename}`)
+  }
+  playMusic = filename=> {
+    this.props.playAudio('music',`storytime-${filename}`)
+  }
+
   render() {
     switch (this.state.screen) {
       case screens.intro:
         return (
           <Intro 
             switchScreen={this.switchScreen} 
+            playVoice={this.playVoice}
           />
         )
       case screens.read:
@@ -130,6 +138,7 @@ class StoryTime extends Component {
             story={this.state.story.join(' ')} 
             turn={this.state.turn}
             playVideo={this.props.playVideo}
+            playVoice={this.playVoice}
           />
         )
       case screens.next:
@@ -140,6 +149,7 @@ class StoryTime extends Component {
             turn={this.state.turn} 
             prompt={this.state.prompt}
             playVideo={this.props.playVideo}
+            playVoice={this.playVoice}
           />
         )
       case screens.write:
@@ -152,6 +162,8 @@ class StoryTime extends Component {
             room={this.props.room}
             declareWinner={this.declareWinner}
             playVideo={this.props.playVideo}
+            playVoice={this.playVoice}
+            playMusic
           />
         )
       case screens.winner:
@@ -161,6 +173,7 @@ class StoryTime extends Component {
             winner={this.state.winner}
             nextTurn={this.nextTurn}
             playVideo={this.props.playVideo}
+            playVoice={this.playVoice}
           />
         )
         default:

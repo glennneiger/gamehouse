@@ -11,10 +11,16 @@ class Next extends Component {
 
   componentDidMount() {
     this.props.playVideo('storytime/whosnext');
+    let {turn} = this.props;
+    let interval = 0;
+    if (turn===0) {
+      this.props.playVoice('02');
+      interval=8000;
+    }
     if (!this.state.timerSet) {
       setTimeout(()=>{ 
         this.props.switchScreen(screens.write);
-      }, 1500);
+      }, interval);
       this.setState({timerSet:true});
     }
   }
