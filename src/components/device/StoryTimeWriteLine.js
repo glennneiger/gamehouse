@@ -18,9 +18,11 @@ export default class StoryTimeWriteLine extends Component {
     return (
       <div className="StoryTime">
         <div>Fill in the blank:</div>
-        <div>{this.props.prompt}</div>
-        <input type="text" className="textbox" id="write-line" maxLength="100" onChange={this.updateText}></input>
-        <div className="btn" onClick={this.handleSubmit}>Submit</div>
+        <div className="font-large">{this.props.prompt}...</div>
+        <textarea className="textbox" id="write-line" maxLength="100" rows="2" onChange={this.updateText}></textarea>
+        <div className="row">
+          <div className="btn" onClick={this.handleSubmit}>Submit</div>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {screens} from './helpers';
+import {screens, read} from './helpers';
 
 class Read extends Component {
 
@@ -9,54 +9,44 @@ class Read extends Component {
   }
 
   componentDidMount() {
-    this.props.playVideo('storytime/bg0' + this.props.turn % 3);
+    const {story, turn} = this.props;
+
+    let vidIndex = 0;
+    
+    if (turn===2) { 
+      this.props.playAudio('music', 'storytime/1');
+      this.props.preloadMusic('storytime/2');
+    } else if (turn===5) { 
+      this.props.playAudio('music', 'storytime/2');
+      this.props.preloadMusic('storytime/3');
+      vidIndex = 1;
+    } else if (turn===7) {
+      this.props.playAudio('music', 'storytime/3');
+      this.props.preloadMusic('storytime/final');
+      vidIndex = 2;
+    }
+
+    this.props.playVideo('storytime/read0' + vidIndex);
+    this.props.preloadVideo('storytime/next');
     if (!this.state.reading) {
-      this.read();
+      read(story, this.handleFinishReading);
       this.setState({reading:true});
     }
-  }
-
-
-  read = ()=> {
-    const speaker = {
-      "name": "Alex",
-      "lang": "en-US"
-    }
-
-    let msg = new SpeechSynthesisUtterance();
-
-    msg.volume = 1; // 0 to 1
-    msg.rate = 1.1; // 0.1 to 10
-    msg.pitch = 1.5; // 0 to 2
-    msg.text  = this.props.story;
-    const voice = speaker;
-    msg.voiceURI = voice.name;
-    msg.lang = voice.lang;
-    speechSynthesis.speak(msg);  
-
-    var _wait =()=> {
-      if ( ! window.speechSynthesis.speaking ) {
-        this.handleFinishReading();
-        return;
-      }
-      window.setTimeout( _wait, 200 );
-    }
-    _wait();
   }
 
   handleFinishReading = ()=> {
     this.setState({reading:false});
     let {turn} = this.props;
-    let interval = 0;
-    if (turn===0) {
-      this.props.playVoice('01');
-      interval = 6000;
+
+    if (turn===0 || turn===7) {
+      this.props.playVoice(`read/${turn}`, this.nextScreen);
+    } else {
+      this.nextScreen();
     }
+  }
 
-    setTimeout(()=>{ 
-      this.props.switchScreen(screens.next);
-    }, interval);
-
+  nextScreen = ()=> {
+    this.props.switchScreen(screens.next);
   }
 
   render() {

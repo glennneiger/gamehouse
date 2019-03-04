@@ -5,6 +5,7 @@ import Read from './Read';
 import Next from './Next';
 import Write from './Write';
 import Winner from './Winner';
+import Final from './Final';
 
 import {shuffle} from './helpers';
 
@@ -27,10 +28,11 @@ class StoryTime extends Component {
 
   componentDidMount(){
 
-    this.testing();
+    // this.testing();
 
-    this.props.playAudio('music', 'storytime');
+    this.props.playAudio('music', 'storytime/0');
     this.props.playVideo('storytime/intro');
+    this.props.preloadMusic('storytime/1');
 
     const rnd = Math.floor(Math.random() * storyStarts.length);
     const firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
@@ -115,8 +117,8 @@ class StoryTime extends Component {
     this.setState({screen});
   }
 
-  playVoice = filename=> {
-    this.props.playAudio('audio',`storytime/${filename}`)
+  playVoice = (filename, onFinish)=> {
+    this.props.playAudio('audio',`storytime/${filename}`, onFinish);
   }
   playMusic = filename=> {
     this.props.playAudio('music',`storytime-${filename}`)
@@ -129,6 +131,7 @@ class StoryTime extends Component {
           <Intro 
             switchScreen={this.switchScreen} 
             playVoice={this.playVoice}
+            preloadVideo={this.props.preloadVideo}
           />
         )
       case screens.read:
@@ -139,6 +142,9 @@ class StoryTime extends Component {
             turn={this.state.turn}
             playVideo={this.props.playVideo}
             playVoice={this.playVoice}
+            playAudio={this.props.playAudio}
+            preloadVideo={this.props.preloadVideo}
+            preloadMusic={this.props.preloadMusic}
           />
         )
       case screens.next:
@@ -150,6 +156,7 @@ class StoryTime extends Component {
             prompt={this.state.prompt}
             playVideo={this.props.playVideo}
             playVoice={this.playVoice}
+            preloadVideo={this.props.preloadVideo}
           />
         )
       case screens.write:
@@ -158,22 +165,37 @@ class StoryTime extends Component {
             switchScreen={this.switchScreen} 
             writers={this.state.writers[this.state.turn]} 
             story={this.state.story.join(' ')} 
+            turn={this.state.turn} 
             prompt={this.state.prompt}
             room={this.props.room}
             declareWinner={this.declareWinner}
             playVideo={this.props.playVideo}
             playVoice={this.playVoice}
-            playMusic
+            preloadVideo={this.props.preloadVideo}
           />
         )
       case screens.winner:
         return (
           <Winner 
+            turn={this.state.turn} 
             switchScreen={this.switchScreen} 
             winner={this.state.winner}
+            winningText={this.state.story[this.state.story.length-1]}
             nextTurn={this.nextTurn}
             playVideo={this.props.playVideo}
             playVoice={this.playVoice}
+            preloadVideo={this.props.preloadVideo}
+          />
+        )
+      case screens.final:
+        return (
+          <Final 
+            playVideo={this.props.playVideo}
+            playVoice={this.playVoice}
+            playAudio={this.props.playAudio}
+            preloadVideo={this.props.preloadVideo}
+            preloadMusic={this.props.preloadMusic}
+            story={this.state.story.join(' ')} 
           />
         )
         default:

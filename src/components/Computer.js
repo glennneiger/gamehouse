@@ -24,6 +24,7 @@ class Computer extends Component {
       open: false,
       code: '',
       sound: '',
+      onSoundFinish: ()=>{},
       music: '',
       preloadedMusic: '',
       video: '',
@@ -77,12 +78,14 @@ class Computer extends Component {
     this.setState({players});
   }
 
-  playAudio = (type, audio)=> {
+  playAudio = (type, audio, onSoundFinish)=> {
     //plays music or sound fx
     if (type==='music') {
       this.setState({music: audio});
     } else {
-      this.setState({sound: audio});
+      let callback = ()=>{};
+      if (onSoundFinish) callback = onSoundFinish;
+      this.setState({sound: audio, onSoundFinish: callback});
     }
   }
 
@@ -101,7 +104,7 @@ class Computer extends Component {
   render() {
     return (
       <div>
-        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} />
+        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} callback={this.state.onSoundFinish} />
         <Video video={this.state.video} preload={this.state.preloadedVideo} />
         {this.renderContent()}
       </div>

@@ -7,7 +7,7 @@ class SelectGame extends Component {
   renderContent() {
     if (this.props.vip) {
       return (
-        <div>
+        <div className="column">
           <p>Select Game:</p>
             <div className="btn" onClick={()=>selectGame(this.props.code, games.storyTime)}>Story Time</div>
         </div>

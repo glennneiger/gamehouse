@@ -1,4 +1,4 @@
-import { auth, database, storage } from '../Firebase';
+import { /* auth, */ database/*, storage */ } from '../Firebase';
 
 import { games } from './games';
 

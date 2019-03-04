@@ -19,9 +19,9 @@ export default class StoryTimeVote extends Component {
 
   render() {
     return (
-      <div className="StoryTime">
-        <div>Vote!</div>
-        <div className="column">{this.renderOptions()}</div>
+      <div className="StoryTime column">
+        <div className="font-large">Vote!</div>
+        <div className="row vote">{this.renderOptions()}</div>
       </div>
     )
   }

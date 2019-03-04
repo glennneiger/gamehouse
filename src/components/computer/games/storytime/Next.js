@@ -4,25 +4,18 @@ import {screens} from './helpers';
 
 class Next extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {timerSet: false};
-  }
 
   componentDidMount() {
-    this.props.playVideo('storytime/whosnext');
     let {turn} = this.props;
-    let interval = 0;
-    if (turn===0) {
-      this.props.playVoice('02');
-      interval=8000;
-    }
-    if (!this.state.timerSet) {
-      setTimeout(()=>{ 
-        this.props.switchScreen(screens.write);
-      }, interval);
-      this.setState({timerSet:true});
-    }
+
+    this.props.playVideo('storytime/next');
+    this.props.preloadVideo(`storytime/write0${turn}`);
+
+    this.props.playVoice(`next/${turn}`, this.nextScreen);
+  }
+
+  nextScreen = ()=> {
+    this.props.switchScreen(screens.write);
   }
 
 

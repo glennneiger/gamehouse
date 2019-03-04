@@ -45,6 +45,7 @@ class Audio extends Component {
         document.querySelector(`#music-${currentMusicPlayer}-source-mp3`).src=(`assets/music/${music}.mp3`);
         player.load();
       }
+      player.volume=.6;
       player.play();
       this.setState({currentMusicPlayer});
     }
@@ -71,18 +72,18 @@ class Audio extends Component {
     return (
       <div style={{display: 'none'}}>
 
-        <audio id="sound-player">
+        <audio id="sound-player" onEnded={this.props.callback}>
           <source id="sound-source-ogg" src='' type="audio/ogg" />
           <source id="sound-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>  
 
-        <audio id="music-player-1">
+        <audio id="music-player-1" className="music-player">
           <source id="music-1-source-ogg" src='' type="audio/ogg" />
           <source id="music-1-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>  
-        <audio id="music-player-2">
+        <audio id="music-player-2" className="music-player">
           <source id="music-2-source-ogg" src='' type="audio/ogg" />
           <source id="music-2-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.

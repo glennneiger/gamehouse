@@ -306,16 +306,16 @@ div.StoryTime div.story-text {
 @media screen and (max-width: 1400px) {
   div.StoryTime div.story-text {
     margin: 39px 39px 100px;
-    font-size: 20pt;
-    padding: 24px 34px 34px;
+    font-size: 22pt;
+    padding: 31px 40px 34px;
   }
 }
 
 @media screen and (max-width: 1040px) {
   div.StoryTime div.story-text {
     margin: 24px 24px 80px;
-    font-size: 12pt;
-    padding: 16px 22px 22px;
+    font-size: 16pt;
+    padding: 20px 32px 22px;
   }
 }
 
@@ -326,14 +326,14 @@ div.StoryTime div.story-text.prompt {
 }
 
 @media screen and (max-width: 1400px) {
-  div.StoryTime div.story-text {
-    font-size: 25pt;
+  div.StoryTime div.story-text.prompt {
+    font-size: 26pt;
   }
 }
 
 @media screen and (max-width: 1040px) {
-  div.StoryTime div.story-text {
-    font-size: 16pt;
+  div.StoryTime div.story-text.prompt {
+    font-size: 18pt;
   }
 }
 
@@ -366,6 +366,7 @@ div.StoryTime .WriterCard .speech-bubble {
   margin: 0 15px;
   -webkit-transition-duration: 300ms;
           transition-duration: 300ms;
+  text-align: center;
 }
 
 @media screen and (max-width: 1400px) {
@@ -397,14 +398,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
   border-left: 0;
   margin-left: -10px;
   margin-bottom: -20px;
-}
-
-div.StoryTime .WriterCard img.voter-icon {
-  width: 60px;
-  height: 60px;
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
 }
 
 a {
@@ -529,6 +522,15 @@ body.device img.logo {
   margin: 15px 0 25px 0;
 }
 
+body.device .StoryTime textarea {
+  font-family: "Nunito", verdana, arial, sans-serif;
+  font-size: 14pt;
+  padding: 0 4pt;
+  width: 98vw;
+  margin: 10px auto 24px;
+  max-width: 300px;
+}
+
 body.device .btn {
   font-size: 20pt;
   background-color: #3fa9f5;
@@ -552,5 +554,30 @@ body.device p {
   max-width: 400px;
   font-size: 19pt;
   padding: 6pt 0 18pt;
+}
+
+body.device .font-large {
+  font-size: 19pt;
+}
+
+body.device div.vote {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  max-width: 330px;
+  padding: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body.device div.vote img {
+  width: 40%;
+  height: 40%;
+  padding: 0;
+  margin: 5px 5px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

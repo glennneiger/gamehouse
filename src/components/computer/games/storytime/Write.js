@@ -15,12 +15,17 @@ class Write extends Component {
       votingOpen: false, // first half is writers writing, second half is voters voting 
       voters: [], // indices of players who will be voting 
       votes: {}, // map writer indices => arr of indices of players who voted for them
-      writers: props.writers
+      writers: props.writers,
+      winner: {},
+      winningText: '',
+      tie: false
     }
   }
 
   componentDidMount() {
-    this.props.playVideo('storytime/write');
+    let {turn} = this.props;
+    this.props.playVideo(`storytime/write0${turn}`);
+    this.props.preloadVideo('storytime/winner');
     
     this.sendWriteRequests();
 
@@ -114,33 +119,50 @@ class Write extends Component {
   }
 
   handleAllWritersSubmitted = ()=> {
+    let {turn} = this.props;
 
     // play voice 
-    this.props.playVoice('03');
-
-    // //play voting music
-    // this.props.play
-
-    this.openVoting();
+    this.props.playVoice(`voteopen/${turn}`, this.openVoting);
   }
 
   handleAllVotersSubmitted = ()=> {
-    let {votes, texts} = this.state;
-    let {writers} = this.props;
-    let winners = findWinners(writers, votes);
-    let winner;
-    if (winners.length > 0) {
-      //handle tie 
+    const {turn} = this.props;
+    
+    this.props.playVoice(`voteclose/${turn}`, this.seeIfTie);
 
+    const {votes, texts} = this.state;
+    const {writers} = this.props;
+    const winners = findWinners(writers, votes);
+    let winner;
+    let tie = false;
+    if (winners.length > 1) {
+      //handle tie 
+      tie = true;
       //choose winner at random
       winner = winners[Math.floor(Math.random()*winners.length)];
     } else {
       winner = winners[0];
     }
-    let winningText = texts[winner.index];
+    const winningText = texts[winner.index];
+
+    this.setState({winner, winningText, tie});
+  }
+
+  seeIfTie = ()=> {
+    if (this.state.tie) {
+      this.props.playVoice('tie/0', this.nextScreen);
+    } else {
+      this.nextScreen()
+    } 
+  }
+
+
+  nextScreen = ()=> {
+    const {winner, winningText} = this.state;
     this.props.declareWinner(winner, winningText);
     this.props.switchScreen(screens.winner);
   }
+  
 
   openVoting = ()=> {
     this.setState({votingOpen: true})
@@ -153,10 +175,9 @@ class Write extends Component {
       if (!text) {
         text = ' ';
       }
-      let {players} = this.props.room;
-      let {submitted, votes} = this.state;
+      let {submitted} = this.state;
       return (
-        <WriterCard key={i} name={writer.name} img={writer.img} text={text} submitted={submitted.includes(writer.index)} votes={votes[writer.index]} players={players}/>
+        <WriterCard key={i} name={writer.name} img={writer.img} text={text} submitted={submitted.includes(writer.index)} />
       )
     }
   );
