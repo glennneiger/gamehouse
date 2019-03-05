@@ -31,9 +31,7 @@ class App extends Component {
         <Device />
       )
     } else {
-      return (
-        <div></div>
-      )
+      return null;
     }
   }
 

@@ -112,7 +112,7 @@ class JoinRoom extends Component {
         )
       } else {
         return (
-          <div>
+          <div className="column">
             <p>Welcome to the Party!</p>
             <p>Sit back, relax until everyone has joined!</p>
             <p>{this.state.vipName} will start the party as soon as everyone is in!</p>
@@ -121,7 +121,7 @@ class JoinRoom extends Component {
       }
     } else {
       return (
-        <div>
+        <div className="column">
           <div>Room Code:</div>
           <input type="text" className="textbox" id="room-code" maxLength="4"></input>
           
@@ -144,9 +144,7 @@ class JoinRoom extends Component {
   render() {
     return (
       <div className="JoinRoom">
-        <div className="column">
-          {this.renderContent()}
-        </div>
+        {this.renderContent()}
       </div>
     )
   }

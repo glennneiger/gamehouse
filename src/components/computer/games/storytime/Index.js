@@ -125,7 +125,6 @@ class StoryTime extends Component {
   }
 
   playVoice = (filename, onFinish)=> {
-    console.log(filename);
     this.props.playAudio('audio',`storytime/${filename}`, onFinish);
   }
   playMusic = filename=> {
@@ -133,7 +132,6 @@ class StoryTime extends Component {
   }
 
   render() {
-    console.log(this.state.screen);
     switch (this.state.screen) {
       case screens.read:
         return (

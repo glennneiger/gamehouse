@@ -50,7 +50,6 @@ class Video extends Component {
         if (currentPlayer===1) {
           backupPlayer = 2;
         } 
-        console.log(backupPlayer)
         let player = document.querySelector(`#video-player-${backupPlayer}`);
         document.querySelector(`#video-src-${backupPlayer}`).src=(`assets/video/${preload}.mp4`);
         player.load();

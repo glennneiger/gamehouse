@@ -101,10 +101,14 @@ class Computer extends Component {
     this.setState({preloadedVideo: video})
   }
 
+  clearAudio = async ()=>{
+    await this.setState({sound: null})
+  }
+
   render() {
     return (
       <div>
-        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={()=>this.setState({sound: null})} callback={this.state.onSoundFinish} />
+        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={this.clearAudio} callback={this.state.onSoundFinish} />
         <Video video={this.state.video} preload={this.state.preloadedVideo} />
         {this.renderContent()}
       </div>
