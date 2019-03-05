@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {selectGame} from '../../actions';
 import {games} from '../../actions/games';
 
+import Ad from './Ad';
+
 class SelectGame extends Component {
 
   renderContent() {
@@ -27,7 +29,8 @@ class SelectGame extends Component {
         <div className="column">
 
           {this.renderContent()}
-
+          
+          <Ad/>
         </div>
       </div>
     )

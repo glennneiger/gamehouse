@@ -13,7 +13,7 @@ class Audio extends Component {
     const newProps = this.props;
 
     // new audio
-    if(oldProps.sound !== newProps.sound) {
+    if(newProps.sound && oldProps.sound !== newProps.sound) {
       let player = document.querySelector('#sound-player');
       let source1 = document.querySelector('#sound-source-ogg');
       let source2 = document.querySelector('#sound-source-mp3');
@@ -25,7 +25,7 @@ class Audio extends Component {
     }
 
     //new music
-    if(oldProps.music !== newProps.music) {
+    if(newProps.music && oldProps.music !== newProps.music) {
       let {currentMusicPlayer} = this.state;
       let {music} = newProps;
       let {preload} = oldProps;
@@ -51,7 +51,7 @@ class Audio extends Component {
     }
 
     // new preload 
-    if(oldProps.preload !== newProps.preload) {
+    if(newProps.preload && oldProps.preload !== newProps.preload) {
       setTimeout(() => {  
         let {preload} = newProps;
         let {currentMusicPlayer} = this.state;
@@ -68,11 +68,16 @@ class Audio extends Component {
     
   }
 
+  handleFinishAudio = ()=>{
+    this.props.callback();
+    this.props.clearAudio();
+  }
+
   render() {
     return (
       <div style={{display: 'none'}}>
 
-        <audio id="sound-player" onEnded={this.props.callback}>
+        <audio id="sound-player" onEnded={this.handleFinishAudio}>
           <source id="sound-source-ogg" src='' type="audio/ogg" />
           <source id="sound-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.

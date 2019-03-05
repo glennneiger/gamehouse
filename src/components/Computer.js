@@ -104,7 +104,7 @@ class Computer extends Component {
   render() {
     return (
       <div>
-        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} callback={this.state.onSoundFinish} />
+        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={()=>this.setState({sound: null})} callback={this.state.onSoundFinish} />
         <Video video={this.state.video} preload={this.state.preloadedVideo} />
         {this.renderContent()}
       </div>
@@ -123,11 +123,11 @@ class Computer extends Component {
         )
       case games.storyTime:
         return (
-          <StoryTime room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
+          <StoryTime room={this.state} switchGame={this.switchGame} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
         )
       default:
         return (
-          <Landing switchGame = {this.switchGame} useAsDevice={this.props.useAsDevice} />
+          <Landing switchGame={this.switchGame} useAsDevice={this.props.useAsDevice} />
         );
     }
   }

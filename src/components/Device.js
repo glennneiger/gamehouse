@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 
 import JoinRoom from './device/JoinRoom';
 import SelectGame from './device/SelectGame';
+import PlayAgain from './device/PlayAgain';
 import StoryTimeWriteLine from './device/StoryTimeWriteLine';
 import StoryTimeVote from './device/StoryTimeVote';
+
+import Ad from './device/Ad';
 
 import Logo from './device/Logo';
 
@@ -72,9 +75,13 @@ class Device extends Component {
         return (
           <StoryTimeVote options={this.state.requestMessage} code={this.state.code} playerIndex={this.state.playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
         )
+      case requests.playAgain:
+        return (
+          <PlayAgain code={this.state.code} />
+        )
       default:
         return (
-          <div></div>
+          <Ad />
         )
      }
   }

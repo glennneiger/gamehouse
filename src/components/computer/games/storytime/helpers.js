@@ -11,11 +11,14 @@ export const storyStarts = [
   // 'test'
   'a little boy named Chuck, who lived in a cabin in the woods with his grandmother',
   'a mouse named Whiskers who loved peanut butter',
-  'a princess named Victoria who lived in a castle',
+  'a princess named Charlotte who lived in a castle',
   'a frog named Hopper who lived in a swamp',
   'a fairy named Belinda who could grant wishes',
   'a dog named Fluffy who lived in a house in the suburbs',
-  'a dog named Max who lived on a farm'
+  'a dog named Max who lived on a farm',
+  'a man named Fred who worked in an office',
+  'a lobster named Lenny who lived in the ocean',
+  'a girl named Kate who lived in an old house in a small town'
 ]
 
 export const getWritersPerTurn = numPlayers=> {

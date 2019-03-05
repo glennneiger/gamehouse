@@ -8,6 +8,10 @@ class Video extends Component {
     this.state = {currentPlayer: 1};
   }
 
+  componentDidMount() {
+    document.getElementById('video-player-2').style.display='none';
+  }
+
   componentDidUpdate(oldProps) {
     const newProps = this.props
 
@@ -20,21 +24,21 @@ class Video extends Component {
       //stop the current video 
       let player = document.querySelector(`#video-player-${currentPlayer}`);
       player.pause();
-      player.style.display = "none";
-
-      //switch the player (there are 2)
-      currentPlayer===1 ? currentPlayer = 2 : currentPlayer = 1;
-      player = document.querySelector(`#video-player-${currentPlayer}`);
 
       // see if the new music has already been preloaded. This can be done to cut down on load time
-      if (video !==preload) {
+      if (video===preload) {
+        // if so, switch to the player that has it preloaded (there are 2)
+        player.style.display = "none";
+        currentPlayer===1 ? currentPlayer = 2 : currentPlayer = 1;
+        player = document.querySelector(`#video-player-${currentPlayer}`);
+        player.style.display = "block";
+        this.setState({currentPlayer});
+      } else {
         // if not, load it
         document.querySelector(`#video-src-${currentPlayer}`).src=(`assets/video/${video}.mp4`);
         player.load();
       }
       player.play();
-      player.style.display = "block";
-      this.setState({currentPlayer});
     }
 
     // new preload 
@@ -46,6 +50,7 @@ class Video extends Component {
         if (currentPlayer===1) {
           backupPlayer = 2;
         } 
+        console.log(backupPlayer)
         let player = document.querySelector(`#video-player-${backupPlayer}`);
         document.querySelector(`#video-src-${backupPlayer}`).src=(`assets/video/${preload}.mp4`);
         player.load();

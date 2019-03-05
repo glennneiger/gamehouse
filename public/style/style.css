@@ -539,7 +539,7 @@ body.device .btn {
   max-width: 360px;
   border-radius: 40px;
   color: white;
-  margin-bottom: 36px;
+  margin: 0 0 16px;
   -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
 }
