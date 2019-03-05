@@ -43,7 +43,7 @@ export const storyStarts = [
   'an old man named Phil who lived by the park',
   'a duck named Wobbles who lived by a pond',
   'a girl named Anne who loved to ride horses',
-  'a girl named Courtney who wanted to become a well-known DJ',
+  'a girl named Courtney who wanted to become an actor',
   'a young man named Roger who wanted to be a professional athlete',
   'a girl named Shelly who loved sea shells',
   'a woman named Denice who had a magic wand',

@@ -83,12 +83,12 @@ class Audio extends Component {
           Your browser does not support the audio element.
         </audio>  
 
-        <audio id="music-player-1" className="music-player">
+        <audio id="music-player-1" className="music-player" loop >
           <source id="music-1-source-ogg" src='' type="audio/ogg" />
           <source id="music-1-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>  
-        <audio id="music-player-2" className="music-player">
+        <audio id="music-player-2" className="music-player" loop >
           <source id="music-2-source-ogg" src='' type="audio/ogg" />
           <source id="music-2-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.
