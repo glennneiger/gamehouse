@@ -8,7 +8,7 @@ import Final from './Final';
 
 import {shuffle} from './helpers';
 
-import {storyStarts, screens, getWritersPerTurn, getPrompt} from './helpers';
+import {getStoryStart, screens, getWritersPerTurn, getPrompt} from './helpers';
 
 class StoryTime extends Component {
 
@@ -39,14 +39,20 @@ class StoryTime extends Component {
     this.props.preloadMusic('storytime/1');
     this.props.preloadVideo('storytime/read00');
 
-    const rnd = Math.floor(Math.random() * storyStarts.length);
-    const firstLine = `Once upon a time, there was ${storyStarts[rnd]}.`;
+    const storyStart = getStoryStart();
+    const firstLine = `Once upon a time, there was ${storyStart}.`;
 
     const numPlayers = this.props.room.players.length;
     const writersPerTurn = getWritersPerTurn(numPlayers); 
     const writers = this.selectWriters(writersPerTurn);
     const prompt = getPrompt(0);
-    this.setState({writers, story:[firstLine], prompt});
+    this.setState({
+      writers, 
+      story:[firstLine],
+      turn: 0, 
+      prompt,
+      winner: {}
+    });
   }
 
 
