@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {joinRoom, selectGame} from '../../actions';
+import {joinRoom, selectGame, watchForChange} from '../../actions';
 import {games} from '../../actions/games';
 
 class JoinRoom extends Component {
@@ -7,7 +7,7 @@ class JoinRoom extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {entered: false, vipName: '', playerId: 0}
+    this.state = {entered: false, vipName: '', playerId: 0, enoughPlayers: false}
   }
 
   componentDidMount() {
@@ -16,6 +16,10 @@ class JoinRoom extends Component {
   }
 
   startGame = () => {
+    if (!this.state.enoughPlayers) {
+      alert('You must have at least 3 players to continue!');
+      return;
+    }
     selectGame(this.props.code, games.gameRoom);
   }
   
@@ -77,7 +81,7 @@ class JoinRoom extends Component {
       if (room.players) {
         //you're not the first player to join
         vipName = room.players['0'].name;
-        for (let i=1; i<10; i++) {
+        for (let i=1; i<16; i++) {
           if (!room.players[i]) {
             playerId = i;
             break;
@@ -86,6 +90,7 @@ class JoinRoom extends Component {
       } else {
         //you are the first, making you the host/VIP 
         this.props.setVip();
+        watchForChange(roomCode, 'players', this.seeIfEnoughPlayers);
       }
 
       this.setState({entered, vipName, playerId});
@@ -94,6 +99,13 @@ class JoinRoom extends Component {
     } else {
       // room is full
       alert('Sorry! This room is full!');
+    }
+  }
+
+  seeIfEnoughPlayers = async data=> {
+    const players = await data.toJSON();
+    if (players[2]) {
+      this.setState({enoughPlayers: true});
     }
   }
 
@@ -106,7 +118,7 @@ class JoinRoom extends Component {
             <p>Welcome to the Party!</p>
             <p>Looks like you're the host!</p>
             <p>Tap Continue as soon as all the guests have arrived!</p>
-            <p>(Minimum 4 Players)</p>
+            <p>(Minimum 3 Players)</p>
             <div className="btn" onClick={this.startGame}>Continue</div>
           </div>
         )

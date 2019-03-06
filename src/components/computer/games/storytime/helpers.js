@@ -105,17 +105,22 @@ export const getWritersPerTurn = numPlayers=> {
   // how many players compete each turn? 
 
   const breakdowns = [
+    [2,2,2,2,2,2,2,2], // if there are 3 players 
     [2,2,2,2,2,2,2,2], // if there are 4 players 
     [2,2,2,3,3,3,3,2], // if there are 5 players 
-    [3,3,3,3,3,3,3,3], // ... 
-    [2,2,3,3,3,3,3,2],
-    [3,3,3,3,3,3,3,3],
-    [3,3,3,3,4,4,4,3],
-    [4,4,4,4,4,4,4,3], // if there are 10 players 
-    // [2,3,3,3,3,3,3,2], // if there are 11 players 
-    // [3,3,3,3,3,3,3,3], // if there are 12 players 
+    [3,3,3,3,3,3,3,3], // ...6 
+    [2,2,3,3,3,3,3,2], // 7
+    [3,3,3,3,3,3,3,3], // 8
+    [3,3,3,3,4,4,4,3], // 9
+    [3,4,4,4,4,4,4,3], // 10
+    [2,3,3,3,3,3,3,2], // 11
+    [3,3,3,3,3,3,3,3], // 12
+    [3,3,4,3,4,3,3,3], // 13
+    [3,3,4,4,4,4,3,3], // 14
+    [3,4,4,4,4,4,4,3], // if there are 15 players 
+    [4,4,4,4,4,4,4,4], // if there are 16 players 
   ]
-  const breakdown = breakdowns[numPlayers - 4];
+  const breakdown = breakdowns[numPlayers - 3];
 
   return breakdown;
 }

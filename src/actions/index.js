@@ -2,6 +2,9 @@ import { /* auth, */ database/*, storage */ } from '../Firebase';
 
 import { games } from './games';
 
+const maxPlayers = 16;
+
+
 export function createNewRoom(roomCode, callback) {
   database.ref(`rooms/${roomCode}`).set({
     open: true, players: [], game: games.newRoom
@@ -73,22 +76,22 @@ export async function joinRoom(roomCode, name, img) {
       if (room.open && room.players) {
         let playersObj = room.players;
         //convert obj to arr
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < maxPlayers; i++) {
           if (playersObj[i]) {
             players.push(playersObj[i]);
           } else {
-            i=10;
+            break;
           }
         }
       }
       
-      if (!room.open || (players.length >= 10)) {
+      if (!room.open || (players.length >= maxPlayers)) {
         return false; //room is not open, or room is maxed out
       }
 
       let index = players.length;
       players.push({name, img, index}); // add the new player
-      let open = players.length === 10 ? false : true; //cap room at 10
+      let open = players.length === maxPlayers ? false : true; //cap room at maxPlayers
 
       database.ref(`rooms/${roomCode}`).update({
         players, open 
