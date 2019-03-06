@@ -198,9 +198,9 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   -webkit-box-align: center;
@@ -211,19 +211,12 @@ body {
   height: 65vh;
   max-height: 700px;
   padding-top: 3vh;
-  width: 860px;
+  width: 96vw;
 }
 
 @media screen and (max-width: 1400px) {
   .NewRoom div.players {
     height: 60vh;
-    width: 785px;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  .NewRoom div.players {
-    width: 710px;
   }
 }
 
@@ -244,38 +237,20 @@ body {
 
 .ProfileCard {
   margin: 0;
-  padding: 14px 18px;
-  width: 170px;
-}
-
-@media screen and (max-width: 1400px) {
-  .ProfileCard {
-    padding: 13px 17px;
-    width: 155px;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  .ProfileCard {
-    padding: 12px 15px;
-    width: 140px;
-  }
+  padding: 0;
+  width: 12vw;
+  display: block;
 }
 
 .ProfileCard img {
-  margin-bottom: 6px;
-  border-radius: 24px;
-  width: 100%;
-}
-
-@media screen and (max-width: 1040px) {
-  .ProfileCard img {
-    margin-bottom: 0;
-  }
+  width: 11vw;
+  border-radius: 10%;
 }
 
 .ProfileCard .name {
   font-size: 24pt;
+  line-height: 24pt;
+  margin-bottom: 5px;
   text-align: center;
 }
 
