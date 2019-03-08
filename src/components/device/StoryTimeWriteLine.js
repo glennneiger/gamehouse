@@ -19,7 +19,7 @@ export default class StoryTimeWriteLine extends Component {
       <div className="StoryTime">
         <div>Fill in the blank:</div>
         <div className="font-large">{this.props.prompt}...</div>
-        <textarea className="textbox" id="write-line" maxLength="100" rows="2" onChange={this.updateText}></textarea>
+        <textarea className="textbox" id="write-line" maxLength="120" rows="2" onChange={this.updateText}></textarea>
         <div className="row">
           <div className="btn" onClick={this.handleSubmit}>Submit</div>
         </div>
