@@ -7,12 +7,7 @@ class JoinRoom extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {entered: false, vipName: '', playerId: 0, enoughPlayers: false}
-  }
-
-  componentDidMount() {
-    //this class will turn body bg color white instead of black
-    document.querySelector('body').classList.add('device');
+    this.state = {playerId: 0, enoughPlayers: false}
   }
 
   startGame = () => {
@@ -68,7 +63,6 @@ class JoinRoom extends Component {
     let room = await joinRoom(roomCode, playerName, img);
     
     let vipName = '';
-    let entered = false;
     let playerId = 0;
 
     if (room===null) {
@@ -76,7 +70,6 @@ class JoinRoom extends Component {
       alert('Invalid Room Code!');
     } else if (room.open) {
       //success!
-      entered = true;
 
       if (room.players) {
         //you're not the first player to join
@@ -89,12 +82,11 @@ class JoinRoom extends Component {
         }
       } else {
         //you are the first, making you the host/VIP 
-        this.props.setVip();
         watchForChange(roomCode, 'players', this.seeIfEnoughPlayers);
       }
 
-      this.setState({entered, vipName, playerId});
-      this.props.setRoom(roomCode, playerId);
+      this.setState({playerId});
+      this.props.setRoom(roomCode, playerId, vipName);
 
     } else {
       // room is full
@@ -110,7 +102,7 @@ class JoinRoom extends Component {
   }
 
   renderContent = ()=> {
-    if (this.state.entered) {
+    if (this.props.entered) {
       if (this.state.playerId===0) {
         // you're the vip
         return (
@@ -127,7 +119,7 @@ class JoinRoom extends Component {
           <div className="column">
             <p>Welcome to the Party!</p>
             <p>Sit back, relax until everyone has joined!</p>
-            <p>{this.state.vipName} will start the party as soon as everyone is in!</p>
+            <p>{this.props.vipName} will start the party as soon as everyone is in!</p>
           </div>
         )
       }

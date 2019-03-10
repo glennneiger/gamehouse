@@ -59,6 +59,12 @@ export function watchForChange(roomCode, child, callback) {
   database.ref(`rooms/${roomCode}/${child}`).on('value', data => callback(data));
 }
 
+
+export function getValue(roomCode, value) {
+  return database.ref(`rooms/${roomCode}/${value}`).once('value');
+}
+
+
 export async function joinRoom(roomCode, name, img) {
 
   let res = await database.ref(`rooms/${roomCode}`).once('value', data => {
