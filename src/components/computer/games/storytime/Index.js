@@ -10,6 +10,10 @@ import {shuffle} from './helpers';
 
 import {getStoryStart, screens, getWritersPerTurn, getPrompt} from './helpers';
 
+
+import {incrementGame} from '../../../../actions'
+import {games} from '../../../../actions/games'
+
 class StoryTime extends Component {
 
   constructor(props) {
@@ -53,6 +57,8 @@ class StoryTime extends Component {
       prompt,
       winner: {}
     });
+
+    incrementGame(games.storyTime);
   }
 
 

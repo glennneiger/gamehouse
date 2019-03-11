@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {joinRoom, selectGame, watchForChange, removeWatcher} from '../../actions';
+import {joinRoom, selectGame, watchForChange, removeWatcher, incrementSessions} from '../../actions';
 import {games} from '../../actions/games';
 
 class JoinRoom extends Component {
@@ -12,7 +12,7 @@ class JoinRoom extends Component {
 
   componentDidMount() {
     // test mode
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    if ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') && !this.props.entered) {
       document.getElementById('room-code').value="TEST";
       const testNames = ['Jacob','Brandon','Karen','Stephen','Shayla','Jon','Debra','David','Emily','Luis','Tasheda'];
       document.getElementById('player-name').value = testNames[Math.floor(Math.random()*testNames.length)];
@@ -31,7 +31,9 @@ class JoinRoom extends Component {
       alert('You must have at least 3 players to continue!');
       return;
     }
-    selectGame(this.props.code, games.gameRoom);
+    const {code} = this.props;
+    selectGame(code, games.gameRoom);
+    incrementSessions();
   }
   
   renderPictures = () => {
@@ -144,11 +146,11 @@ class JoinRoom extends Component {
       return (
         <div className="column">
           <div>Room Code:</div>
-          <input type="text" className="textbox" id="room-code" maxLength="4" autocomplete="off"></input>
+          <input type="text" className="textbox" id="room-code" maxLength="4" autoComplete="off"></input>
           
 
           <div>Name:</div>
-          <input type="text" className="textbox" id="player-name" maxLength="12" autocomplete="off"></input>
+          <input type="text" className="textbox" id="player-name" maxLength="12" autoComplete="off"></input>
 
           <div>Picture:</div>
 

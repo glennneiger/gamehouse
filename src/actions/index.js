@@ -11,14 +11,6 @@ export function createNewRoom(roomCode, callback) {
   });
 
   watchForNewPlayers(roomCode, callback);
-
-  // counter
-  if (roomCode !== 'TEST') {
-    let ref = database.ref('totalPlays');
-    ref.transaction(function(currentTotal) {
-      return (currentTotal || 0) + 1;
-    });
-  }
 }
 
 export async function roomExists(roomCode) {
@@ -27,6 +19,10 @@ export async function roomExists(roomCode) {
     exists = snapshot.hasChild('players');
   });
   return exists;
+}
+
+export function updateRoom(roomCode, update) {
+  database.ref(`rooms/${roomCode}`).update(update);
 }
 
 export function selectGame(roomCode, game) {
@@ -84,9 +80,11 @@ export function getValue(roomCode, value) {
   return database.ref(`rooms/${roomCode}/${value}`).once('value');
 }
 
+
 export function deleteRoom(roomCode) {
-  return database.ref(`rooms/${roomCode}`).remove();
-}
+  database.ref(`rooms/${roomCode}`).remove();
+};
+
 
 
 export async function joinRoom(roomCode, name, img) {
@@ -127,3 +125,41 @@ export async function joinRoom(roomCode, name, img) {
 
   return res.toJSON();
 };
+
+
+
+
+
+
+//****** TRACK STATS *****/
+export function incrementSessions() {
+  if (devMode()) return;
+  incrementStat('total-sessions');
+}
+
+export async function incrementGame(game) {
+  if (devMode()) return;
+
+  let data = await database.ref('stats/total-games').once('value');
+  let games = await data.toJSON();
+  games++;
+  data = await database.ref('stats/total-sessions').once('value');
+  let sessions = await data.toJSON();
+  const gamesPerSession = Math.round(games/sessions);
+
+  incrementStat(`games/${game}`);
+  incrementStat('total-games');
+  database.ref('stats').update({
+    'avg-games-per-session' : gamesPerSession
+  });
+}
+
+function incrementStat(stat) {
+  database.ref(`stats/${stat}`).transaction(function(currentTotal) {
+    return (currentTotal || 0) + 1;
+  });
+}
+
+function devMode() {
+  return (!process.env.NODE_ENV || process.env.NODE_ENV === 'development');
+}
