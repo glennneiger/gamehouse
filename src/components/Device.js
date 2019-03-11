@@ -11,7 +11,7 @@ import Ad from './device/Ad';
 
 import Logo from './device/Logo';
 
-import {watchForChange, getValue} from '../actions';
+import {watchForChange, getValue, roomExists} from '../actions';
 import {games} from '../actions/games';
 import {requests} from '../actions/requestTypes';
 
@@ -44,8 +44,16 @@ class Device extends Component {
     }
   }
 
+
   // called if a player refreshes browser
   refreshGame = async (code)=> {
+
+    const exists = await roomExists(code);
+    if (!exists) { // room no longer exists
+      localStorage.clear();
+      return;
+    }
+
     const playerIndex = localStorage.getItem('playerIndex');
     const vipName = localStorage.getItem('vipName');
 
@@ -53,19 +61,17 @@ class Device extends Component {
 
     let data = await getValue(code, `players/${playerIndex}/request`);
     const request = await data.toJSON();
-    console.log(request);
     if (request) {
       this.setState({screen: request.requestType, requestMessage: request.requestMessage});
     } else {
       data = await getValue(code, 'game');
       const game = await data.toJSON();
-      console.log(game);
       this.setState({screen: game});
     }
   }
 
   updateGame = async data=> {
-    const game = await data.toJSON();
+    let game = await data.toJSON();
     this.setState({screen: game});
   }
 
@@ -113,24 +119,31 @@ class Device extends Component {
       <div>
         <Logo />
         {this.renderContent()}
-        <LeaveParty entered = {this.state.entered} handleClickLeave={this.handleClickLeave} handleLeaveRoom={this.handleLeaveRoom} clicked={this.state.showLeaveMenu} />
       </div>
     )
   }
 
   renderContent = ()=> {
     const {vip, code, entered, vipName, requestMessage, playerIndex, screen, showLeaveMenu} = this.state;
-    
+    const leaveParty = <LeaveParty entered = {this.state.entered} handleClickLeave={this.handleClickLeave} handleLeaveRoom={this.handleLeaveRoom} clicked={this.state.showLeaveMenu} />
+
+
     if (showLeaveMenu) return null;
 
     switch (screen) {
       case games.gameRoom:
         return (
-          <SelectGame vip={vip} code={code} />
+          <div>
+            <SelectGame vip={vip} code={code} />
+            {leaveParty}
+          </div>
         )
       case games.newRoom:
         return (
-          <JoinRoom setRoom = {this.setRoom} code={code} entered={entered} vipName={vipName} />
+          <div>
+            <JoinRoom setRoom = {this.setRoom} code={code} entered={entered} vipName={vipName} />
+            {leaveParty}
+          </div>
         )
       case requests.storyTime.writeLine:
         return (

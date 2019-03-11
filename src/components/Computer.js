@@ -8,7 +8,7 @@ import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
 import StoryTime from './computer/games/storytime/Index';
 
-import {createNewRoom, watchForChange} from '../actions';
+import {createNewRoom, watchForChange, deleteRoom} from '../actions';
 
 import {games} from '../actions/games';
 
@@ -33,7 +33,19 @@ class Computer extends Component {
 
   }
 
+  onUnload = ()=> {
+    const {code} = this.state;
+    if (code) {
+      deleteRoom(code);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.onUnload);
+  }
   componentDidMount() {
+    window.addEventListener("beforeunload", this.onUnload);
+
     this.setState({video: 'home', preloadedMusic: 'newroom', preloadedVideo: 'newroom'});
   }
 
