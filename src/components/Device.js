@@ -5,13 +5,13 @@ import SelectGame from './device/SelectGame';
 import PlayAgain from './device/PlayAgain';
 import StoryTimeWriteLine from './device/StoryTimeWriteLine';
 import StoryTimeVote from './device/StoryTimeVote';
-import LeaveParty from './device/LeaveParty';
+import MenuLink from './device/MenuLink';
 
 import Ad from './device/Ad';
 
 import Logo from './device/Logo';
 
-import {watchForChange, getValue, roomExists} from '../actions';
+import {watchForChange, getValue, roomExists, selectGame, removeWatcher} from '../actions';
 import {games} from '../actions/games';
 import {requests} from '../actions/requestTypes';
 
@@ -28,7 +28,7 @@ class Device extends Component {
       playerIndex: 0,
       screen: games.newRoom, 
       requestMessage: '', //any special message that comes in with an input request,
-      showLeaveMenu: false
+      showMenu: false
     }
 
   }
@@ -71,8 +71,12 @@ class Device extends Component {
   }
 
   updateGame = async data=> {
-    let game = await data.toJSON();
+    const game = await data.toJSON();
     this.setState({screen: game});
+
+    if (game===games.landing) {
+      this.handleLeaveRoom();
+    }
   }
 
   updateRequest = async data=> {
@@ -96,12 +100,20 @@ class Device extends Component {
     localStorage.setItem('vipName', vipName);
   }
 
-  handleClickLeave = showLeaveMenu=> {
-    this.setState({showLeaveMenu});
+  handleClickMenu = (menu, showMenu)=> {
+    if (showMenu) { //boolean
+      this.setState({showMenu: menu}); //string
+    } else {
+      this.setState({showMenu: false})
+    }
   }
 
   handleLeaveRoom = ()=> {
     localStorage.clear();
+    const {code, playerIndex} = this.state;
+    removeWatcher(code, 'game');
+    removeWatcher(code, `players/${playerIndex}/request`);
+    
     this.setState({
       vip: false,
       vipName: '',
@@ -110,8 +122,18 @@ class Device extends Component {
       playerIndex: 0,
       screen: 'thank-you', 
       requestMessage: '',
-      showLeaveMenu: false
+      showMenu: false
     });
+  }
+
+  handleExitGame = ()=> {
+    selectGame(this.state.code, games.gameRoom);
+    this.setState({showMenu: false});
+  }
+
+  handleCloseParty = ()=> {
+    selectGame(this.state.code, games.landing);
+    this.handleLeaveRoom()
   }
 
   render() {
@@ -124,38 +146,65 @@ class Device extends Component {
   }
 
   renderContent = ()=> {
-    const {vip, code, entered, vipName, requestMessage, playerIndex, screen, showLeaveMenu} = this.state;
-    const leaveParty = <LeaveParty entered = {this.state.entered} handleClickLeave={this.handleClickLeave} handleLeaveRoom={this.handleLeaveRoom} clicked={this.state.showLeaveMenu} />
+    const {vip, code, entered, vipName, requestMessage, playerIndex, screen, showMenu} = this.state;
 
+    let menu = {
+      // option to leave party
+      leave: <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('leave', showMenu)} handleAction={this.handleLeaveRoom} clicked={showMenu==='leave'} text='leave the party' caption='Leave Party' />,
+      // exit to lobby from game
+      exit: null, // these menu options are only given to vip
+      // close the whole party down
+      close: null // ...
+    }
+    if (vip) {
+      menu.exit = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='exit the game and return to the lobby' caption='Return to Lobby' />
+      menu.close = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('close', showMenu)} handleAction={this.handleCloseParty} clicked={showMenu==='close'} text='close the party' caption='Close Party' />
+    }
 
-    if (showLeaveMenu) return null;
+    if (showMenu) return <div>{menu[showMenu]}</div>;
 
     switch (screen) {
       case games.gameRoom:
         return (
           <div>
             <SelectGame vip={vip} code={code} />
-            {leaveParty}
+            {menu.leave}
+            {menu.close}
           </div>
         )
       case games.newRoom:
         return (
           <div>
             <JoinRoom setRoom = {this.setRoom} code={code} entered={entered} vipName={vipName} />
-            {leaveParty}
+            {menu.leave}
+            {menu.close}
           </div>
         )
       case requests.storyTime.writeLine:
         return (
-          <StoryTimeWriteLine prompt={requestMessage} code={code} playerIndex={playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
+          <div>
+            <StoryTimeWriteLine prompt={requestMessage} code={code} playerIndex={playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
+            {menu.exit}
+          </div>
         )
       case requests.storyTime.vote:
         return (
-          <StoryTimeVote options={requestMessage} code={code} playerIndex={playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
+          <div>
+            <StoryTimeVote options={requestMessage} code={code} playerIndex={playerIndex} handleSubmit={()=>this.setState({screen: games.storyTime})}/>
+            {menu.exit}
+          </div>
+
         )
       case requests.playAgain:
         return (
           <PlayAgain code={code} />
+        )
+      case games.storyTime:
+        return (
+          <div>
+            <Ad />
+            {menu.exit}
+          </div>
         )
       case 'thank-you':
         return (
@@ -169,9 +218,10 @@ class Device extends Component {
         return (
           <Ad />
         )
-     }
+    }
   }
 }
+
 
 export default Device;
 

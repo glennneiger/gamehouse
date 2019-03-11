@@ -46,8 +46,24 @@ class Computer extends Component {
   componentDidMount() {
     window.addEventListener("beforeunload", this.onUnload);
 
-    this.setState({video: 'home', preloadedMusic: 'newroom', preloadedVideo: 'newroom'});
+    this.init();
   }
+
+  init = ()=> {
+    this.setState({
+      game: games.landing,
+      players: [],
+      open: false,
+      code: '',
+      sound: 'stop',
+      onSoundFinish: ()=>{},
+      music: 'stop',
+      preloadedMusic: 'newroom',
+      video: 'home',
+      preloadedVideo: 'newroom'
+    });
+  };
+
 
   switchGame = game=> {
     this.setState({game});
@@ -78,8 +94,14 @@ class Computer extends Component {
 
   //callback function. Called anytime a new player joins the room (is added to the database) 
   updateGame = async data=> {
-    let game = await data.toJSON();
-    this.setState({game});
+    const game = await data.toJSON();
+    if (game===null) return;
+    if (game===games.landing) {
+      if (this.state.code) deleteRoom(this.state.code);
+      this.init();
+    } else {
+      this.setState({game});  
+    }
   }
 
   //callback function. Called anytime VIP selects a game

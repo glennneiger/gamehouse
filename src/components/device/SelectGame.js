@@ -16,9 +16,12 @@ class SelectGame extends Component {
       )
     } else {
       return (
-        <p>
-          Your host will select the next game.
-        </p>
+        <div className="column">
+          <p> 
+            Your host will select the next game.
+          </p>
+          <Ad />
+        </div>
       )
     }
   }
@@ -26,12 +29,9 @@ class SelectGame extends Component {
   render() {
     return (
       <div className="SelectGame">
-        <div className="column">
 
-          {this.renderContent()}
+        {this.renderContent()}
           
-          <Ad/>
-        </div>
       </div>
     )
   }

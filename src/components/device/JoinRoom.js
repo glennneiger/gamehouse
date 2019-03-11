@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {joinRoom, selectGame, watchForChange} from '../../actions';
+import {joinRoom, selectGame, watchForChange, removeWatcher} from '../../actions';
 import {games} from '../../actions/games';
 
 class JoinRoom extends Component {
@@ -7,7 +7,14 @@ class JoinRoom extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {playerId: 0, enoughPlayers: false}
+    this.state = {playerId: 0, enoughPlayers: false, roomCode: null}
+  }
+
+  componentWillUnmount() {
+    const {roomCode} = this.state;
+    if (roomCode) {
+      removeWatcher(roomCode, 'players');
+    }
   }
 
   startGame = () => {
@@ -83,6 +90,7 @@ class JoinRoom extends Component {
       } else {
         //you are the first, making you the host/VIP 
         watchForChange(roomCode, 'players', this.seeIfEnoughPlayers);
+        this.setState({roomCode});
       }
 
       this.setState({playerId});
@@ -96,7 +104,7 @@ class JoinRoom extends Component {
 
   seeIfEnoughPlayers = async data=> {
     const players = await data.toJSON();
-    if (players[2]) {
+    if (players && players[2]) {
       this.setState({enoughPlayers: true});
     }
   }

@@ -18,10 +18,12 @@ class Audio extends Component {
       let source1 = document.querySelector('#sound-source-ogg');
       let source2 = document.querySelector('#sound-source-mp3');
       player.pause();
-      source1.src=(`assets/audio/${this.props.sound}.ogg`);
-      source2.src=(`assets/audio/${this.props.sound}.mp3`);
-      player.load();
-      player.play();
+      if (newProps.sound !== 'stop') {
+        source1.src=(`assets/audio/${this.props.sound}.ogg`);
+        source2.src=(`assets/audio/${this.props.sound}.mp3`);
+        player.load();
+        player.play();
+      }
     }
 
     //new music
@@ -34,20 +36,22 @@ class Audio extends Component {
       let player = document.querySelector(`#music-player-${currentMusicPlayer}`);
       player.pause();
 
-      //switch the player (there are 2)
-      currentMusicPlayer===1 ? currentMusicPlayer = 2 : currentMusicPlayer = 1;
-      player = document.querySelector(`#music-player-${currentMusicPlayer}`);
+      if (music !== 'stop') {
+        //switch the player (there are 2)
+        currentMusicPlayer===1 ? currentMusicPlayer = 2 : currentMusicPlayer = 1;
+        player = document.querySelector(`#music-player-${currentMusicPlayer}`);
 
-      // see if the new music has already been preloaded. This can be done to cut down on load time
-      if (music!==preload) {
-        // if not, load it
-        document.querySelector(`#music-${currentMusicPlayer}-source-ogg`).src=(`assets/music/${music}.ogg`);
-        document.querySelector(`#music-${currentMusicPlayer}-source-mp3`).src=(`assets/music/${music}.mp3`);
-        player.load();
+        // see if the new music has already been preloaded. This can be done to cut down on load time
+        if (music!==preload) {
+          // if not, load it
+          document.querySelector(`#music-${currentMusicPlayer}-source-ogg`).src=(`assets/music/${music}.ogg`);
+          document.querySelector(`#music-${currentMusicPlayer}-source-mp3`).src=(`assets/music/${music}.mp3`);
+          player.load();
+        }
+        player.volume=.6;
+        player.play();
+        this.setState({currentMusicPlayer});
       }
-      player.volume=.6;
-      player.play();
-      this.setState({currentMusicPlayer});
     }
 
     // new preload 

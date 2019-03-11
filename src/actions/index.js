@@ -67,6 +67,10 @@ export function watchForChange(roomCode, child, callback) {
   database.ref(`rooms/${roomCode}/${child}`).on('value', data => callback(data));
 }
 
+export function removeWatcher(roomCode, child) {
+  database.ref(`rooms/${roomCode}/${child}`).off('value');
+}
+
 
 export function getValue(roomCode, value) {
   return database.ref(`rooms/${roomCode}/${value}`).once('value');

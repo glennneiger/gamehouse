@@ -537,15 +537,14 @@ body.device .btn-half {
   line-height: 60px;
 }
 
-body.device .btn-leave {
+body.device .btn-link {
   text-decoration: underline;
   color: #500;
   width: 150px;
-  margin: auto;
-  margin-bottom: 24px;
+  margin: 6px auto 12px;
 }
 
-body.device .btn-leave:hover {
+body.device .btn-link:hover {
   color: #d00;
   cursor: pointer;
 }

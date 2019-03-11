@@ -10,7 +10,7 @@ class NewRoom extends Component {
     this.props.preloadMusic('lobby');
     this.props.preloadVideo('lobby');
 
-    this.goFullScreen();
+    // this.goFullScreen();
   }
 
   goFullScreen = ()=> {
