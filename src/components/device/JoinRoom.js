@@ -10,6 +10,15 @@ class JoinRoom extends Component {
     this.state = {playerId: 0, enoughPlayers: false, roomCode: null}
   }
 
+  componentDidMount() {
+    // test mode
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      document.getElementById('room-code').value="TEST";
+      const testNames = ['Jacob','Brandon','Karen','Stephen','Shayla','Jon','Debra','David','Emily','Luis','Tasheda'];
+      document.getElementById('player-name').value = testNames[Math.floor(Math.random()*testNames.length)];
+    }
+  }
+
   componentWillUnmount() {
     const {roomCode} = this.state;
     if (roomCode) {
@@ -135,11 +144,11 @@ class JoinRoom extends Component {
       return (
         <div className="column">
           <div>Room Code:</div>
-          <input type="text" className="textbox" id="room-code" maxLength="4"></input>
+          <input type="text" className="textbox" id="room-code" maxLength="4" autocomplete="off"></input>
           
 
           <div>Name:</div>
-          <input type="text" className="textbox" id="player-name" maxLength="12"></input>
+          <input type="text" className="textbox" id="player-name" maxLength="12" autocomplete="off"></input>
 
           <div>Picture:</div>
 

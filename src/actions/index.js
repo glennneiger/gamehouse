@@ -11,6 +11,14 @@ export function createNewRoom(roomCode, callback) {
   });
 
   watchForNewPlayers(roomCode, callback);
+
+  // counter
+  if (roomCode !== 'TEST') {
+    let ref = database.ref('totalPlays');
+    ref.transaction(function(currentTotal) {
+      return (currentTotal || 0) + 1;
+    });
+  }
 }
 
 export async function roomExists(roomCode) {

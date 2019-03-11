@@ -83,12 +83,20 @@ class Computer extends Component {
   }
 
   generateCode = ()=> {
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      return "TEST";
+    }
     let code = "";
     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  
-    for (var i = 0; i < 4; i++) {
-      code += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
+    const censored = ['TEST','FUCK','SHIT','DICK','COCK','CUNT','BOOB','SLUT','TWAT','NIGG'];
+
+    while (true) {
+      code = "";
+      for (let i = 0; i < 4; i++) {
+        code += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      if (!censored.includes(code)) break;
+    } 
     return code;
   }
 
