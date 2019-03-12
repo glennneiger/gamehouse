@@ -7,7 +7,7 @@ class JoinRoom extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {playerId: 0, enoughPlayers: false, roomCode: null}
+    this.state = {playerId: 0, enoughPlayers: false, roomCode: null, players: [], host: props.host, hostName: props.hostName}
   }
 
   componentDidMount() {
@@ -23,6 +23,17 @@ class JoinRoom extends Component {
     const {roomCode} = this.state;
     if (roomCode) {
       removeWatcher(roomCode, 'players');
+      removeWatcher(roomCode, 'hostIndex');
+    }
+  }
+
+  componentDidUpdate(oldProps) {
+    const {host, hostName} = this.props;
+    if(oldProps.host !== host) {
+      this.setState({host: host});
+    }
+    if(oldProps.hostName !== hostName) {
+      this.setState({hostName: hostName});
     }
   }
 
@@ -79,33 +90,33 @@ class JoinRoom extends Component {
 
     //join room
     let room = await joinRoom(roomCode, playerName, img);
-    
-    let vipName = '';
+    let hostName = '';
     let playerId = 0;
 
     if (room===null) {
       //room does not exist
       alert('Invalid Room Code!');
-    } else if (room.open) {
+    } else if (!room.full) {
       //success!
+      const {hostIndex, nextIndex, totalPlayers} = room;
+      let players = room.players || {};
 
-      if (room.players) {
-        //you're not the first player to join
-        vipName = room.players['0'].name;
-        for (let i=1; i<16; i++) {
-          if (!room.players[i]) {
-            playerId = i;
-            break;
-          }
-        }
+      if (!totalPlayers) {
+        hostName = playerName;
       } else {
-        //you are the first, making you the host/VIP 
-        watchForChange(roomCode, 'players', this.seeIfEnoughPlayers);
-        this.setState({roomCode});
+        hostName = players[hostIndex].name;
       }
 
-      this.setState({playerId});
-      this.props.setRoom(roomCode, playerId, vipName);
+      playerId = nextIndex;
+
+      const host = playerId===hostIndex;
+      players[playerId] = {name: playerName, img};
+
+      watchForChange(roomCode, 'hostIndex', this.updateHost);
+      watchForChange(roomCode, 'players', this.updatePlayers);
+
+      this.setState({playerId, players, roomCode, host, hostName});
+      this.props.setRoom(roomCode, playerId, host, hostName);
 
     } else {
       // room is full
@@ -113,17 +124,25 @@ class JoinRoom extends Component {
     }
   }
 
-  seeIfEnoughPlayers = async data=> {
-    const players = await data.toJSON();
-    if (players && players[2]) {
-      this.setState({enoughPlayers: true});
-    }
+  updatePlayers = async data=> {
+    const playersObj = await data.toJSON();
+    const playersArr = Object.values(playersObj);
+    const enoughPlayers = playersArr.length > 2;
+    this.setState({enoughPlayers, players: playersObj});
+  }
+
+  updateHost = async data=> {
+    const hostIndex = await data.toJSON();
+    const {roomCode, playerId, players} = this.state;
+    const host = hostIndex === playerId;
+    const hostName = players[hostIndex].name;
+    this.props.setRoom(roomCode, playerId, host, hostName);
   }
 
   renderContent = ()=> {
     if (this.props.entered) {
-      if (this.state.playerId===0) {
-        // you're the vip
+      if (this.state.host) {
+        // you're the host
         return (
           <div className="column">
             <p>Welcome to the Party!</p>
@@ -138,7 +157,7 @@ class JoinRoom extends Component {
           <div className="column">
             <p>Welcome to the Party!</p>
             <p>Sit back, relax until everyone has joined!</p>
-            <p>{this.props.vipName} will start the party as soon as everyone is in!</p>
+            <p>{this.state.hostName} will start the party as soon as everyone is in!</p>
           </div>
         )
       }

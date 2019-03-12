@@ -8,7 +8,7 @@ import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
 import StoryTime from './computer/games/storytime/Index';
 
-import {createNewRoom, watchForChange, deleteRoom} from '../actions';
+import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers} from '../actions';
 
 import {games} from '../actions/games';
 
@@ -50,6 +50,11 @@ class Computer extends Component {
   }
 
   init = ()=> {
+    const {code} = this.state;
+    if (code) {
+      removeWatcher(code, 'game');
+      removeWatcher(code, 'players');
+    }
     this.setState({
       game: games.landing,
       players: [],
@@ -78,7 +83,8 @@ class Computer extends Component {
     
     this.setState({code});
 
-    createNewRoom(code, this.updatePlayers);
+    createNewRoom(code);
+    watchForChangeInPlayers(code, this.updatePlayers);
     watchForChange(code, 'game', this.updateGame);
   }
 
@@ -100,7 +106,7 @@ class Computer extends Component {
     return code;
   }
 
-  //callback function. Called anytime a new player joins the room (is added to the database) 
+  //callback function. Called anytime host selects a game 
   updateGame = async data=> {
     const game = await data.toJSON();
     if (game===null) return;
@@ -112,11 +118,18 @@ class Computer extends Component {
     }
   }
 
-  //callback function. Called anytime VIP selects a game
-  updatePlayers = async data=> {
-    let newPlayer = await data.toJSON(); //players are stored as an object
+  
+  //callback function. Called anytime a new player joins or leaves the room
+  updatePlayers = async (data, type /* 'added' or 'removed' */)=> {
+    const player = await data.toJSON();
+    if (player===null) return;
+
     let {players} = this.state;
-    players.push(newPlayer);
+    if (type==='added') {
+      players.push(player);
+    } else {
+      players = players.filter(el=>el.index !== player.index);
+    }
     this.setState({players});
   }
 

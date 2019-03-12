@@ -5,12 +5,10 @@ import { games } from './games';
 const maxPlayers = 16;
 
 
-export function createNewRoom(roomCode, callback) {
+export function createNewRoom(roomCode) {
   database.ref(`rooms/${roomCode}`).set({
-    open: true, players: [], game: games.newRoom
+    players: [], game: games.newRoom, nextIndex: 0, full: false, totalPlayers: 0, hostIndex: 0
   });
-
-  watchForNewPlayers(roomCode, callback);
 }
 
 export async function roomExists(roomCode) {
@@ -62,9 +60,11 @@ export function receiveSubmission(roomCode, playerIndex) {
 }
 
 
+// returns players, IFF number of players changes (not if anything else changes within players)
+export function watchForChangeInPlayers(roomCode, callback) {
+  database.ref(`rooms/${roomCode}/players`).on('child_added', data => callback(data, 'added'));
+  database.ref(`rooms/${roomCode}/players`).on('child_removed', data => callback(data, 'removed'));
 
-export function watchForNewPlayers(roomCode, callback) {
-  database.ref(`rooms/${roomCode}/players`).on('child_added', data => callback(data));
 }
 
 export function watchForChange(roomCode, child, callback) {
@@ -89,42 +89,66 @@ export function deleteRoom(roomCode) {
 
 export async function joinRoom(roomCode, name, img) {
 
-  let res = await database.ref(`rooms/${roomCode}`).once('value', data => {
+  let res = await database.ref(`rooms/${roomCode}`).once('value', async data => {
 
-    if (data.toJSON() === null) {
+    let room = await data.toJSON();
+
+    if (room === null || room.totalPlayers===maxPlayers) {
 
       return false
 
     } else {
 
-      let room = data.toJSON();
+      const index = room.nextIndex;
 
-      let players = [];
-      let index = 0;
+      let hostIndex = room.hostIndex;
 
-      if (room.open && room.players) {
-        let playersObj = room.players;
-        //convert obj to arr
-        players = Object.values(playersObj);
-        index = players[players.length - 1].index + 1;
-      }
-      
-      if (!room.open || (players.length >= maxPlayers)) {
-        return false; //room is not open, or room is maxed out
-      }
+      const newPlayer = {name, img, index}; 
 
-      players.push({name, img, index}); // add the new player
-      let open = players.length === maxPlayers ? false : true; //cap room at maxPlayers
+      const nextIndex = room.nextIndex + 1;
+      const totalPlayers = room.totalPlayers + 1;
+      const full = (totalPlayers===maxPlayers);
 
       database.ref(`rooms/${roomCode}`).update({
-        players, open 
+         nextIndex, totalPlayers, full, hostIndex
       });
+      database.ref(`rooms/${roomCode}/players/${index}`).set(newPlayer);
 
     }
   });
 
   return res.toJSON();
 };
+
+export function leaveRoom(roomCode, index) {
+  if(!roomCode) return;
+
+  database.ref(`rooms/${roomCode}`).once('value', async data => {
+    let room = await data.toJSON();
+    if (room === null) {
+      return;
+    } else {
+
+      let {hostIndex, totalPlayers, nextIndex} = room;
+      
+      totalPlayers--;
+
+      if (hostIndex===index) {
+        //if the host is leaving the party, we need to find a new host!
+        if (room.totalPlayers===1) {
+          hostIndex=nextIndex;
+        } else {
+          const players = Object.values(room.players);
+          hostIndex = players[1].index; //next player in line
+        }
+      }
+      database.ref(`rooms/${roomCode}`).update({
+        hostIndex, totalPlayers, full: false 
+      });
+      database.ref(`rooms/${roomCode}/players/${index}`).remove();
+    }
+  });
+}
 
 
 
