@@ -126,6 +126,7 @@ class JoinRoom extends Component {
 
   updatePlayers = async data=> {
     const playersObj = await data.toJSON();
+    if (!playersObj) return;
     const playersArr = Object.values(playersObj);
     const enoughPlayers = playersArr.length > 2;
     this.setState({enoughPlayers, players: playersObj});
@@ -133,6 +134,7 @@ class JoinRoom extends Component {
 
   updateHost = async data=> {
     const hostIndex = await data.toJSON();
+    if (!hostIndex) return;
     const {roomCode, playerId, players} = this.state;
     const host = hostIndex === playerId;
     const hostName = players[hostIndex].name;

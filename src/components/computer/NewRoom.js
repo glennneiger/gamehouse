@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Card from './ProfileCard';
+import PlayerGrid from './PlayerGrid';
 
 
 class NewRoom extends Component {
@@ -9,13 +9,6 @@ class NewRoom extends Component {
     this.props.playVideo('newroom');
     this.props.preloadMusic('lobby');
     this.props.preloadVideo('lobby');
-  }
-
-  renderCards() {
-    let players = this.props.room.players;
-    return players.map((player, i) => {
-      return <Card name={player.name} img={player.img} key={i} />
-    });
   }
 
   render () {
@@ -30,11 +23,9 @@ class NewRoom extends Component {
             </div>
           </div>
 
-          <div className="row">
-            <div className="players">
-              {this.renderCards()}
-            </div>
-          </div>
+
+          <PlayerGrid players={this.props.room.players} />
+
 
           <div className="row website">
             &nbsp;<i className="fas fa-tablet-alt"></i>&nbsp;partyhouse.tv

@@ -175,7 +175,6 @@ class Device extends Component {
 
     if (showMenu) return <div>{menu[showMenu]}</div>;
 
-    console.log(screen);
     switch (screen) {
       case games.gameRoom:
         return (

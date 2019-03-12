@@ -1,0 +1,102 @@
+.PlayerGrid
+    
+  *, *:before, *:after 
+    -moz-box-sizing: border-box
+    -webkit-box-sizing: border-box
+    box-sizing: border-box
+
+
+  .flexbox 
+    display: flex
+    flex-direction: row
+    width: 100vw
+    flex-wrap: wrap
+    height: 65vh
+    max-height: 700px
+    padding-top: 3vh
+    width: 96vw
+    @media screen and (max-width: $xl)
+      height: 60vh
+
+  .flex-item  
+    // height: 100px
+    flex: 1
+    overflow: hidden
+
+    transition: all 500ms linear
+    text-align: center
+    display: flex 
+    justify-content: center 
+  
+  .flex-item:first-child 
+    border-left: none
+
+  .hover-collapse-item 
+    white-space: nowrap
+    background: rgba(150, 0, 150, .3)
+  
+  .flexbox:hover .hover-collapse-item 
+    /* 0 does not work so we have to use a small number */
+    flex: .00001
+
+
+  .new-item 
+    /* 0 does not work so we have to use a small number */
+    /* Start our small */
+    flex: .00001
+
+    min-width: 0
+
+    -webkit-animation: flexGrow 500ms ease forwards;
+    -o-animation: flexGrow 500ms ease forwards;
+    animation: flexGrow 500ms ease forwards;
+  
+
+  .remove-item 
+    flex: 1
+
+    -webkit-animation: flexShrink 500ms ease forwards;
+    -o-animation: flexShrink 500ms ease forwards;
+    animation: flexShrink 500ms ease forwards;
+  
+
+  @-webkit-keyframes flexGrow 
+    to 
+      flex: 1
+      min-width: 12.5%
+    
+  
+  @-o-keyframes flexGrow 
+    to 
+      flex: 1
+      min-width: 12.5%
+    
+  
+  @keyframes flexGrow 
+    to 
+      flex: 1
+      min-width: 12.5%
+    
+  
+
+  @-webkit-keyframes flexShrink 
+    to 
+      flex: .01
+      flex: .00001
+      min-width: 0
+    
+  
+  @-o-keyframes flexShrink 
+    to 
+      flex: .01
+      flex: .00001
+      min-width: 0
+    
+  
+  @keyframes flexShrink 
+    to 
+      flex: .01
+      flex: .00001
+      min-width: 0
+    
+  
