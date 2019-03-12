@@ -13,17 +13,17 @@ class Final extends Component {
     this.props.preloadVideo('storytime/intro');
     this.props.preloadMusic('storytime/main');
 
-    // ask host (player[0]) if play again
-    let {code} = this.props;
-    inputRequest(code, requests.playAgain, null, [0]);
-    watchForChange(code, 'players/0/input', this.handleReceiveInput);
+    // ask host (player[hostIndex]) if play again
+    let {code, hostIndex} = this.props;
+    inputRequest(code, requests.playAgain, null, [hostIndex]);
+    watchForChange(code, `players/${hostIndex}/input`, this.handleReceiveInput);
   }
 
   handleReceiveInput = async data=>{
     let playAgain = await data.toJSON();
     if(playAgain===null) return;
 
-    receiveSubmission(this.props.code, 0);
+    receiveSubmission(this.props.code, this.props.hostIndex);
 
     if (playAgain) {
       this.props.switchScreen(screens.intro);

@@ -7,7 +7,7 @@ import Ad from './Ad';
 class SelectGame extends Component {
 
   renderContent() {
-    if (this.props.vip) {
+    if (this.props.host) {
       return (
         <div className="column">
           <p>Select Game:</p>

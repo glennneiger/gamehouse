@@ -11,7 +11,7 @@ import Ad from './device/Ad';
 
 import Logo from './device/Logo';
 
-import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom} from '../actions';
+import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../actions';
 import {games} from '../actions/games';
 import {requests} from '../actions/requestTypes';
 
@@ -73,6 +73,7 @@ class Device extends Component {
 
   updateGame = async data=> {
     const game = await data.toJSON();
+    if (!game) return;
     this.setState({screen: game});
 
     if (game===games.landing) {
@@ -85,7 +86,11 @@ class Device extends Component {
     if (!request) {
       return;
     }
-    this.setState({screen: request.requestType, requestMessage: request.requestMessage});
+    if (request==='submitted') {
+      this.setState({screen: null, requestMessage: null});
+    } else {
+      this.setState({screen: request.requestType, requestMessage: request.requestMessage});
+    }
   }
 
   setRoom = (code, playerIndex, host, hostName)=> {
@@ -118,7 +123,7 @@ class Device extends Component {
       removeWatcher(code, 'game');
       removeWatcher(code, `players/${playerIndex}/request`);
     }
-    
+
     this.setState({
       host: false,
       hostName: '',
@@ -137,8 +142,10 @@ class Device extends Component {
   }
 
   handleCloseParty = ()=> {
-    selectGame(this.state.code, games.landing);
-    this.handleLeaveRoom()
+    let {code} = this.state;
+    selectGame(code, games.landing);
+    this.handleLeaveRoom();
+    deleteRoom(code);
   }
 
   render() {
@@ -168,6 +175,7 @@ class Device extends Component {
 
     if (showMenu) return <div>{menu[showMenu]}</div>;
 
+    console.log(screen);
     switch (screen) {
       case games.gameRoom:
         return (
@@ -202,14 +210,7 @@ class Device extends Component {
         )
       case requests.playAgain:
         return (
-          <PlayAgain code={code} />
-        )
-      case games.storyTime:
-        return (
-          <div>
-            <Ad />
-            {menu.exit}
-          </div>
+          <PlayAgain code={code} playerIndex={playerIndex} />
         )
       case 'thank-you':
         return (
@@ -219,9 +220,12 @@ class Device extends Component {
             <div className="btn" onClick={()=>this.setState({screen: games.newRoom})}>Join New Game</div>
           </div>
         )
-      default:
+      default: // default screen shown during games
         return (
-          <Ad />
+          <div>
+            <Ad />
+            {menu.exit}
+          </div>
         )
     }
   }

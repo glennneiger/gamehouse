@@ -46,7 +46,7 @@ class Read extends Component {
   }
 
   nextScreen = ()=> {
-    this.props.switchScreen(screens.next);
+    this.props.switchScreen(screens.next); 
   }
 
   render() {

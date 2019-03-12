@@ -6,8 +6,8 @@ import {games} from '../../actions/games';
 export default class PlayAgain extends Component {
 
   respond = playAgain=> {
-    const {code} = this.props;
-    submitInput(code, 0, playAgain);
+    const {code, playerIndex} = this.props;
+    submitInput(code, playerIndex, playAgain);
     if (!playAgain) {
       selectGame(code, games.gameRoom);
     }

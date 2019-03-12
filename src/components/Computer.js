@@ -8,7 +8,7 @@ import NewRoom from './computer/NewRoom';
 import GameRoom from './computer/GameRoom';
 import StoryTime from './computer/games/storytime/Index';
 
-import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers} from '../actions';
+import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
 
 import {games} from '../actions/games';
 
@@ -28,7 +28,8 @@ class Computer extends Component {
       music: '',
       preloadedMusic: '',
       video: '',
-      preloadedVideo: ''
+      preloadedVideo: '',
+      hostIndex: 0
     };
 
   }
@@ -111,7 +112,6 @@ class Computer extends Component {
     const game = await data.toJSON();
     if (game===null) return;
     if (game===games.landing) {
-      if (this.state.code) deleteRoom(this.state.code);
       this.init();
     } else {
       this.setState({game});  
@@ -128,6 +128,12 @@ class Computer extends Component {
     if (type==='added') {
       players.push(player);
     } else {
+      //if the host leaves, who is the new host?
+      if (player.index===this.state.hostIndex) {
+        const data = await getValue(this.state.code, 'hostIndex');
+        const hostIndex = await data.toJSON();
+        this.setState({hostIndex});
+      }
       players = players.filter(el=>el.index !== player.index);
     }
     this.setState({players});

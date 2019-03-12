@@ -55,7 +55,8 @@ class StoryTime extends Component {
       story:[firstLine],
       turn: 0, 
       prompt,
-      winner: {}
+      winner: {},
+      screen: screens.intro,
     });
 
     incrementGame(games.storyTime);
@@ -132,8 +133,11 @@ class StoryTime extends Component {
   };
 
   switchScreen = screen=> {
+    if (screen===screens.intro) {
+      this.init();
+      return;
+    }
     this.setState({screen});
-    if (screen===screens.intro) this.init();
   }
 
   playVoice = (filename, onFinish)=> {
@@ -210,6 +214,7 @@ class StoryTime extends Component {
             code={this.props.room.code}
             switchScreen={this.switchScreen} 
             switchGame={this.props.switchGame}
+            hostIndex={this.props.room.hostIndex}
           />
         )
         default:
