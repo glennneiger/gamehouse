@@ -1,0 +1,40 @@
+div.GameDisplay
+  margin: 4vh auto auto auto 
+  img 
+    width: 600px 
+    height: 450px
+    @media screen and (max-width: $xl)
+      width: 440px
+      height: 330px
+    @media screen and (max-width: $lg)
+      width: 360px
+      height: 270px
+    @media screen and (max-width: $md)
+      width: 320px
+      height: 240px
+  div.details
+    width: 40%
+    padding: 2% 0 0 4%
+    justify-content: space-between
+    font-size: 2.2rem
+    @media screen and (max-width: $xl)
+      font-size: 1.6rem
+    @media screen and (max-width: $lg)
+      font-size: 1.2rem
+    @media screen and (max-width: $md)
+      font-size: 1rem
+  div.stats 
+    margin: 0
+    display: flex 
+    justify-content: space-evenly
+    div 
+      text-align: center
+    i 
+      padding-bottom: 3px
+      font-size: 5rem
+      @media screen and (max-width: $xl)
+        font-size: 4rem
+      @media screen and (max-width: $lg)
+        font-size: 3rem
+      @media screen and (max-width: $md)
+        font-size: 2.2rem

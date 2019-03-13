@@ -472,6 +472,280 @@ div.StoryTime .WriterCard .speech-bubble:after {
   }
 }
 
+.Lobby {
+  height: 98vh;
+}
+
+.Lobby .row {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.Lobby .top {
+  height: 89%;
+}
+
+.Lobby .bottom {
+  height: 10%;
+}
+
+.Lobby .left {
+  width: 28%;
+}
+
+.Lobby .right {
+  width: 72%;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.Lobby .left, .Lobby .right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+}
+
+.Lobby img.logo {
+  height: 35vh;
+  max-height: 30vw;
+  padding: 2vh 0;
+}
+
+.Lobby .room-code {
+  margin-left: auto;
+  font-size: 5rem;
+  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
+  line-height: 5rem;
+  padding: 6vh 8vw;
+}
+
+@media screen and (max-width: 1400px) {
+  .Lobby .room-code {
+    font-size: 4rem;
+    line-height: 3.8rem;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Lobby .room-code {
+    font-size: 3.2rem;
+    line-height: 3.2rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .Lobby .room-code {
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+  }
+}
+
+.Lobby div.PlayerGrid {
+  width: 90%;
+  margin: auto;
+}
+
+.Lobby div.flexbox {
+  width: 100%;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  height: 11vh;
+  max-height: 100px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+@-webkit-keyframes flexGrow {
+  to {
+    -webkit-box-flex: 1;
+            flex: 1;
+    min-width: 6.25%;
+  }
+}
+
+@keyframes flexGrow {
+  to {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    min-width: 6.25%;
+  }
+}
+
+.Lobby div.ProfileCard {
+  width: 100%;
+}
+
+.Lobby div.ProfileCard img {
+  min-height: 40px;
+  min-width: 40px;
+  height: 4vw;
+  width: 4vw;
+  max-height: 80px;
+  max-width: 80px;
+  margin: 0;
+  padding: 0;
+}
+
+.Lobby div.ProfileCard .name {
+  display: none;
+}
+
+@media screen and (max-width: 1400px) {
+  .Lobby div.ProfileCard {
+    height: 10vh;
+  }
+}
+
+.GameSelector {
+  padding-top: 2vh;
+}
+
+.GameSelector p {
+  font-size: 2.4rem;
+  margin: 1vw 0;
+  color: #bba;
+  font-weight: 100;
+}
+
+.GameSelector p.selected {
+  font-weight: 900;
+  font-size: 2.7rem;
+  color: white;
+}
+
+@media screen and (max-width: 1400px) {
+  .GameSelector p {
+    font-size: 1.8rem;
+  }
+  .GameSelector p.selected {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .GameSelector p {
+    font-size: 1.6rem;
+  }
+  .GameSelector p.selected {
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .GameSelector p {
+    font-size: 1.4rem;
+  }
+  .GameSelector p.selected {
+    font-size: 1.5rem;
+  }
+}
+
+div.GameDisplay {
+  margin: 4vh auto auto auto;
+}
+
+div.GameDisplay img {
+  width: 600px;
+  height: 450px;
+}
+
+@media screen and (max-width: 1400px) {
+  div.GameDisplay img {
+    width: 440px;
+    height: 330px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.GameDisplay img {
+    width: 360px;
+    height: 270px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  div.GameDisplay img {
+    width: 320px;
+    height: 240px;
+  }
+}
+
+div.GameDisplay div.details {
+  width: 40%;
+  padding: 2% 0 0 4%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 2.2rem;
+}
+
+@media screen and (max-width: 1400px) {
+  div.GameDisplay div.details {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.GameDisplay div.details {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  div.GameDisplay div.details {
+    font-size: 1rem;
+  }
+}
+
+div.GameDisplay div.stats {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+div.GameDisplay div.stats div {
+  text-align: center;
+}
+
+div.GameDisplay div.stats i {
+  padding-bottom: 3px;
+  font-size: 5rem;
+}
+
+@media screen and (max-width: 1400px) {
+  div.GameDisplay div.stats i {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.GameDisplay div.stats i {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  div.GameDisplay div.stats i {
+    font-size: 2.2rem;
+  }
+}
+
 a {
   display: block;
   text-decoration: none;
@@ -548,7 +822,6 @@ body.device .JoinRoom input.textbox {
   width: 100vw;
   max-width: 300px;
   height: 64px;
-  text-transform: uppercase;
   text-align: center;
   font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
   color: #303544;
@@ -557,10 +830,11 @@ body.device .JoinRoom input.textbox {
 
 body.device .JoinRoom input#room-code {
   font-size: 48pt;
+  text-transform: uppercase;
 }
 
 body.device .JoinRoom input#player-name {
-  font-size: 40pt;
+  font-size: 42pt;
 }
 
 body.device .JoinRoom .pictures {

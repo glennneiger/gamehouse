@@ -1,0 +1,81 @@
+.Lobby 
+  height: 98vh
+  .row 
+    justify-content: flex-start
+  .top 
+    height: 89%
+  .bottom 
+    height: 10%
+  .left 
+    width: 28%
+  .right
+    width: 72%
+    justify-content: flex-start
+  .left, .right
+    display: flex 
+    flex-direction: column 
+    align-items: center
+    height: 100%
+  img.logo 
+    height: 35vh
+    max-height: 30vw
+    padding: 2vh 0
+  .room-code 
+    margin-left: auto
+    font-size: 5rem
+    font-family: $font-fun
+    line-height: 5rem
+    padding: 6vh 8vw
+    @media screen and (max-width: $xl)
+      font-size: 4rem
+      line-height: 3.8rem
+    @media screen and (max-width: $lg)
+      font-size: 3.2rem
+      line-height: 3.2rem
+    @media screen and (max-width: $md)
+      font-size: 2.4rem
+      line-height: 2.4rem
+
+  div.PlayerGrid
+    width: 90%
+    margin: auto
+  div.flexbox 
+    width: 100%
+    flex-wrap: nowrap
+    height: 11vh
+    max-height: 100px
+    width: 100%
+    padding: 0
+    margin: 0
+    @-webkit-keyframes flexGrow 
+      to 
+        flex: 1
+        min-width: 6.25%
+      
+    
+    @-o-keyframes flexGrow 
+      to 
+        flex: 1
+        min-width: 6.25%
+      
+    
+    @keyframes flexGrow 
+      to 
+        flex: 1
+        min-width: 6.25%
+
+  div.ProfileCard 
+    width: 100%
+    img 
+      min-height: 40px
+      min-width: 40px
+      height: 4vw 
+      width: 4vw
+      max-height: 80px
+      max-width: 80px
+      margin: 0
+      padding: 0
+    .name 
+      display: none
+    @media screen and (max-width: $xl)
+      height: 10vh

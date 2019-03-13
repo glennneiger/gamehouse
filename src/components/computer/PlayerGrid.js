@@ -12,8 +12,8 @@ class PlayerGrid extends Component {
 
   componentDidUpdate() {
 
-    const oldPlayers = this.state.players;
-    const {players} = this.props;
+    const oldPlayers = this.state.players.slice();
+    const players = this.props.players.slice();
 
     if (players.length !== oldPlayers.length) {
       if (players.length > oldPlayers.length) {

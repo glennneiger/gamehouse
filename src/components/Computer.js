@@ -5,7 +5,7 @@ import Video from './computer/VideoBackground';
 
 import Landing from './computer/Landing';
 import NewRoom from './computer/NewRoom';
-import GameRoom from './computer/GameRoom';
+import Lobby from './computer/Lobby';
 import StoryTime from './computer/games/storytime/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
@@ -184,7 +184,7 @@ class Computer extends Component {
         )
       case games.gameRoom:
         return (
-          <GameRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
+          <Lobby room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
         )
       case games.storyTime:
         return (

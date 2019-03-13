@@ -14,7 +14,7 @@ class JoinRoom extends Component {
     // test mode
     if ((!process.env.NODE_ENV || process.env.NODE_ENV === 'development') && !this.props.entered) {
       document.getElementById('room-code').value="TEST";
-      const testNames = ['Jacob','Brandon','Karen','Stephen','Shayla','Jon','Debra','David','Emily','Luis','Tasheda'];
+      const testNames = ['Jacob','Brandon','Karen','Stephen','Shayla','Jon','Debra','David','Emily','Luis','Tasheda','Ethan','Ariel'];
       document.getElementById('player-name').value = testNames[Math.floor(Math.random()*testNames.length)];
     }
   }
@@ -76,15 +76,13 @@ class JoinRoom extends Component {
       return;
     }
 
-    let nameInput = document.getElementById('player-name').value;
+    let playerName = document.getElementById('player-name').value.trim();
     // NAME validation
-    if (!nameInput.trim()) {
+    if (!playerName) {
       alert('Enter Name');
       return;
     }
 
-    //auto capitalize name
-    let playerName = nameInput.trim().charAt(0).toUpperCase() + nameInput.trim().slice(1); 
     //img id
     let img = document.querySelector('.selected').dataset.imgid;
 
@@ -166,12 +164,16 @@ class JoinRoom extends Component {
     } else {
       return (
         <div className="column">
-          <div>Room Code:</div>
-          <input type="text" className="textbox" id="room-code" maxLength="4" autoComplete="off"></input>
           
+          <form onSubmit={this.joinRoom}>
 
-          <div>Name:</div>
-          <input type="text" className="textbox" id="player-name" maxLength="12" autoComplete="off"></input>
+            <div>Room Code:</div>
+            <input type="text" className="textbox" id="room-code" maxLength="4" autoComplete="off" spellCheck={false}></input>
+
+            <div>Name:</div>
+            <input type="text" className="textbox" id="player-name" maxLength="12" autoComplete="off" spellCheck={false}></input>
+          
+          </form>
 
           <div>Picture:</div>
 
