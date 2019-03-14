@@ -72,7 +72,6 @@ class JoinRoom extends Component {
             <p>Welcome to the Party!</p>
             <p>Looks like you're the host!</p>
             <p>Tap Continue as soon as all the guests have arrived!</p>
-            <p>(Minimum 3 Players)</p>
             <div className="btn" onClick={this.startGame}>Continue</div>
           </div>
         )

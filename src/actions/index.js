@@ -60,6 +60,15 @@ export function receiveSubmission(roomCode, playerIndex) {
   });
 }
 
+export function expireRequest(roomCode, playerIndex) {
+  database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
+  database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
+  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+    request: 'expired',
+    input: null 
+  });
+}
+
 
 // returns players, IFF number of players changes (not if anything else changes within players)
 export function watchForChangeInPlayers(roomCode, callback) {

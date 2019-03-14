@@ -664,6 +664,8 @@ div.GameDisplay {
 div.GameDisplay img {
   width: 600px;
   height: 450px;
+  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
+          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 1400px) {
@@ -733,7 +735,7 @@ div.GameDisplay div.stats div {
 }
 
 div.GameDisplay div.stats div.red {
-  color: red;
+  color: #ff4422;
   -webkit-transform: scale(1.3);
           transform: scale(1.3);
 }
@@ -766,6 +768,25 @@ div.GameDisplay div.stats i {
   div.GameDisplay div.stats i {
     font-size: 2.2rem;
   }
+}
+
+.Timer {
+  display: none;
+  position: fixed;
+  top: 1vh;
+  left: 0;
+  width: 100%;
+  height: 2vh;
+}
+
+.Timer div {
+  display: block;
+  margin: auto;
+  -webkit-transition: background-color 1000ms;
+  transition: background-color 1000ms;
+  height: 1vh;
+  border-bottom: rgba(0, 0, 0, 0.5) solid 2px;
+  border-radius: 1vh;
 }
 
 a {

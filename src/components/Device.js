@@ -92,7 +92,7 @@ class Device extends Component {
     if (!request) {
       return;
     }
-    if (request==='submitted') {
+    if (request==='submitted' || request==='expired') {
       this.setState({screen: null, requestMessage: null});
     } else {
       this.setState({screen: request.requestType, requestMessage: request.requestMessage});
