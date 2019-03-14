@@ -29,28 +29,17 @@ class Write extends Component {
     
     this.sendWriteRequests();
 
-    let voters = [];
     let votes = {};
-    for (let i = 0; i < this.props.room.players.length; i++) {
-      voters.push(i);
-    }
 
-    let {code} = this.props.room;
+    const {code} = this.props.room;
 
     this.state.writers.forEach(writer=>{
-      voters.splice(voters.indexOf(writer.index), 1);
       votes[writer.index] = []; 
       watchForChange(code, `players/${writer.index}/input`, data=>this.updateText(data, writer.index));
       watchForChange(code, `players/${writer.index}/request`, data=>this.handleSubmissions(data, writer.index));
     });
 
-    voters.forEach(voter=>{
-      watchForChange(code, `players/${voter}/input`, data=>this.recordVote(data, voter));
-      watchForChange(code, `players/${voter}/request`, data=>this.handleSubmissions(data, voter));
-    });
-
     this.setState({
-      voters,
       votes
     });
   }
@@ -101,7 +90,8 @@ class Write extends Component {
     let {submitted} = this.state;
     submitted.push(index);
     this.setState({submitted});
-    let {writers, room} = this.props;
+    const {writers} = this.props;
+    const {voters} = this.state;
 
     if (!this.state.votingOpen) {
       //writing phase
@@ -111,7 +101,7 @@ class Write extends Component {
       }      
     } else {
       //voting phase
-      if (submitted.length===room.players.length) {
+      if (submitted.length===writers.length + voters.length) {
         //all writers have submitted 
         this.handleAllVotersSubmitted();    
       }
@@ -165,7 +155,29 @@ class Write extends Component {
   
 
   openVoting = ()=> {
-    this.setState({votingOpen: true})
+
+    let voters = [];
+
+    // voters = [0, 1, 2, 3,]
+    const {code, players} = this.props.room;
+    const {writers} = this.state;
+
+    players.forEach(player=> {
+      if (!writers.includes(player)) {
+        voters.push(player.index);
+      }
+    });
+
+    voters.forEach(voter=>{
+      watchForChange(code, `players/${voter}/input`, data=>this.recordVote(data, voter));
+      watchForChange(code, `players/${voter}/request`, data=>this.handleSubmissions(data, voter));
+    });
+
+    this.setState({
+      voters,
+      votingOpen: true
+    });
+
     inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters);
   }
 
