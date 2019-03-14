@@ -64,6 +64,7 @@ class Audio extends Component {
           backupPlayer = 2;
         } 
         let player = document.querySelector(`#music-player-${backupPlayer}`);
+        if (!player) return;
         document.querySelector(`#music-${backupPlayer}-source-ogg`).src=(`assets/music/${preload}.ogg`);
         document.querySelector(`#music-${backupPlayer}-source-mp3`).src=(`assets/music/${preload}.mp3`);
         player.load();

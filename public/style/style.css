@@ -72,6 +72,11 @@ body {
   }
 }
 
+.Landing span.song-titles {
+  font-weight: 100;
+  font-style: italic;
+}
+
 .Landing .option {
   width: 320px;
   height: 340px;
@@ -721,6 +726,23 @@ div.GameDisplay div.stats {
 
 div.GameDisplay div.stats div {
   text-align: center;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+}
+
+div.GameDisplay div.stats div.red {
+  color: red;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
+div.GameDisplay div.stats div.fade {
+  -webkit-transition: color 1500ms, -webkit-transform 1500ms;
+  transition: color 1500ms, -webkit-transform 1500ms;
+  transition: transform 1500ms, color 1500ms;
+  transition: transform 1500ms, color 1500ms, -webkit-transform 1500ms;
 }
 
 div.GameDisplay div.stats i {
@@ -880,6 +902,30 @@ body.device .StoryTime textarea {
   width: 98vw;
   margin: 10px auto 24px;
   max-width: 300px;
+}
+
+.SelectGame {
+  margin-bottom: 18px;
+}
+
+.SelectGame img {
+  cursor: pointer;
+}
+
+.SelectGame .arrows {
+  height: 125px;
+  height: 125px;
+}
+
+.SelectGame .arrows img {
+  width: 125px;
+  height: 125px;
+  margin: 0 6px 0;
+}
+
+.SelectGame img#select {
+  width: 135px;
+  height: 135px;
 }
 
 body.device .btn {

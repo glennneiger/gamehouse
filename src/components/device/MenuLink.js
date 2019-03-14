@@ -12,7 +12,7 @@ export default class MenuLink extends Component {
       if (this.props.clicked) {
         return (
           <div className="column">
-            <p>Are you sure you want to {this.props.text}?</p>
+            <p>{this.props.text}</p>
             <div className="row">
               <div className="btn btn-half" onClick={this.props.handleAction}>Yes</div>
               <div className="btn btn-half" onClick={()=>this.handleClick(false)}>No</div>

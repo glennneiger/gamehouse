@@ -12,8 +12,8 @@ export default class GameDisplay extends Component {
         <div className="details column">
           <div className="description">{description}</div>
           <div className="row stats">
-            <div><i className="fas fa-user-friends"></i><br/>{min}-{max}</div>
-            <div><i className="far fa-clock"></i><br />{time} min </div>
+            <div className="player-count"><i className="fas fa-user-friends"></i><br/>{min}-{max}</div>
+            <div className="play-time"><i className="far fa-clock"></i><br />{time} min </div>
           </div>
         </div>
       </div>

@@ -38,7 +38,7 @@ class Landing extends Component {
           <div className="instructions">
             <p>Created By:<br />Jacob Garcia</p>
             <p>Music:<br />
-            Zazie, Local Forecast, Doobly Doo<br />
+            <span className="song-titles">Street Party, Local Forecast, Doobly Doo, Fretless, Autumn Day, Easy Lemon, Cheery Monday</span><br />
             by Kevin MacLeod (incompetech.com)<br />
             Licensed under the Creative Commons 3.0:<br />By Attribution license.</p>
           </div>

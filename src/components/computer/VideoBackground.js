@@ -23,6 +23,7 @@ class Video extends Component {
 
       //stop the current video 
       let player = document.querySelector(`#video-player-${currentPlayer}`);
+      if (!player) return;
       player.pause();
 
       // see if the new music has already been preloaded. This can be done to cut down on load time
@@ -31,6 +32,7 @@ class Video extends Component {
         player.style.display = "none";
         currentPlayer===1 ? currentPlayer = 2 : currentPlayer = 1;
         player = document.querySelector(`#video-player-${currentPlayer}`);
+        if (!player) return;
         player.style.display = "block";
         this.setState({currentPlayer});
       } else {
@@ -51,6 +53,7 @@ class Video extends Component {
           backupPlayer = 2;
         } 
         let player = document.querySelector(`#video-player-${backupPlayer}`);
+        if (!player) return;
         document.querySelector(`#video-src-${backupPlayer}`).src=(`assets/video/${preload}.mp4`);
         player.load();
       }, 500);

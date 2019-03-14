@@ -21,7 +21,6 @@ class Computer extends Component {
     this.state={
       game: games.landing,
       players: [],
-      open: false,
       code: '',
       sound: '',
       onSoundFinish: ()=>{},
@@ -59,7 +58,6 @@ class Computer extends Component {
     this.setState({
       game: games.landing,
       players: [],
-      open: false,
       code: '',
       sound: 'stop',
       onSoundFinish: ()=>{},
@@ -73,6 +71,7 @@ class Computer extends Component {
 
   switchGame = game=> {
     this.setState({game});
+    this.stopSound();
 
     if (game===games.newRoom) {
       this.createRoom();
@@ -125,12 +124,16 @@ class Computer extends Component {
     if (player===null) return;
 
     let {players} = this.state;
+
+    //player joins 
     if (type==='added') {
       players.push(player);
+
+    //player leaves
     } else {
       //if the host leaves, who is the new host?
       if (player.index===this.state.hostIndex) {
-        const data = await getValue(this.state.code, 'hostIndex');
+        const data = await getValue(this.state.code, 'host/index');
         const hostIndex = await data.toJSON();
         this.setState({hostIndex});
       }
@@ -148,6 +151,11 @@ class Computer extends Component {
       if (onSoundFinish) callback = onSoundFinish;
       this.setState({sound: audio, onSoundFinish: callback});
     }
+  }
+
+  stopSound = ()=> {
+    const onSoundFinish = ()=> {};
+    this.playAudio('sound', 'stop', onSoundFinish);
   }
 
   preloadMusic = music=> {
@@ -184,7 +192,7 @@ class Computer extends Component {
         )
       case games.gameRoom:
         return (
-          <Lobby room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
+          <Lobby room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} stopSound={this.stopSound} />
         )
       case games.storyTime:
         return (

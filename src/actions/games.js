@@ -14,15 +14,15 @@ export const gameDetails = [
     description: "There's no telling what hilarious stories will be told when all your friends have a say!",
     min: 3,
     max: 16,
-    time: 30
+    time: 20
   },
-  {
-    id: games.speakEasy,
-    title: 'Speakeasy',
-    folder: 'speakeasy',
-    description: 'A game for Prohibition era bootleggers! Keep the speakeasy in business. But let an undercover agent in by mistake and get shut down!',
-    min: 5,
-    max: 16,
-    time: 35
-  }
+  // {
+  //   id: games.speakEasy,
+  //   title: 'Speakeasy',
+  //   folder: 'speakeasy',
+  //   description: 'A game for Prohibition era bootleggers! Keep the speakeasy in business. But let an undercover agent in by mistake and get shut down!',
+  //   min: 5,
+  //   max: 16,
+  //   time: 30
+  // }
 ];

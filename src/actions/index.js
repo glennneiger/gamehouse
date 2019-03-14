@@ -6,8 +6,9 @@ const maxPlayers = 16;
 
 
 export function createNewRoom(roomCode) {
+  const host = {index: 0, name: ''};
   database.ref(`rooms/${roomCode}`).set({
-    players: [], game: games.newRoom, nextIndex: 0, full: false, totalPlayers: 0, hostIndex: 0
+    players: [], game: games.newRoom, nextIndex: 0, full: false, totalPlayers: 0, host
   });
 }
 
@@ -101,16 +102,20 @@ export async function joinRoom(roomCode, name, img) {
 
       const index = room.nextIndex;
 
-      let hostIndex = room.hostIndex;
+      let hostName = room.host.name;
+      const hostIndex = room.host.index;
 
-      const newPlayer = {name, img, index}; 
+      const newPlayer = {name, img, index};
+      
+      if (index===hostIndex) hostName = name;
 
       const nextIndex = room.nextIndex + 1;
       const totalPlayers = room.totalPlayers + 1;
       const full = (totalPlayers===maxPlayers);
+      const host = {name: hostName, index: hostIndex};
 
       database.ref(`rooms/${roomCode}`).update({
-         nextIndex, totalPlayers, full, hostIndex
+         nextIndex, totalPlayers, full, host
       });
       database.ref(`rooms/${roomCode}/players/${index}`).set(newPlayer);
 
@@ -129,21 +134,23 @@ export function leaveRoom(roomCode, index) {
       return;
     } else {
 
-      let {hostIndex, totalPlayers, nextIndex} = room;
+      let {host, totalPlayers, nextIndex} = room;
       
       totalPlayers--;
 
-      if (hostIndex===index) {
+      if (host.index===index) {
         //if the host is leaving the party, we need to find a new host!
-        if (room.totalPlayers===1) {
-          hostIndex=nextIndex;
+        if (room.totalPlayers===1) { //last player to leave
+          host.index=nextIndex;
+          host.name=null; //this will get updated when the next player joins and becomes the new host
         } else {
           const players = Object.values(room.players);
-          hostIndex = players[1].index; //next player in line
+          host.index = players[1].index; //next player in line
+          host.name = players[1].name;
         }
       }
       database.ref(`rooms/${roomCode}`).update({
-        hostIndex, totalPlayers, full: false 
+        host, totalPlayers, full: false 
       });
       database.ref(`rooms/${roomCode}/players/${index}`).remove();
     }

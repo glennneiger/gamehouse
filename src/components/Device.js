@@ -54,12 +54,11 @@ class Device extends Component {
       return;
     }
 
-    const playerIndex = localStorage.getItem('playerIndex');
-    const hostName = localStorage.getItem('hostName');
-    const host = localStorage.getItem('host');
+    const playerIndex = parseInt(localStorage.getItem('playerIndex'));
 
-    this.setRoom(code, playerIndex, host, hostName);
+    this.setRoom(code, playerIndex);
 
+    //set current screen
     let data = await getValue(code, `players/${playerIndex}/request`);
     const request = await data.toJSON();
     if (request) {
@@ -81,6 +80,13 @@ class Device extends Component {
     }
   }
 
+  updateHost = async data=> {
+    const host = await data.toJSON();
+    if (!host) return;
+    const isHost = host.index===this.state.playerIndex;
+    this.setState({host: isHost, hostName: host.name});
+  }
+
   updateRequest = async data=> {
     const request = await data.toJSON();
     if (!request) {
@@ -93,17 +99,20 @@ class Device extends Component {
     }
   }
 
-  setRoom = (code, playerIndex, host, hostName)=> {
-    this.setState({code, playerIndex, entered: true, hostName, host});
+  setRoom = async (code, playerIndex)=> {
+    let data = await getValue(code, `host`);
+    let host = await data.toJSON();
+    if (!host) host=0;
+    let isHost = host.index === playerIndex;
+    this.setState({code, playerIndex, entered: true, host: isHost, hostName: host.name});
     watchForChange(code, 'game', this.updateGame);
+    watchForChange(code, 'host', this.updateHost);
     watchForChange(code, `players/${playerIndex}/request`, this.updateRequest);
 
     // save roomCode and playerIndex in localStorage 
     // in case a player refreshes browser, it can automatically go back into room
     localStorage.setItem('roomCode', code);
     localStorage.setItem('playerIndex', playerIndex);
-    localStorage.setItem('host', host);
-    localStorage.setItem('hostName', hostName);
   }
 
   handleClickMenu = (menu, showMenu)=> {
@@ -121,6 +130,7 @@ class Device extends Component {
     if (code) {
       leaveRoom(code, playerIndex);
       removeWatcher(code, 'game');
+      removeWatcher(code, 'host');
       removeWatcher(code, `players/${playerIndex}/request`);
     }
 
@@ -162,15 +172,15 @@ class Device extends Component {
 
     let menu = {
       // option to leave party
-      leave: <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('leave', showMenu)} handleAction={this.handleLeaveRoom} clicked={showMenu==='leave'} text='leave the party' caption='Leave Party' />,
+      leave: <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('leave', showMenu)} handleAction={this.handleLeaveRoom} clicked={showMenu==='leave'} text='Are you sure you want to leave the party?' caption='Leave Party' />,
       // exit to lobby from game
       exit: null, // these menu options are only given to host
       // close the whole party down
       close: null // ...
     }
     if (host) {
-      menu.exit = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='exit the game and return to the lobby' caption='Return to Lobby' />
-      menu.close = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('close', showMenu)} handleAction={this.handleCloseParty} clicked={showMenu==='close'} text='close the party' caption='Close Party' />
+      menu.exit = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='Exit the current game and return to the lobby?' caption='Return to Lobby' />
+      menu.close = <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('close', showMenu)} handleAction={this.handleCloseParty} clicked={showMenu==='close'} text='Are you sure? This will close the party for all players.' caption='Close Party' />
     }
 
     if (showMenu) return <div>{menu[showMenu]}</div>;
@@ -179,7 +189,7 @@ class Device extends Component {
       case games.gameRoom:
         return (
           <div>
-            <SelectGame host={host} code={code} />
+            <SelectGame host={host} code={code} playerIndex={playerIndex} />
             {menu.leave}
             {menu.close}
           </div>
