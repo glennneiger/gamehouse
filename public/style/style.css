@@ -330,7 +330,7 @@ div.StoryTime .WriterCard .speech-bubble {
   color: black;
   font-size: 21pt;
   border-radius: 50px;
-  padding: 15px 30px 20px 30px;
+  padding: 18px 30px 20px 30px;
   margin: 0 15px;
   -webkit-transition-duration: 300ms;
           transition-duration: 300ms;
@@ -341,7 +341,7 @@ div.StoryTime .WriterCard .speech-bubble {
   div.StoryTime .WriterCard .speech-bubble {
     font-size: 19pt;
     border-radius: 35px;
-    padding: 10px 20px 15px 20px;
+    padding: 13px 20px 15px 20px;
   }
 }
 
@@ -349,7 +349,7 @@ div.StoryTime .WriterCard .speech-bubble {
   div.StoryTime .WriterCard .speech-bubble {
     font-size: 17pt;
     border-radius: 20px;
-    padding: 5px 10px 10px 10px;
+    padding: 7px 10px 10px 10px;
   }
 }
 

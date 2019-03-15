@@ -39,15 +39,23 @@ export function inputRequest(roomCode, requestType, requestMessage, playersToRec
 }
 
 export function sendInput(roomCode, playerIndex, input) {
-  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-    input
+  database.ref(`rooms/${roomCode}`).once('value', async data => {
+    let room = await data.toJSON();
+    if (!room) return;
+    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+      input
+    });
   });
 }
 
 // like sendInput, but closes the request
 export function submitInput(roomCode, playerIndex, input) {
-  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-    input, request: 'submitted'
+  database.ref(`rooms/${roomCode}`).once('value', async data => {
+    let room = await data.toJSON();
+    if (!room) return;
+    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+      input, request: 'submitted'
+    });
   });
 }
 
