@@ -220,12 +220,12 @@ body {
 .ProfileCard {
   margin: 0;
   padding: 0;
-  width: 12vw;
   display: block;
 }
 
 .ProfileCard img {
   border-radius: 10%;
+  max-width: 14vw;
 }
 
 .ProfileCard .name {
@@ -277,7 +277,7 @@ div.StoryTime div.story-text {
 
 div.StoryTime div.story-text.prompt {
   font-size: 34pt;
-  margin-top: 150px;
+  margin: 0;
   max-width: 75vw;
 }
 
@@ -291,6 +291,10 @@ div.StoryTime div.story-text.prompt {
   div.StoryTime div.story-text.prompt {
     font-size: 18pt;
   }
+}
+
+div.StoryTime .grid {
+  width: 90%;
 }
 
 div.StoryTime .writer-cards {
@@ -312,6 +316,8 @@ div.StoryTime .WriterCard {
 }
 
 div.StoryTime .WriterCard .speech-bubble {
+  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
+          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
   position: relative;
   bottom: 15px;
   background: white;
@@ -342,6 +348,8 @@ div.StoryTime .WriterCard .speech-bubble {
 }
 
 div.StoryTime .WriterCard .speech-bubble:after {
+  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
+          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
   content: '';
   position: absolute;
   bottom: 0;
@@ -429,10 +437,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
 .PlayerGrid .grow-4 {
   -webkit-animation: flexGrow-4 500ms ease forwards;
   animation: flexGrow-4 500ms ease forwards;
-}
-
-.PlayerGrid .grow-4 img {
-  max-width: 15vw;
 }
 
 .PlayerGrid .grow-8 {
@@ -771,7 +775,7 @@ a {
           justify-content: flex-start;
 }
 
-.v-center {
+.center {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -782,6 +786,9 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 div[class^="v-"] {

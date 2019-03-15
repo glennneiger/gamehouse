@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ProfileCard from '../../ProfileCard';
+import PlayerGrid from '../../PlayerGrid';
 import {screens} from './helpers';
 
 class Next extends Component {
@@ -18,28 +18,17 @@ class Next extends Component {
     this.props.switchScreen(screens.write);
   }
 
-
-  renderProfileCards = ()=> {
-
-    let cards = this.props.writers.map((writer, i)=> (
-      <ProfileCard name={writer.name} img={writer.img} key={i}/>
-    ))
-    return (
-      <div className="row">
-          {cards}
-      </div>
-    )
-  }
-
   render() {
     return (
-      <div className="StoryTime">
-        <div className="row">
+      <div className="StoryTime column">
+        <div className="v-45 center">
           <div className="story-text prompt">
             {this.props.prompt}, _________ .
           </div>
         </div>
-        {this.renderProfileCards()}
+        <div className="v-55 grid">
+          <PlayerGrid players={this.props.writers} max={4} rows={1} />
+        </div>
       </div>
     )
   }

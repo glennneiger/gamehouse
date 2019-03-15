@@ -18,12 +18,14 @@ div.StoryTime
       padding: 20px 32px 22px  
     &.prompt 
       font-size: 34pt 
-      margin-top: 150px 
+      margin: 0
       max-width: 75vw
       @media screen and (max-width: $xl)
         font-size: 26pt
       @media screen and (max-width: $lg)
         font-size: 18pt
+  .grid 
+    width: 90%
   .writer-cards
     position: absolute 
     bottom: 2vh
@@ -33,6 +35,7 @@ div.StoryTime
   .WriterCard 
     width: 22vw
     .speech-bubble 
+      box-shadow: 10px 10px 4px rgba(0, 0, 0, .5)
       position: relative
       bottom: 15px
       background: white 
@@ -52,6 +55,7 @@ div.StoryTime
         border-radius: 20px
         padding: 10px 20px
     .speech-bubble:after 
+      box-shadow: 10px 10px 4px rgba(0, 0, 0, .5)
       content: ''
       position: absolute
       bottom: 0

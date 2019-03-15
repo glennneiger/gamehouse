@@ -21,12 +21,13 @@ export default class Timer extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
   stopTimer = ()=> {
     clearInterval(this.clock);
     this.setState({startTimer: false});
-    const doNothing = ()=>{return};
-    const onFinish = this.props.onFinish || doNothing; 
-    onFinish();
     document.querySelector('.Timer').style.display="none";
   }
 
@@ -55,6 +56,9 @@ export default class Timer extends Component {
       }
       if (width < .2) {
         this.stopTimer();
+        const doNothing = ()=>{return};
+        const onFinish = this.props.onFinish || doNothing; 
+        onFinish();
       }
     }, interval);
 

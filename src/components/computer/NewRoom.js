@@ -16,8 +16,8 @@ class NewRoom extends Component {
       <div className="NewRoom column">
     
 
-        <div className="v-25 v-center">
-          <div className="darken header v-center">
+        <div className="v-25 center">
+          <div className="darken header center">
             <div className="room-code">Room Code:</div>
             <div id="code">{this.props.room.code}</div>
           </div>
@@ -27,8 +27,8 @@ class NewRoom extends Component {
           <PlayerGrid players={this.props.room.players} />
         </div>
 
-        <div className="v-15 v-center">
-          <div className="darken website v-center">
+        <div className="v-15 center">
+          <div className="darken website center">
             <div>
               &nbsp;<i className="fas fa-tablet-alt"></i>&nbsp;partyhouse.tv
             </div>
