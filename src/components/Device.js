@@ -189,7 +189,7 @@ class Device extends Component {
       case games.gameRoom:
         return (
           <div>
-            <SelectGame host={host} code={code} playerIndex={playerIndex} />
+            <SelectGame host={host} hostName={hostName} code={code} playerIndex={playerIndex} />
             {menu.leave}
             {menu.close}
           </div>

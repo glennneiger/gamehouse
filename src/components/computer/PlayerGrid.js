@@ -5,8 +5,13 @@ import Card from './ProfileCard';
 class PlayerGrid extends Component {
   constructor(props) {
     super(props);
+
+    const rows = this.props.rows || 2;
+    const max = this.props.max || 16;
+    const across = max / rows;
+
     this.state = {
-      cards: [], players: []
+      cards: [], players: [], rows, across
     }
   }
 
@@ -35,11 +40,7 @@ class PlayerGrid extends Component {
     // get cards from state.players, not from state.cards. state.cards might not reflect players that have been removed but are still in the process of being animated out. Therefore, state.players is more up-to-date
     players.forEach(player=>{
       const key = player.index;
-      cards.push(
-        <div className="flex-item new-item" key={key} id={`flex-${key}`} >
-          <Card name={player.name} img={player.img} />
-        </div>
-      )
+      cards.push(this.createCard(player.name, player.img, key))
     });
 
     let interval = 10;
@@ -47,15 +48,21 @@ class PlayerGrid extends Component {
       const key = player.index;
       // add one at a time with slight intervals between for a smoother effect
       setTimeout(()=>{
-        cards.push(
-          <div className="flex-item new-item" key={key} id={`flex-${key}`} >
-            <Card name={player.name} img={player.img} />
-          </div>
-        )    
+        cards.push(this.createCard(player.name, player.img, key));    
         this.setState({cards});
       }, interval);
       interval += 150;
     });
+  }
+
+  createCard = (name, img, key) => {
+    const {rows, across} = this.state;
+    const {hideNames} = this.props;
+    return (
+      <div className={`flex-item new-item grow-${across}`} key={key} id={`flex-${key}`} style={{height: `${100/rows}%`}} >
+        <Card name={name} img={img} hideName={hideNames} />
+      </div>
+    );
   }
 
   removeCards = playersToRemove=> {

@@ -1,4 +1,6 @@
 .PlayerGrid
+  height: 100%
+  width: 100%
     
   *, *:before, *:after 
     -moz-box-sizing: border-box
@@ -11,14 +13,9 @@
     flex-direction: row
     align-items: center 
     align-content: center 
-    width: 100vw
     flex-wrap: wrap
-    height: 65vh
-    max-height: 700px
-    padding-top: 3vh
-    width: 96vw
-    @media screen and (max-width: $xl)
-      height: 60vh
+    height: 100%
+    width: 100%
 
   .flex-item  
     // height: 100px
@@ -49,9 +46,24 @@
 
     min-width: 0
 
-    -webkit-animation: flexGrow 500ms ease forwards
-    -o-animation: flexGrow 500ms ease forwards
-    animation: flexGrow 500ms ease forwards
+  .grow-4
+    -webkit-animation: flexGrow-4 500ms ease forwards
+    -o-animation: flexGrow-4 500ms ease forwards
+    animation: flexGrow-4 500ms ease forwards
+    img 
+      max-width: 15vw
+  .grow-8
+    -webkit-animation: flexGrow-8 500ms ease forwards
+    -o-animation: flexGrow-8 500ms ease forwards
+    animation: flexGrow-8 500ms ease forwards
+    img 
+      max-width: 11.2vw
+  .grow-16
+    -webkit-animation: flexGrow-16 500ms ease forwards
+    -o-animation: flexGrow-16 500ms ease forwards
+    animation: flexGrow-16 500ms ease forwards
+    img 
+      max-width: 5.6vw
   
 
   .remove-item 
@@ -62,43 +74,5 @@
     animation: flexShrink 500ms ease forwards
   
 
-  @-webkit-keyframes flexGrow 
-    to 
-      flex: 1
-      min-width: 12.5%
-    
-  
-  @-o-keyframes flexGrow 
-    to 
-      flex: 1
-      min-width: 12.5%
-    
-  
-  @keyframes flexGrow 
-    to 
-      flex: 1
-      min-width: 12.5%
-    
-  
-
-  @-webkit-keyframes flexShrink 
-    to 
-      flex: .01
-      flex: .00001
-      min-width: 0
-    
-  
-  @-o-keyframes flexShrink 
-    to 
-      flex: .01
-      flex: .00001
-      min-width: 0
-    
-  
-  @keyframes flexShrink 
-    to 
-      flex: .01
-      flex: .00001
-      min-width: 0
     
   

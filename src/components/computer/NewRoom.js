@@ -13,25 +13,28 @@ class NewRoom extends Component {
 
   render () {
     return (
-      <div className="NewRoom">
+      <div className="NewRoom column">
+    
 
-        <div className="column">
-          <div className="row header">
-            <div className="column">
-              <div className="room-code">Room Code:</div>
-              <div id="code">{this.props.room.code}</div>
+        <div className="v-25 v-center">
+          <div className="darken header v-center">
+            <div className="room-code">Room Code:</div>
+            <div id="code">{this.props.room.code}</div>
+          </div>
+        </div>
+
+        <div className="v-60 grid">
+          <PlayerGrid players={this.props.room.players} />
+        </div>
+
+        <div className="v-15 v-center">
+          <div className="darken website v-center">
+            <div>
+              &nbsp;<i className="fas fa-tablet-alt"></i>&nbsp;partyhouse.tv
             </div>
           </div>
-
-
-          <PlayerGrid players={this.props.room.players} />
-
-
-          <div className="row website">
-            &nbsp;<i className="fas fa-tablet-alt"></i>&nbsp;partyhouse.tv
-          </div>
-
         </div>
+
 
       </div>
     )

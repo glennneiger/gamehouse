@@ -89,7 +89,7 @@ export default class Lobby extends Component {
     const {players, code} = this.props.room;
     return (
       <div className="Lobby">
-        <div className="row top">
+        <div className="row v-85">
           <div className="left">
           <img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
             <GameSelector games={games} selection={selection} />
@@ -99,8 +99,8 @@ export default class Lobby extends Component {
             <GameDisplay games={games} selection={selection} />
           </div>
         </div>
-        <div className="row bottom">
-          <PlayerGrid players={players} />
+        <div className="row v-15 grid">
+          <PlayerGrid players={players} rows={1} hideNames={true}/>
         </div>
       </div>
     )    

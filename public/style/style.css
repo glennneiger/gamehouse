@@ -169,19 +169,21 @@ body {
   text-decoration: underline;
 }
 
-.NewRoom div.header {
+.NewRoom div.darken {
   background-color: rgba(20, 35, 50, 0.3);
-  margin-top: 3vh;
+}
+
+.NewRoom div.header {
+  height: 80%;
+  width: 100%;
 }
 
 .NewRoom div.header .room-code {
-  padding-top: 7pt;
   font-size: 24pt;
 }
 
 @media screen and (max-width: 1040px) {
   .NewRoom div.header .room-code {
-    padding-top: 5pt;
     font-size: 18pt;
   }
 }
@@ -199,18 +201,19 @@ body {
   }
 }
 
+.NewRoom div.grid {
+  width: 96%;
+}
+
 .NewRoom div.website {
-  background-color: rgba(20, 35, 50, 0.3);
-  position: fixed;
-  bottom: 5vh;
+  height: 80%;
+  width: 100%;
   font-size: 24pt;
-  padding: 32px 0 36px;
 }
 
 @media screen and (max-width: 1040px) {
   .NewRoom div.website {
     font-size: 17pt;
-    padding: 18px 0 18px;
   }
 }
 
@@ -222,7 +225,6 @@ body {
 }
 
 .ProfileCard img {
-  width: 11vw;
   border-radius: 10%;
 }
 
@@ -354,6 +356,11 @@ div.StoryTime .WriterCard .speech-bubble:after {
   margin-bottom: -20px;
 }
 
+.PlayerGrid {
+  height: 100%;
+  width: 100%;
+}
+
 .PlayerGrid *, .PlayerGrid *:before, .PlayerGrid *:after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -372,19 +379,10 @@ div.StoryTime .WriterCard .speech-bubble:after {
           align-items: center;
   -ms-flex-line-pack: center;
       align-content: center;
-  width: 100vw;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  height: 65vh;
-  max-height: 700px;
-  padding-top: 3vh;
-  width: 96vw;
-}
-
-@media screen and (max-width: 1400px) {
-  .PlayerGrid .flexbox {
-    height: 60vh;
-  }
+  height: 100%;
+  width: 100%;
 }
 
 .PlayerGrid .flex-item {
@@ -426,8 +424,33 @@ div.StoryTime .WriterCard .speech-bubble:after {
       -ms-flex: .00001;
           flex: .00001;
   min-width: 0;
-  -webkit-animation: flexGrow 500ms ease forwards;
-  animation: flexGrow 500ms ease forwards;
+}
+
+.PlayerGrid .grow-4 {
+  -webkit-animation: flexGrow-4 500ms ease forwards;
+  animation: flexGrow-4 500ms ease forwards;
+}
+
+.PlayerGrid .grow-4 img {
+  max-width: 15vw;
+}
+
+.PlayerGrid .grow-8 {
+  -webkit-animation: flexGrow-8 500ms ease forwards;
+  animation: flexGrow-8 500ms ease forwards;
+}
+
+.PlayerGrid .grow-8 img {
+  max-width: 11.2vw;
+}
+
+.PlayerGrid .grow-16 {
+  -webkit-animation: flexGrow-16 500ms ease forwards;
+  animation: flexGrow-16 500ms ease forwards;
+}
+
+.PlayerGrid .grow-16 img {
+  max-width: 5.6vw;
 }
 
 .PlayerGrid .remove-item {
@@ -438,45 +461,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
   animation: flexShrink 500ms ease forwards;
 }
 
-@-webkit-keyframes flexGrow {
-  to {
-    -webkit-box-flex: 1;
-            flex: 1;
-    min-width: 12.5%;
-  }
-}
-
-@keyframes flexGrow {
-  to {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    min-width: 12.5%;
-  }
-}
-
-@-webkit-keyframes flexShrink {
-  to {
-    -webkit-box-flex: .01;
-            flex: .01;
-    -webkit-box-flex: .00001;
-            flex: .00001;
-    min-width: 0;
-  }
-}
-
-@keyframes flexShrink {
-  to {
-    -webkit-box-flex: .01;
-        -ms-flex: .01;
-            flex: .01;
-    -webkit-box-flex: .00001;
-        -ms-flex: .00001;
-            flex: .00001;
-    min-width: 0;
-  }
-}
-
 .Lobby {
   height: 98vh;
 }
@@ -485,14 +469,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-}
-
-.Lobby .top {
-  height: 89%;
-}
-
-.Lobby .bottom {
-  height: 10%;
 }
 
 .Lobby .left {
@@ -555,62 +531,8 @@ div.StoryTime .WriterCard .speech-bubble:after {
   }
 }
 
-.Lobby div.PlayerGrid {
-  width: 90%;
-  margin: auto;
-}
-
-.Lobby div.flexbox {
-  width: 100%;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  height: 11vh;
-  max-height: 100px;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-@-webkit-keyframes flexGrow {
-  to {
-    -webkit-box-flex: 1;
-            flex: 1;
-    min-width: 6.25%;
-  }
-}
-
-@keyframes flexGrow {
-  to {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    min-width: 6.25%;
-  }
-}
-
-.Lobby div.ProfileCard {
-  width: 100%;
-}
-
-.Lobby div.ProfileCard img {
-  min-height: 40px;
-  min-width: 40px;
-  height: 4vw;
-  width: 4vw;
-  max-height: 80px;
-  max-width: 80px;
-  margin: 0;
-  padding: 0;
-}
-
-.Lobby div.ProfileCard .name {
-  display: none;
-}
-
-@media screen and (max-width: 1400px) {
-  .Lobby div.ProfileCard {
-    height: 10vh;
-  }
+.Lobby .grid {
+  width: 95%;
 }
 
 .GameSelector {
@@ -658,7 +580,7 @@ div.StoryTime .WriterCard .speech-bubble:after {
 }
 
 div.GameDisplay {
-  margin: 4vh auto auto auto;
+  margin: 3vh auto auto auto;
 }
 
 div.GameDisplay img {
@@ -847,6 +769,183 @@ a {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+}
+
+.v-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+div[class^="v-"] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+div.v-5 {
+  height: 5vh;
+}
+
+div.v-10 {
+  height: 10vh;
+}
+
+div.v-15 {
+  height: 15vh;
+}
+
+div.v-20 {
+  height: 20vh;
+}
+
+div.v-25 {
+  height: 25vh;
+}
+
+div.v-30 {
+  height: 30vh;
+}
+
+div.v-35 {
+  height: 35vh;
+}
+
+div.v-40 {
+  height: 40vh;
+}
+
+div.v-45 {
+  height: 45vh;
+}
+
+div.v-50 {
+  height: 50vh;
+}
+
+div.v-55 {
+  height: 55vh;
+}
+
+div.v-60 {
+  height: 60vh;
+}
+
+div.v-65 {
+  height: 65vh;
+}
+
+div.v-70 {
+  height: 70vh;
+}
+
+div.v-75 {
+  height: 75vh;
+}
+
+div.v-80 {
+  height: 80vh;
+}
+
+div.v-85 {
+  height: 85vh;
+}
+
+div.v-90 {
+  height: 90vh;
+}
+
+div.v-95 {
+  height: 95vh;
+}
+
+div.v-100 {
+  height: 100vh;
+}
+
+@-webkit-keyframes flexGrow-4 {
+  to {
+    -webkit-box-flex: 1;
+            flex: 1;
+    min-width: 25%;
+  }
+}
+
+@keyframes flexGrow-4 {
+  to {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    min-width: 25%;
+  }
+}
+
+@-webkit-keyframes flexGrow-8 {
+  to {
+    -webkit-box-flex: 1;
+            flex: 1;
+    min-width: 12.5%;
+  }
+}
+
+@keyframes flexGrow-8 {
+  to {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    min-width: 12.5%;
+  }
+}
+
+@-webkit-keyframes flexGrow-16 {
+  to {
+    -webkit-box-flex: 1;
+            flex: 1;
+    min-width: 6.2%;
+  }
+}
+
+@keyframes flexGrow-16 {
+  to {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    min-width: 6.2%;
+  }
+}
+
+@-webkit-keyframes flexShrink {
+  to {
+    -webkit-box-flex: .01;
+            flex: .01;
+    -webkit-box-flex: .00001;
+            flex: .00001;
+    min-width: 0;
+  }
+}
+
+@keyframes flexShrink {
+  to {
+    -webkit-box-flex: .01;
+        -ms-flex: .01;
+            flex: .01;
+    -webkit-box-flex: .00001;
+        -ms-flex: .00001;
+            flex: .00001;
+    min-width: 0;
+  }
 }
 
 body.device {

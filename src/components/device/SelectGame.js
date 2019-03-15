@@ -6,13 +6,8 @@ import {sendInput} from '../../actions';
 
 class SelectGame extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {host: props.host};
-  }
-
   renderContent() {
-    if (this.state.host) {
+    if (this.props.host) {
       return (
         <div className="column">
           <img alt="up" src="assets/img/controls/select.svg" id="select" onClick={()=>this.handleKeyPress('select')} />
@@ -26,7 +21,7 @@ class SelectGame extends Component {
       return (
         <div className="column">
           <p> 
-            Your host will select the next game.
+            {this.props.hostName} will select the next game.
           </p>
           <Ad />
         </div>
