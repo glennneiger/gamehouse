@@ -149,7 +149,7 @@ export function leaveRoom(roomCode, index) {
 
       if (host.index===index) {
         //if the host is leaving the party, we need to find a new host!
-        if (room.totalPlayers===1) { //last player to leave
+        if (room.totalPlayers===1 || !room.players) { //last player to leave
           host.index=nextIndex;
           host.name=null; //this will get updated when the next player joins and becomes the new host
         } else {

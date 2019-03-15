@@ -248,6 +248,10 @@ body {
   }
 }
 
+div.StoryTime {
+  overflow: hidden;
+}
+
 div.StoryTime div.story-text {
   display: block;
   margin: 54px 54px 120px;
@@ -316,15 +320,17 @@ div.StoryTime .WriterCard {
 }
 
 div.StoryTime .WriterCard .speech-bubble {
+  min-width: 150px;
+  min-height: 40px;
   -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
           box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
   position: relative;
-  bottom: 15px;
+  bottom: 20px;
   background: white;
   color: black;
-  font-size: 20pt;
+  font-size: 21pt;
   border-radius: 50px;
-  padding: 20px 50px;
+  padding: 15px 30px 20px 30px;
   margin: 0 15px;
   -webkit-transition-duration: 300ms;
           transition-duration: 300ms;
@@ -333,23 +339,21 @@ div.StoryTime .WriterCard .speech-bubble {
 
 @media screen and (max-width: 1400px) {
   div.StoryTime .WriterCard .speech-bubble {
-    font-size: 16pt;
+    font-size: 19pt;
     border-radius: 35px;
-    padding: 15px 35px;
+    padding: 10px 20px 15px 20px;
   }
 }
 
 @media screen and (max-width: 1040px) {
   div.StoryTime .WriterCard .speech-bubble {
-    font-size: 14pt;
+    font-size: 17pt;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 5px 10px 10px 10px;
   }
 }
 
 div.StoryTime .WriterCard .speech-bubble:after {
-  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
-          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
   content: '';
   position: absolute;
   bottom: 0;
@@ -362,6 +366,20 @@ div.StoryTime .WriterCard .speech-bubble:after {
   border-left: 0;
   margin-left: -10px;
   margin-bottom: -20px;
+}
+
+.StoryTime.Winner .WriterCard {
+  width: 30vw;
+}
+
+.StoryTime.Winner .speech-bubble {
+  -webkit-animation: 1000ms ease-out 0s 1 slideInFromTop;
+          animation: 1000ms ease-out 0s 1 slideInFromTop;
+}
+
+.StoryTime.Winner .ProfileCard {
+  -webkit-animation: 700ms ease-out 0s 1 slideInFromBottom;
+          animation: 700ms ease-out 0s 1 slideInFromBottom;
 }
 
 .PlayerGrid {
@@ -880,6 +898,94 @@ div.v-95 {
 
 div.v-100 {
   height: 100vh;
+}
+
+@-webkit-keyframes slideInFromLeft {
+  0% {
+    -webkit-transform: translateX(-50vw);
+            transform: translateX(-50vw);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    -webkit-transform: translateX(-50vw);
+            transform: translateX(-50vw);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes slideInFromRight {
+  0% {
+    -webkit-transform: translateX(50vw);
+            transform: translateX(50vw);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    -webkit-transform: translateX(50vw);
+            transform: translateX(50vw);
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+}
+
+@-webkit-keyframes slideInFromTop {
+  0% {
+    -webkit-transform: translateY(-50vw);
+            transform: translateY(-50vw);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    -webkit-transform: translateY(-50vw);
+            transform: translateY(-50vw);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes slideInFromBottom {
+  0% {
+    -webkit-transform: translateY(50vw);
+            transform: translateY(50vw);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    -webkit-transform: translateY(50vw);
+            transform: translateY(50vw);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
 }
 
 @-webkit-keyframes flexGrow-4 {

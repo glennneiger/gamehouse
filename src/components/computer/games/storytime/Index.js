@@ -34,6 +34,9 @@ class StoryTime extends Component {
   }
 
   init = ()=> { //called when intro is mounted
+    const {players} = this.props.room;
+    if (!players) this.testing();
+    
     this.props.playAudio('music', 'storytime/0');
     this.props.playVideo('storytime/intro');
 
@@ -46,7 +49,7 @@ class StoryTime extends Component {
     const storyStart = getStoryStart();
     const firstLine = `Once upon a time, there was ${storyStart}.`;
 
-    const numPlayers = this.props.room.players.length;
+    const numPlayers = players.length;
     const writersPerTurn = getWritersPerTurn(numPlayers); 
     const writers = this.selectWriters(writersPerTurn);
     const prompt = getPrompt(0);

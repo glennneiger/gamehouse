@@ -29,8 +29,9 @@ class Winner extends Component {
       this.props.preloadVideo('storytime/next');
     }
 
-    read(winningText, this.handleFinishReading);
     this.setState({nextScreen});
+
+    setTimeout(()=> {read(winningText, this.handleFinishReading)}, 1100);
   }
 
   handleFinishReading = ()=> {
@@ -47,7 +48,7 @@ class Winner extends Component {
 
   render() {
     return (
-      <div className="StoryTime">
+      <div className="StoryTime Winner">
         <div className="center-screen">
           <WriterCard name={this.props.winner.name} img={this.props.winner.img} text={this.props.winningText} />
         </div>
