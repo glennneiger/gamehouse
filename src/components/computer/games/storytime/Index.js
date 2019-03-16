@@ -6,7 +6,7 @@ import Write from './Write';
 import Winner from './Winner';
 import Final from './Final';
 
-import {shuffle} from './helpers';
+import {selectWriters} from './helpers';
 
 import {getStoryStart, screens, getWritersPerTurn, getPrompt} from './helpers';
 
@@ -51,7 +51,7 @@ class StoryTime extends Component {
 
     const numPlayers = players.length;
     const writersPerTurn = getWritersPerTurn(numPlayers); 
-    const writers = this.selectWriters(writersPerTurn);
+    const writers = selectWriters(writersPerTurn, players);
     const prompt = getPrompt(0);
     this.setState({
       writers, 
@@ -81,35 +81,6 @@ class StoryTime extends Component {
     ]
   }
 
-  selectWriters = writersPerTurn=> {
-    // this will determine every writer for every turn (2-4 writers per turn, 8 turns per game)
-    let writers = []; //array of arrays [turn][player] 
-    const {players} = this.props.room;
-  
-    // All players are shuffled and added to queue. 
-    // As players are taken out of queue, they're added to holding to be used again 
-    // When queue gets low, players in holding are reshuffled and added back to queue
-    let queue = shuffle(players);
-    let holding = []; 
-  
-    for (let turn = 0; turn < 8; turn++) { //this algorithm works flawlessly!
-      writers.push([]); // this array represents one turn. we will fill this array with players 
-      let numWriters = writersPerTurn[turn];
-      if (queue.length < numWriters) { //if queue is too low to fill turn 
-        writers[turn] = queue; // add whatever is in the queue to turn
-        const stillNeedToAdd = numWriters - queue.length; // We still need to add this many more
-        queue = shuffle(holding).concat(queue); //new queue = shuffle holding, and add to end what we just used
-        holding = queue.slice(0, stillNeedToAdd); // add the players we're about to take from queue to holding
-        writers[turn] = writers[turn].concat(holding); // add these players to turn
-        queue = queue.slice(stillNeedToAdd, queue.length); // take them out of queue 
-      } else {
-        writers[turn] = queue.slice(0, numWriters);
-        holding = holding.concat(writers[turn]);
-        queue = queue.slice(numWriters, queue.length);
-      }
-    }
-    return writers;
-  }
 
   declareWinner = (winner, winningText)=> {
     let {story, prompt} = this.state;
@@ -151,73 +122,56 @@ class StoryTime extends Component {
   }
 
   render() {
+
+    const {switchScreen, playVoice} = this;
+    const {playVideo, playAudio, preloadVideo, preloadMusic, room, switchGame} = this.props;
+    const {turn, writers, prompt, story, winner} = this.state;
+    const props = {switchScreen, playVoice, playVideo, playAudio, preloadVideo, preloadMusic, turn}
+
     switch (this.state.screen) {
       case screens.read:
         return (
           <Read 
-            switchScreen={this.switchScreen} 
             story={this.state.turn>0 ? this.state.story.join(' ') : this.state.story[0] + ' And every day,'} 
-            turn={this.state.turn}
-            playVideo={this.props.playVideo}
-            playVoice={this.playVoice}
-            playAudio={this.props.playAudio}
-            preloadVideo={this.props.preloadVideo}
-            preloadMusic={this.props.preloadMusic}
+            {...props}
           />
         )
       case screens.next:
         return (
           <Next 
-            switchScreen={this.switchScreen} 
-            writers={this.state.writers[this.state.turn]} 
-            turn={this.state.turn} 
-            prompt={this.state.prompt}
-            playVideo={this.props.playVideo}
-            playVoice={this.playVoice}
-            preloadVideo={this.props.preloadVideo}
+            writers={writers[turn]} 
+            prompt={prompt}
+            {...props}
           />
         )
       case screens.write:
         return (
           <Write 
-            switchScreen={this.switchScreen} 
-            writers={this.state.writers[this.state.turn]} 
-            story={this.state.story.join(' ')} 
-            turn={this.state.turn} 
-            prompt={this.state.prompt}
-            room={this.props.room}
+            writers={writers[turn]} 
+            story={story.join(' ')} 
+            prompt={prompt}
+            room={room}
             declareWinner={this.declareWinner}
-            playVideo={this.props.playVideo}
-            playVoice={this.playVoice}
-            preloadVideo={this.props.preloadVideo}
+            {...props}
           />
         )
       case screens.winner:
         return (
           <Winner 
-            turn={this.state.turn} 
-            switchScreen={this.switchScreen} 
-            winner={this.state.winner}
-            winningText={this.state.story[this.state.story.length-1]}
+            winner={winner}
+            winningText={story[story.length-1]}
             nextTurn={this.nextTurn}
-            playVideo={this.props.playVideo}
-            playVoice={this.playVoice}
-            preloadVideo={this.props.preloadVideo}
+            {...props}
           />
         )
       case screens.final:
         return (
           <Final 
-            playVideo={this.props.playVideo}
-            playVoice={this.playVoice}
-            playAudio={this.props.playAudio}
-            preloadVideo={this.props.preloadVideo}
-            preloadMusic={this.props.preloadMusic}
-            story={this.state.story.join(' ')} 
-            code={this.props.room.code}
-            switchScreen={this.switchScreen} 
-            switchGame={this.props.switchGame}
-            hostIndex={this.props.room.hostIndex}
+            story={story.join(' ')} 
+            code={room.code}
+            switchGame={switchGame}
+            hostIndex={room.hostIndex}
+            {...props}
           />
         )
         default:

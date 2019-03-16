@@ -190,3 +190,33 @@ export const read = (text, callback)=> {
   }
   _wait();
 }
+
+
+export const selectWriters = (writersPerTurn, players)=> {
+  // this will determine every writer for every turn (2-4 writers per turn, 8 turns per game)
+  let writers = []; //array of arrays [turn][player] 
+  
+  // All players are shuffled and added to queue. 
+  // As players are taken out of queue, they're added to holding to be used again 
+  // When queue gets low, players in holding are reshuffled and added back to queue
+  let queue = shuffle(players);
+  let holding = []; 
+
+  for (let turn = 0; turn < 8; turn++) { //this algorithm works flawlessly!
+    writers.push([]); // this array represents one turn. we will fill this array with players 
+    let numWriters = writersPerTurn[turn];
+    if (queue.length < numWriters) { //if queue is too low to fill turn 
+      writers[turn] = queue; // add whatever is in the queue to turn
+      const stillNeedToAdd = numWriters - queue.length; // We still need to add this many more
+      queue = shuffle(holding).concat(queue); //new queue = shuffle holding, and add to end what we just used
+      holding = queue.slice(0, stillNeedToAdd); // add the players we're about to take from queue to holding
+      writers[turn] = writers[turn].concat(holding); // add these players to turn
+      queue = queue.slice(stillNeedToAdd, queue.length); // take them out of queue 
+    } else {
+      writers[turn] = queue.slice(0, numWriters);
+      holding = holding.concat(writers[turn]);
+      queue = queue.slice(numWriters, queue.length);
+    }
+  }
+  return writers;
+}

@@ -7,6 +7,7 @@ import Landing from './computer/Landing';
 import NewRoom from './computer/NewRoom';
 import Lobby from './computer/Lobby';
 import StoryTime from './computer/games/storytime/Index';
+import Speakeasy from './computer/games/speakeasy/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
 
@@ -185,23 +186,28 @@ class Computer extends Component {
   }
 
   renderContent() {
+
+    const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound} = this;
+    const room = this.state;
+
+    const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound}
+
     switch (this.state.game) {
+
       case games.newRoom:
-        return (
-          <NewRoom room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
-        )
+        return <NewRoom {...props} />
+
       case games.gameRoom:
-        return (
-          <Lobby room={this.state} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} stopSound={this.stopSound} />
-        )
+        return <Lobby {...props} />
+
       case games.storyTime:
-        return (
-          <StoryTime room={this.state} switchGame={this.switchGame} playAudio={this.playAudio} playVideo={this.playVideo} preloadMusic={this.preloadMusic} preloadVideo={this.preloadVideo} />
-        )
+        return <StoryTime {...props} />
+
+      case games.speakEasy:
+        return <Speakeasy {...props} />
+    
       default:
-        return (
-          <Landing switchGame={this.switchGame} useAsDevice={this.props.useAsDevice} />
-        );
+        return <Landing switchGame={this.switchGame} useAsDevice={this.props.useAsDevice} />
     }
   }
 }
