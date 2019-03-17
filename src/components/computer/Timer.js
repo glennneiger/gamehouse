@@ -46,7 +46,7 @@ export default class Timer extends Component {
       width-=0.1;
       timer.style.width=`${width}vw`;
       if (parseInt(width)===50) {
-        timer.style.backgroundColor="#ccbb44";
+        timer.style.backgroundColor="#eedd44";
       }
       if (parseInt(width)===35) {
         timer.style.backgroundColor="orange";

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
 import {inputRequest, watchForChange, receiveSubmission} from '../../../../actions';
-import {requests} from '../../../../actions/requestTypes';
-import {games} from '../../../../actions/games';
+import {requests} from '../../helpers/requestTypes';
+import {games} from '../../helpers/games';
 import {screens} from './helpers';
 
 class Final extends Component {

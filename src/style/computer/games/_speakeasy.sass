@@ -1,0 +1,67 @@
+.Speakeasy
+  overflow: hidden
+  
+.Speakeasy.Breakdown
+  .line 
+    display: none
+    color: white
+    font-size: 72pt
+    @media screen and (max-width: $xl)
+      font-size: 66pt
+    @media screen and (max-width: $lg)
+      font-size: 50pt
+
+.Speakeasy.Rounds
+  .indicator
+    width: 15vw 
+    height: 15vw 
+    display: flex
+    justify-content: center 
+    align-items: center
+    border: 0.5vw black solid 
+    border-radius: 50%
+    box-shadow: 7px 7px rgba(0, 0, 0, .2)
+    margin: 0 10px
+    color: #ddd
+    text-shadow: 4pt 3pt #000000
+    font-size: 72pt
+    transition: background-color 1000ms
+    @media screen and (max-width: $xl)
+      font-size: 60pt
+    @media screen and (max-width: $lg)
+      font-size: 50pt
+    &.number
+      background-color: rgba(30,30,50,.5) 
+    &.success
+      background-color: rgba(0,240,0,.5) 
+    &.fail
+      background-color: rgba(240,0,0,.5) 
+
+.Speakeasy.Slides 
+  div.wrapper
+    width: 100vw 
+    height: 100vh 
+    position: fixed  
+    top: 0
+    left: 0 
+    div.slide
+      width: 100vw 
+      height: 100vh 
+      display: flex 
+      justify-content: center
+      img 
+        height: 100%
+        max-width: 100%
+
+.Speakeasy.Owner 
+  display: flex 
+  align-items: center
+  justify-content: center
+  height: 100vh
+  width: 100vw
+    
+
+.Speakeasy.Map 
+  img 
+    width: 100vw
+    

@@ -4,5 +4,6 @@ export const screens = {
   map: 'map',
   owner: 'owner',
   rounds: 'rounds',
+  slides: 'slides',
   final: 'final'
 }

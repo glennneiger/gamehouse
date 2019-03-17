@@ -1,6 +1,6 @@
 import { /* auth, */ database/*, storage */ } from '../Firebase';
 
-import { games } from './games';
+import { games } from '../components/computer/helpers/games';
 
 const maxPlayers = 16;
 
@@ -69,11 +69,17 @@ export function receiveSubmission(roomCode, playerIndex) {
 }
 
 export function expireRequest(roomCode, playerIndex) {
-  database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
-  database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
-  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-    request: 'expired',
-    input: null 
+  database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
+    let player = await data.toJSON();
+    if (!player) return;
+    if (player.request && player.request !== 'expired') {
+      database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
+      database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
+      database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+        request: 'expired',
+        input: null 
+      });
+    }
   });
 }
 

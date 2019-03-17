@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {submitInput, selectGame} from '../../actions';
-import {games} from '../../actions/games';
+import {games} from '../computer/helpers/games';
 
 export default class PlayAgain extends Component {
 

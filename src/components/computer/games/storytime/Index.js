@@ -6,13 +6,11 @@ import Write from './Write';
 import Winner from './Winner';
 import Final from './Final';
 
-import {selectWriters} from './helpers';
-
-import {getStoryStart, screens, getWritersPerTurn, getPrompt} from './helpers';
+import {getStoryStart, screens, getWritersPerTurn, getPrompt, selectWriters} from './helpers';
 
 
 import {incrementGame} from '../../../../actions'
-import {games} from '../../../../actions/games'
+import {games} from '../../helpers/games'
 
 class StoryTime extends Component {
 
@@ -33,9 +31,8 @@ class StoryTime extends Component {
     this.init();
   }
 
-  init = ()=> { //called when intro is mounted
+  init = ()=> { 
     const {players} = this.props.room;
-    if (!players) this.testing();
     
     this.props.playAudio('music', 'storytime/0');
     this.props.playVideo('storytime/intro');
@@ -63,22 +60,6 @@ class StoryTime extends Component {
     });
 
     incrementGame(games.storyTime);
-  }
-
-
-  testing = ()=> {
-    this.props.room.players = [
-      {name: 'Jacob', img: 0},
-      {name: 'Brandon', img: 2},
-      {name: 'Luis', img: 3},
-      {name: 'Karen', img: 4},
-      {name: 'Tasheda', img: 5},
-      {name: 'Frankie', img: 6},
-      {name: 'Ethan', img: 7},
-      {name: 'Amy', img: 8},
-      {name: 'Jon', img: 9},
-      {name: 'Stephen', img: 10}
-    ]
   }
 
 

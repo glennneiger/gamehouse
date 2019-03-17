@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {gameDetails} from '../../actions/games';
+import {gameDetails} from './helpers/games';
 import {receiveSubmission, watchForChange, removeWatcher, selectGame} from '../../actions';
 
 import GameSelector from './GameSelector';
@@ -13,18 +13,18 @@ export default class Lobby extends Component {
     super(props);
 
     this.state = {
-      selection: 0,
       games: gameDetails
     }
   }
 
   componentDidMount() {
-    const firstGame = this.state.games[0];
+    const {selection} = this.props;
+    const {games} = this.state;
 
     this.props.stopSound();
     this.props.playVideo('lobby');
     this.props.playAudio('music','lobby');
-    this.preload(firstGame);
+    this.preload(games[selection]);
 
     const {code, hostIndex} = this.props.room;
     watchForChange(code, `players/${hostIndex}/input`, data=>this.handleReceiveCommand(data));
@@ -36,16 +36,17 @@ export default class Lobby extends Component {
   }
 
   preload = game=> {
-    const {folder} = game;
-    this.props.preloadVideo(`${folder}/intro`);
-    this.props.preloadMusic(`${folder}/0`);
+    const {id} = game;
+    this.props.preloadVideo(`${id}/intro`);
+    this.props.preloadMusic(`${id}/0`);
   }
 
   handleReceiveCommand = async data=> {
     const input = await data.toJSON();
     if (!input) return;
     const {key} = input;
-    let {selection, games} = this.state;
+    let {games} = this.state;
+    let {selection, selectGame} = this.props;
     
     if (key==='select') {
       const numPlayers = this.props.room.players.length;
@@ -72,20 +73,22 @@ export default class Lobby extends Component {
         selection--;
         if (selection===-1) selection=games.length-1;
       } 
+      selectGame(selection);
       this.preload(games[selection]);
-      this.setState({selection});
     }
   }
 
   openGame = ()=> {
-    const {selection, games} = this.state;
+    const {games} = this.state;
+    const {selection} = this.props;
     const {code, hostIndex} = this.props.room;
     receiveSubmission(code, hostIndex);
     selectGame(code, games[selection].id);
   }
 
   render() {
-    const {games, selection} = this.state;
+    const {games} = this.state;
+    const {selection} = this.props;
     const {players, code} = this.props.room;
     return (
       <div className="Lobby">

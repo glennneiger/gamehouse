@@ -220,12 +220,22 @@ body {
 .ProfileCard {
   margin: 0;
   padding: 0;
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .ProfileCard img {
   border-radius: 10%;
   max-width: 14vw;
+  padding-bottom: 6px;
 }
 
 .ProfileCard .name {
@@ -246,140 +256,6 @@ body {
     font-size: 17pt;
     line-height: 17pt;
   }
-}
-
-div.StoryTime {
-  overflow: hidden;
-}
-
-div.StoryTime div.story-text {
-  display: block;
-  margin: 54px 54px 120px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  text-align: center;
-  width: 80vw;
-  font-size: 28pt;
-  padding: 42px 48px 48px;
-}
-
-@media screen and (max-width: 1400px) {
-  div.StoryTime div.story-text {
-    margin: 39px 39px 100px;
-    font-size: 22pt;
-    padding: 31px 40px 34px;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.StoryTime div.story-text {
-    margin: 24px 24px 80px;
-    font-size: 16pt;
-    padding: 20px 32px 22px;
-  }
-}
-
-div.StoryTime div.story-text.prompt {
-  font-size: 34pt;
-  margin: 0;
-  max-width: 75vw;
-}
-
-@media screen and (max-width: 1400px) {
-  div.StoryTime div.story-text.prompt {
-    font-size: 26pt;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.StoryTime div.story-text.prompt {
-    font-size: 18pt;
-  }
-}
-
-div.StoryTime .grid {
-  width: 90%;
-}
-
-div.StoryTime .writer-cards {
-  position: absolute;
-  bottom: 2vh;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-}
-
-@media screen and (max-width: 1040px) {
-  div.StoryTime .writer-cards {
-    bottom: 0;
-  }
-}
-
-div.StoryTime .WriterCard {
-  width: 22vw;
-}
-
-div.StoryTime .WriterCard .speech-bubble {
-  min-width: 150px;
-  min-height: 40px;
-  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
-          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
-  position: relative;
-  bottom: 20px;
-  background: white;
-  color: black;
-  font-size: 21pt;
-  border-radius: 50px;
-  padding: 18px 30px 20px 30px;
-  margin: 0 15px;
-  -webkit-transition-duration: 300ms;
-          transition-duration: 300ms;
-  text-align: center;
-}
-
-@media screen and (max-width: 1400px) {
-  div.StoryTime .WriterCard .speech-bubble {
-    font-size: 19pt;
-    border-radius: 35px;
-    padding: 13px 20px 15px 20px;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.StoryTime .WriterCard .speech-bubble {
-    font-size: 17pt;
-    border-radius: 20px;
-    padding: 7px 10px 10px 10px;
-  }
-}
-
-div.StoryTime .WriterCard .speech-bubble:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-top-color: white;
-  border-bottom: 0;
-  border-left: 0;
-  margin-left: -10px;
-  margin-bottom: -20px;
-}
-
-.StoryTime.Winner .WriterCard {
-  width: 30vw;
-}
-
-.StoryTime.Winner .speech-bubble {
-  -webkit-animation: 1000ms ease-out 0s 1 slideInFromTop;
-          animation: 1000ms ease-out 0s 1 slideInFromTop;
-}
-
-.StoryTime.Winner .ProfileCard {
-  -webkit-animation: 700ms ease-out 0s 1 slideInFromBottom;
-          animation: 700ms ease-out 0s 1 slideInFromBottom;
 }
 
 .PlayerGrid {
@@ -733,6 +609,252 @@ div.GameDisplay div.stats i {
   border-radius: 1vh;
 }
 
+div.StoryTime {
+  overflow: hidden;
+}
+
+div.StoryTime div.story-text {
+  display: block;
+  margin: 54px 54px 120px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+  width: 80vw;
+  font-size: 28pt;
+  padding: 42px 48px 48px;
+}
+
+@media screen and (max-width: 1400px) {
+  div.StoryTime div.story-text {
+    margin: 39px 39px 100px;
+    font-size: 22pt;
+    padding: 31px 40px 34px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime div.story-text {
+    margin: 24px 24px 80px;
+    font-size: 16pt;
+    padding: 20px 32px 22px;
+  }
+}
+
+div.StoryTime div.story-text.prompt {
+  font-size: 34pt;
+  margin: 0;
+  max-width: 75vw;
+}
+
+@media screen and (max-width: 1400px) {
+  div.StoryTime div.story-text.prompt {
+    font-size: 26pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime div.story-text.prompt {
+    font-size: 18pt;
+  }
+}
+
+div.StoryTime .grid {
+  width: 90%;
+}
+
+div.StoryTime .writer-cards {
+  position: absolute;
+  bottom: 2vh;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime .writer-cards {
+    bottom: 0;
+  }
+}
+
+div.StoryTime .WriterCard {
+  width: 22vw;
+}
+
+div.StoryTime .WriterCard .speech-bubble {
+  min-width: 150px;
+  min-height: 40px;
+  -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
+          box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  bottom: 20px;
+  background: white;
+  color: black;
+  font-size: 21pt;
+  border-radius: 50px;
+  padding: 18px 30px 20px 30px;
+  margin: 0 15px;
+  -webkit-transition-duration: 300ms;
+          transition-duration: 300ms;
+  text-align: center;
+}
+
+@media screen and (max-width: 1400px) {
+  div.StoryTime .WriterCard .speech-bubble {
+    font-size: 19pt;
+    border-radius: 35px;
+    padding: 13px 20px 15px 20px;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  div.StoryTime .WriterCard .speech-bubble {
+    font-size: 17pt;
+    border-radius: 20px;
+    padding: 7px 10px 10px 10px;
+  }
+}
+
+div.StoryTime .WriterCard .speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-top-color: white;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -10px;
+  margin-bottom: -20px;
+}
+
+.StoryTime.Winner .WriterCard {
+  width: 30vw;
+}
+
+.StoryTime.Winner .speech-bubble {
+  -webkit-animation: 1200ms ease-out 0s 1 slideInFromTop;
+          animation: 1200ms ease-out 0s 1 slideInFromTop;
+}
+
+.StoryTime.Winner .ProfileCard {
+  -webkit-animation: 800ms ease-out 0s 1 slideInFromBottom;
+          animation: 800ms ease-out 0s 1 slideInFromBottom;
+}
+
+.Speakeasy {
+  overflow: hidden;
+}
+
+.Speakeasy.Breakdown .line {
+  display: none;
+  color: white;
+  font-size: 72pt;
+}
+
+@media screen and (max-width: 1400px) {
+  .Speakeasy.Breakdown .line {
+    font-size: 66pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Speakeasy.Breakdown .line {
+    font-size: 50pt;
+  }
+}
+
+.Speakeasy.Rounds .indicator {
+  width: 15vw;
+  height: 15vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 0.5vw black solid;
+  border-radius: 50%;
+  -webkit-box-shadow: 7px 7px rgba(0, 0, 0, 0.2);
+          box-shadow: 7px 7px rgba(0, 0, 0, 0.2);
+  margin: 0 10px;
+  color: #ddd;
+  text-shadow: 4pt 3pt #000000;
+  font-size: 72pt;
+  -webkit-transition: background-color 1000ms;
+  transition: background-color 1000ms;
+}
+
+@media screen and (max-width: 1400px) {
+  .Speakeasy.Rounds .indicator {
+    font-size: 60pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Speakeasy.Rounds .indicator {
+    font-size: 50pt;
+  }
+}
+
+.Speakeasy.Rounds .indicator.number {
+  background-color: rgba(30, 30, 50, 0.5);
+}
+
+.Speakeasy.Rounds .indicator.success {
+  background-color: rgba(0, 240, 0, 0.5);
+}
+
+.Speakeasy.Rounds .indicator.fail {
+  background-color: rgba(240, 0, 0, 0.5);
+}
+
+.Speakeasy.Slides div.wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.Speakeasy.Slides div.wrapper div.slide {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Speakeasy.Slides div.wrapper div.slide img {
+  height: 100%;
+  max-width: 100%;
+}
+
+.Speakeasy.Owner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.Speakeasy.Map img {
+  width: 100vw;
+}
+
 a {
   display: block;
   text-decoration: none;
@@ -902,8 +1024,8 @@ div.v-100 {
 
 @-webkit-keyframes slideInFromLeft {
   0% {
-    -webkit-transform: translateX(-50vw);
-            transform: translateX(-50vw);
+    -webkit-transform: translateX(-100vw);
+            transform: translateX(-100vw);
   }
   100% {
     -webkit-transform: translateX(0);
@@ -913,8 +1035,8 @@ div.v-100 {
 
 @keyframes slideInFromLeft {
   0% {
-    -webkit-transform: translateX(-50vw);
-            transform: translateX(-50vw);
+    -webkit-transform: translateX(-100vw);
+            transform: translateX(-100vw);
   }
   100% {
     -webkit-transform: translateX(0);
@@ -924,8 +1046,8 @@ div.v-100 {
 
 @-webkit-keyframes slideInFromRight {
   0% {
-    -webkit-transform: translateX(50vw);
-            transform: translateX(50vw);
+    -webkit-transform: translateX(100vw);
+            transform: translateX(100vw);
   }
   100% {
     -webkit-transform: translateX(0);
@@ -935,8 +1057,8 @@ div.v-100 {
 
 @keyframes slideInFromRight {
   0% {
-    -webkit-transform: translateX(50vw);
-            transform: translateX(50vw);
+    -webkit-transform: translateX(100vw);
+            transform: translateX(100vw);
   }
   100% {
     -webkit-transform: translateX(0);
@@ -946,8 +1068,8 @@ div.v-100 {
 
 @-webkit-keyframes slideInFromTop {
   0% {
-    -webkit-transform: translateY(-50vw);
-            transform: translateY(-50vw);
+    -webkit-transform: translateY(-100vh);
+            transform: translateY(-100vh);
   }
   100% {
     -webkit-transform: translateY(0);
@@ -957,8 +1079,8 @@ div.v-100 {
 
 @keyframes slideInFromTop {
   0% {
-    -webkit-transform: translateY(-50vw);
-            transform: translateY(-50vw);
+    -webkit-transform: translateY(-100vh);
+            transform: translateY(-100vh);
   }
   100% {
     -webkit-transform: translateY(0);
@@ -968,8 +1090,8 @@ div.v-100 {
 
 @-webkit-keyframes slideInFromBottom {
   0% {
-    -webkit-transform: translateY(50vw);
-            transform: translateY(50vw);
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
   }
   100% {
     -webkit-transform: translateY(0);
@@ -979,13 +1101,149 @@ div.v-100 {
 
 @keyframes slideInFromBottom {
   0% {
-    -webkit-transform: translateY(50vw);
-            transform: translateY(50vw);
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
   }
   100% {
     -webkit-transform: translateY(0);
             transform: translateY(0);
   }
+}
+
+@-webkit-keyframes slideLeft {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100vw);
+            transform: translateX(-100vw);
+    display: none;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(-100vw);
+            transform: translateX(-100vw);
+    display: none;
+  }
+}
+
+@-webkit-keyframes slideRight {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100vw);
+            transform: translateX(100vw);
+    display: none;
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100vw);
+            transform: translateX(100vw);
+    display: none;
+  }
+}
+
+@-webkit-keyframes slideUp {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-100vh);
+            transform: translateY(-100vh);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(-100vh);
+            transform: translateY(-100vh);
+  }
+}
+
+@-webkit-keyframes slideDown {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    -webkit-transform: translateY(0);
+            transform: translateY(0);
+  }
+  100% {
+    -webkit-transform: translateY(100vh);
+            transform: translateY(100vh);
+  }
+}
+
+.slide-in-from-top {
+  -webkit-animation: 1000ms ease-out 0s 1 slideInFromTop;
+          animation: 1000ms ease-out 0s 1 slideInFromTop;
+}
+
+.slide-in-from-bottom {
+  -webkit-animation: 1000ms ease-out 0s 1 slideInFromBottom;
+          animation: 1000ms ease-out 0s 1 slideInFromBottom;
+}
+
+.slide-in-from-left {
+  -webkit-animation: 1000ms ease-out 0s 1 slideInFromLeft;
+          animation: 1000ms ease-out 0s 1 slideInFromLeft;
+}
+
+.slide-in-from-right {
+  -webkit-animation: 1000ms ease-out 0s 1 slideInFromRight;
+          animation: 1000ms ease-out 0s 1 slideInFromRight;
+}
+
+[class*="slide-in-"] {
+  display: block !important;
+}
+
+.slide-up {
+  -webkit-animation: 1000ms ease-out 0s 1 slideUp forwards;
+          animation: 1000ms ease-out 0s 1 slideUp forwards;
+}
+
+.slide-down {
+  -webkit-animation: 1000ms ease-out 0s 1 slideDown forwards;
+          animation: 1000ms ease-out 0s 1 slideDown forwards;
+}
+
+.slide-left {
+  -webkit-animation: 1000ms ease-out 0s 1 slideLeft forwards;
+          animation: 1000ms ease-out 0s 1 slideLeft forwards;
+}
+
+.slide-right {
+  -webkit-animation: 1000ms ease-out 0s 1 slideRight forwards;
+          animation: 1000ms ease-out 0s 1 slideRight forwards;
 }
 
 @-webkit-keyframes flexGrow-4 {

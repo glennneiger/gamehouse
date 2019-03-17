@@ -11,7 +11,7 @@ import Speakeasy from './computer/games/speakeasy/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
 
-import {games} from '../actions/games';
+import {games} from './computer/helpers/games';
 
 
 class Computer extends Component {
@@ -21,6 +21,7 @@ class Computer extends Component {
 
     this.state={
       game: games.landing,
+      gameSelection: 0,
       players: [],
       code: '',
       sound: '',
@@ -57,7 +58,8 @@ class Computer extends Component {
       removeWatcher(code, 'players');
     }
     this.setState({
-      game: games.landing,
+      game: games.speakEasy,
+      gameSelection: 0,
       players: [],
       code: '',
       sound: 'stop',
@@ -189,7 +191,6 @@ class Computer extends Component {
 
     const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound} = this;
     const room = this.state;
-
     const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound}
 
     switch (this.state.game) {
@@ -198,7 +199,7 @@ class Computer extends Component {
         return <NewRoom {...props} />
 
       case games.gameRoom:
-        return <Lobby {...props} />
+        return <Lobby {...props} selection={room.gameSelection} selectGame={gameSelection=>this.setState({gameSelection})} />
 
       case games.storyTime:
         return <StoryTime {...props} />

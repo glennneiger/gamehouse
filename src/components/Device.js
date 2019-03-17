@@ -12,8 +12,8 @@ import Ad from './device/Ad';
 import Logo from './device/Logo';
 
 import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../actions';
-import {games} from '../actions/games';
-import {requests} from '../actions/requestTypes';
+import {games} from './computer/helpers/games';
+import {requests} from './computer/helpers/requestTypes';
 
 class Device extends Component {
 
@@ -72,11 +72,10 @@ class Device extends Component {
 
   updateGame = async data=> {
     const game = await data.toJSON();
-    if (!game) return;
-    this.setState({screen: game});
-
-    if (game===games.landing) {
+    if (!game || game===games.landing) {
       this.handleLeaveRoom();
+    } else {
+      this.setState({screen: game});
     }
   }
 

@@ -3,7 +3,7 @@ import WriterCard from './WriterCard';
 import Timer from '../../Timer';
 
 import {inputRequest, watchForChange, receiveSubmission, expireRequest} from '../../../../actions';
-import {requests} from '../../../../actions/requestTypes';
+import {requests} from '../../helpers/requestTypes';
 import {screens, findWinners} from './helpers';
 
 class Write extends Component {
@@ -46,6 +46,13 @@ class Write extends Component {
 
     this.setState({
       votes, startTimer: true, texts
+    });
+  }
+
+  componentWillUnmount() {
+    const {players, code}= this.props.room;
+    players.forEach(player=>{
+      expireRequest(code, player.index);
     });
   }
 
