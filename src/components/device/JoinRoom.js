@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {joinRoom, selectGame, incrementSessions} from '../../actions';
-import {games} from '../computer/helpers/games';
+import {games} from '../../helpers/games';
 import ImgSelection from './ImgSelection';
 
 class JoinRoom extends Component {

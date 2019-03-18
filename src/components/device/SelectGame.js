@@ -32,7 +32,7 @@ class SelectGame extends Component {
   handleKeyPress = key=> {
     const {code, playerIndex} = this.props;
     const id = new Date().getTime();
-    sendInput(code, playerIndex, {key, id});
+    sendInput(code, playerIndex, {key, id}, false);
   }
 
   render() {

@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 
+
 export default class Map extends Component {
 
+
+  componentDidMount() {
+    const {turn, requestNewLocation} = this.props;
+    if (turn===0) {
+      requestNewLocation();
+    }
+  }
 
   render() {
     return (

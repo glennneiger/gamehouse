@@ -11,7 +11,7 @@ import Speakeasy from './computer/games/speakeasy/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
 
-import {games} from './computer/helpers/games';
+import {games} from '../helpers/games';
 
 
 class Computer extends Component {
@@ -58,7 +58,7 @@ class Computer extends Component {
       removeWatcher(code, 'players');
     }
     this.setState({
-      game: games.speakEasy,
+      game: games.landing,
       gameSelection: 0,
       players: [],
       code: '',
@@ -110,8 +110,7 @@ class Computer extends Component {
   }
 
   //callback function. Called anytime host selects a game 
-  updateGame = async data=> {
-    const game = await data.toJSON();
+  updateGame = game=> {
     if (game===null) return;
     if (game===games.landing) {
       this.init();

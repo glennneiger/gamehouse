@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-import {inputRequest, watchForChange, receiveSubmission} from '../../../../actions';
-import {requests} from '../../helpers/requestTypes';
-import {games} from '../../helpers/games';
+import {inputRequest} from '../../../../actions';
+import {requests} from '../../../../actions/requestTypes';
+import {games} from '../../../../helpers/games';
 import {screens} from './helpers';
 
 class Final extends Component {
@@ -14,18 +14,14 @@ class Final extends Component {
     this.props.preloadMusic('storytime/main');
 
     // ask host (player[hostIndex]) if play again
-    let {code, hostIndex} = this.props;
-    inputRequest(code, requests.playAgain, null, [hostIndex]);
-    watchForChange(code, `players/${hostIndex}/input`, this.handleReceiveInput);
+    const {code, hostIndex} = this.props;
+    inputRequest(code, requests.playAgain, null, [hostIndex], this.handleReceiveInput);
   }
 
-  handleReceiveInput = async data=>{
-    let playAgain = await data.toJSON();
-    if(playAgain===null) return;
+  handleReceiveInput = input=>{
+    if(input===null) return;
 
-    receiveSubmission(this.props.code, this.props.hostIndex);
-
-    if (playAgain) {
+    if (input.message===true) { //playAgain
       this.props.switchScreen(screens.intro);
     } else {
       // go back to lobby

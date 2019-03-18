@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import WriterCard from './WriterCard';
 import Timer from '../../Timer';
 
-import {inputRequest, watchForChange, receiveSubmission, expireRequest} from '../../../../actions';
-import {requests} from '../../helpers/requestTypes';
+import {inputRequest, timeOutRequest} from '../../../../actions';
+import {requests} from '../../../../actions/requestTypes';
 import {screens, findWinners} from './helpers';
 
 class Write extends Component {
@@ -35,24 +35,13 @@ class Write extends Component {
     let votes = {};
     let texts = {};
 
-    const {code} = this.props.room;
-
     this.state.writers.forEach(writer=>{
       votes[writer.index] = []; 
       texts[writer.index] = '';
-      watchForChange(code, `players/${writer.index}/input`, data=>this.updateText(data, writer.index));
-      watchForChange(code, `players/${writer.index}/request`, data=>this.handleSubmissions(data, writer.index));
     });
 
     this.setState({
       votes, startTimer: true, texts
-    });
-  }
-
-  componentWillUnmount() {
-    const {players, code}= this.props.room;
-    players.forEach(player=>{
-      expireRequest(code, player.index);
     });
   }
 
@@ -64,7 +53,7 @@ class Write extends Component {
       writers.forEach(writer=>{
         if (!submitted.includes(writer.index)) {
           submitted.push(writer.index);
-          expireRequest(this.props.room.code, writer.index);
+          timeOutRequest(this.props.room.code, writer.index);
         }
       });
       this.setState({submitted});
@@ -74,7 +63,7 @@ class Write extends Component {
       voters.forEach(voter=>{
         if (!submitted.includes(voter)) {
           submitted.push(voter);
-          expireRequest(this.props.room.code, voter);
+          timeOutRequest(this.props.room.code, voter);
         }
       });
       this.setState({submitted});
@@ -82,30 +71,30 @@ class Write extends Component {
     }
   }
 
-  updateText = async (data, index)=> {
-    const newText = await data.toJSON();
-    if (newText===null) {
+  updateText = (input, index)=> {
+    if (input===null) {
       return;
     }
     let {texts} = this.state;
-    texts[index] = newText;
+    texts[index] = input.message;
     this.setState({texts});
+    if (input.closeRequest) {
+      this.handleSubmissions(index);
+    }
   }
 
-  recordVote = async (data, voter)=> {
-
-    let vote = await data.toJSON();
-
-    if (vote === null) {
+  recordVote = async (input, voter)=> {
+    if (input === null) {
       return;
     } 
-
+    const vote = input.message;
     let {votes} = this.state;
     if (votes[vote]===undefined) {
       return;
     }
     votes[vote].push(voter);
     this.setState({votes});
+    this.handleSubmissions(voter);
   }
 
   sendWriteRequests = ()=> {
@@ -114,16 +103,11 @@ class Write extends Component {
     this.state.writers.forEach(writer => {
       playersToReceive.push(writer.index);
     });
-    inputRequest(this.props.room.code, requests.storyTime.writeLine, this.props.prompt, playersToReceive);
+    const {room, prompt} = this.props;
+    inputRequest(room.code, requests.storyTime.writeLine, prompt, playersToReceive, this.updateText);
   }
 
-  handleSubmissions = async (data, index)=> {
-    let submission = await data.toJSON();
-
-    if (submission !== 'submitted') {
-      return;
-    } 
-    receiveSubmission(this.props.room.code, index);
+  handleSubmissions = index=> {
 
     let submitted = this.state.submitted.slice();
     submitted.push(index);
@@ -199,18 +183,13 @@ class Write extends Component {
     let voters = [];
 
     // voters = [0, 1, 2, 3,]
-    const {code, players} = this.props.room;
+    const {players} = this.props.room;
     const {writers} = this.state;
 
     players.forEach(player=> {
       if (!writers.includes(player)) {
         voters.push(player.index);
       }
-    });
-
-    voters.forEach(voter=>{
-      watchForChange(code, `players/${voter}/input`, data=>this.recordVote(data, voter));
-      watchForChange(code, `players/${voter}/request`, data=>this.handleSubmissions(data, voter));
     });
 
     this.setState({
@@ -220,7 +199,7 @@ class Write extends Component {
       timerSeconds: 30
     });
 
-    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters);
+    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters, this.recordVote);
   }
 
   renderWriterCards = ()=> {

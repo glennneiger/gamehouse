@@ -1,6 +1,6 @@
 import { /* auth, */ database/*, storage */ } from '../Firebase';
 
-import { games } from '../components/computer/helpers/games';
+import { games } from '../helpers/games';
 
 const maxPlayers = 16;
 
@@ -30,56 +30,65 @@ export function selectGame(roomCode, game) {
   });
 }
 
-export function inputRequest(roomCode, requestType, requestMessage, playersToReceive) {
+
+export function inputRequest(roomCode, requestType, requestMessage, playersToReceive, callback) {
+  const handleInput = (input, index)=> {
+
+    if (input.closeRequest) {
+      database.ref(`rooms/${roomCode}/players/${index}/input`).off();
+      database.ref(`rooms/${roomCode}/players/${index}`).update({
+        request: null, //close it out
+        input: null //close it out
+      });
+    }
+
+    callback(input, index);
+  }
+
   playersToReceive.forEach(playerIndex => {
     database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
       request: {requestType, requestMessage}
     });    
   });
+  playersToReceive.forEach(index=>{
+    watchForChange(roomCode, `players/${index}/input`, input=>handleInput(input, index));
+  });
 }
 
-export function sendInput(roomCode, playerIndex, input) {
+
+export function sendInput(roomCode, playerIndex, message, closeRequest) {
   database.ref(`rooms/${roomCode}`).once('value', async data => {
-    let room = await data.toJSON();
+    const room = await data.toJSON();
     if (!room) return;
-    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-      input
+    let player = database.ref(`rooms/${roomCode}/players/${playerIndex}`);
+    player.update({
+      input: {message, closeRequest}
     });
   });
 }
 
-// like sendInput, but closes the request
-export function submitInput(roomCode, playerIndex, input) {
-  database.ref(`rooms/${roomCode}`).once('value', async data => {
-    let room = await data.toJSON();
-    if (!room) return;
-    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-      input, request: 'submitted'
-    });
-  });
-}
-
-export function receiveSubmission(roomCode, playerIndex) {
-  database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
-  database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
-  database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-    request: null, //close it out
-    input: null //close it out
-  });
-}
-
-export function expireRequest(roomCode, playerIndex) {
+export function timeOutRequest(roomCode, playerIndex) {
   database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
-    let player = await data.toJSON();
+    const player = await data.toJSON();
     if (!player) return;
     if (player.request && player.request !== 'expired') {
       database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
-      database.ref(`rooms/${roomCode}/players/${playerIndex}/request`).off();
       database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
         request: 'expired',
         input: null 
       });
     }
+  });
+}
+export async function closeRequest(roomCode, playerIndex) {
+  await database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
+    const player = await data.toJSON();
+    if (!player) return;
+    await database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
+    database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
+      request: null,
+      input: null 
+    });
   });
 }
 
@@ -91,8 +100,12 @@ export function watchForChangeInPlayers(roomCode, callback) {
 
 }
 
-export function watchForChange(roomCode, child, callback) {
-  database.ref(`rooms/${roomCode}/${child}`).on('value', data => callback(data));
+export function watchForChange(roomCode, child, callback, notifyEvenIfNull) {
+  database.ref(`rooms/${roomCode}/${child}`).on('value', async data => {
+    const value = data.toJSON();
+    if (!value && !notifyEvenIfNull) return;
+    callback(value);
+  });
 }
 
 export function removeWatcher(roomCode, child) {

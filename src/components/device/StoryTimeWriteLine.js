@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 
-import {sendInput, submitInput} from '../../actions';
+import {sendInput} from '../../actions';
 
 export default class StoryTimeWriteLine extends Component {
 
   updateText = e=> {
-    sendInput(this.props.code, this.props.playerIndex, e.target.value);
+    sendInput(this.props.code, this.props.playerIndex, e.target.value, false);
   }
 
   handleSubmit = ()=> {
     let text = document.getElementById('write-line').value;
-    submitInput(this.props.code, this.props.playerIndex, text);
+    sendInput(this.props.code, this.props.playerIndex, text, true);
     this.props.handleSubmit();
   }
 

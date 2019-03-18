@@ -3,5 +3,8 @@ export const requests = {
     writeLine: 'story-time-write-line',
     vote: 'story-time-vote'
   },
+  speakeasy: {
+    newLocation: 'new-location'
+  },
   playAgain: 'story-time-play-again'
 }

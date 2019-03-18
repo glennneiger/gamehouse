@@ -12,8 +12,8 @@ import Ad from './device/Ad';
 import Logo from './device/Logo';
 
 import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../actions';
-import {games} from './computer/helpers/games';
-import {requests} from './computer/helpers/requestTypes';
+import {games} from '../helpers/games';
+import {requests} from '../actions/requestTypes';
 
 class Device extends Component {
 
@@ -70,8 +70,7 @@ class Device extends Component {
     }
   }
 
-  updateGame = async data=> {
-    const game = await data.toJSON();
+  updateGame = game=> {
     if (!game || game===games.landing) {
       this.handleLeaveRoom();
     } else {
@@ -79,19 +78,18 @@ class Device extends Component {
     }
   }
 
-  updateHost = async data=> {
-    const host = await data.toJSON();
+  updateHost = host=> {
     if (!host) return;
     const isHost = host.index===this.state.playerIndex;
     this.setState({host: isHost, hostName: host.name});
   }
 
-  updateRequest = async data=> {
-    const request = await data.toJSON();
+  updateRequest = request=> {
     if (!request) {
       return;
     }
-    if (request==='submitted' || request==='expired') {
+    const {screen} = this.state;
+    if (request==='submitted' || (request==='expired' && screen!==games.gameRoom && screen!=='thank-you')) {
       this.setState({screen: null, requestMessage: null});
     } else {
       this.setState({screen: request.requestType, requestMessage: request.requestMessage});
@@ -104,7 +102,7 @@ class Device extends Component {
     if (!host) host=0;
     let isHost = host.index === playerIndex;
     this.setState({code, playerIndex, entered: true, host: isHost, hostName: host.name});
-    watchForChange(code, 'game', this.updateGame);
+    watchForChange(code, 'game', this.updateGame, true);
     watchForChange(code, 'host', this.updateHost);
     watchForChange(code, `players/${playerIndex}/request`, this.updateRequest);
 

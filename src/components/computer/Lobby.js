@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {gameDetails} from './helpers/games';
-import {receiveSubmission, watchForChange, removeWatcher, selectGame} from '../../actions';
+import {gameDetails} from '../../helpers/games';
+import {watchForChange, closeRequest, selectGame} from '../../actions';
 
 import GameSelector from './GameSelector';
 import GameDisplay from './GameDisplay';
@@ -26,13 +26,22 @@ export default class Lobby extends Component {
     this.props.playAudio('music','lobby');
     this.preload(games[selection]);
 
-    const {code, hostIndex} = this.props.room;
-    watchForChange(code, `players/${hostIndex}/input`, data=>this.handleReceiveCommand(data));
+    // close any open requests, in case we left a game with requests open
+    const {players, code, hostIndex}= this.props.room;
+    players.forEach(async player=>{
+      if (player.index===hostIndex) {
+        await closeRequest(code, player.index);
+        watchForChange(code, `players/${hostIndex}/input`, input=>this.handleReceiveCommand(input));
+      } else {
+        closeRequest(code, player.index);
+      }
+    });
+
   }
 
   componentWillUnmount() {
     const {code, hostIndex} = this.props.room;
-    removeWatcher(code, `players/${hostIndex}/input`);
+    closeRequest(code, hostIndex);
   }
 
   preload = game=> {
@@ -41,10 +50,9 @@ export default class Lobby extends Component {
     this.props.preloadMusic(`${id}/0`);
   }
 
-  handleReceiveCommand = async data=> {
-    const input = await data.toJSON();
+  handleReceiveCommand = input=> {
     if (!input) return;
-    const {key} = input;
+    const {key} = input.message;
     let {games} = this.state;
     let {selection, selectGame} = this.props;
     
@@ -82,7 +90,7 @@ export default class Lobby extends Component {
     const {games} = this.state;
     const {selection} = this.props;
     const {code, hostIndex} = this.props.room;
-    receiveSubmission(code, hostIndex);
+    closeRequest(code, hostIndex);
     selectGame(code, games[selection].id);
   }
 

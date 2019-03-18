@@ -10,7 +10,7 @@ import {getStoryStart, screens, getWritersPerTurn, getPrompt, selectWriters} fro
 
 
 import {incrementGame} from '../../../../actions'
-import {games} from '../../helpers/games'
+import {games} from '../../../../helpers/games'
 
 class StoryTime extends Component {
 

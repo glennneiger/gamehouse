@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 
-import {submitInput} from '../../actions';
+import {sendInput} from '../../actions';
 
 export default class StoryTimeVote extends Component {
 
   submitVote = vote=> {
     let {code, playerIndex} = this.props;
-    submitInput(code, playerIndex, vote);
+    sendInput(code, playerIndex, vote, true);
     this.props.handleSubmit();
   }
 

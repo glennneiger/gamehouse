@@ -9,9 +9,10 @@ import Slides from './Slides';
 import Owner from './Owner';
 import Rounds from './Rounds';
 
-import {incrementGame} from '../../../../actions';
-import {games} from '../../helpers/games';
-import {testing} from '../../helpers/testing';
+import {incrementGame, inputRequest} from '../../../../actions';
+import {games} from '../../../../helpers/games';
+import {testing} from '../../../../helpers/testing';
+import { requests } from '../../../../actions/requestTypes';
 
 
 export default class Speakeasy extends Component {
@@ -23,7 +24,8 @@ export default class Speakeasy extends Component {
       screen: screens.intro,
       successes: [],
       owner: null, //index
-      agents: [], //indices
+      agents: [], //indices,
+      availableLocations: [] // location indices. set in init()
     }
   }
 
@@ -52,7 +54,8 @@ export default class Speakeasy extends Component {
     this.setState({
       turn, 
       screen: screens.intro,
-      successes: []
+      successes: [],
+      availableLocations: [0,1,2,3,4,5,6,7,8]
     });
 
     incrementGame(games.speakEasy);
@@ -63,6 +66,12 @@ export default class Speakeasy extends Component {
     const owner = Math.floor(Math.random()*players.length);
     this.setState({owner});
     return owner;
+  }
+
+  requestNewLocation = ()=> {
+    const {room} = this.props;
+    const {owner, availableLocations} = this.state;
+    inputRequest(room, requests.speakeasy.newLocation, availableLocations, owner);
   }
 
   nextTurn = ()=> {
@@ -85,7 +94,7 @@ export default class Speakeasy extends Component {
   render() {
     const {turn, successes, screen, owner} = this.state;
     const {playAudio, playVideo, preloadMusic, preloadVideo, room} = this.props;
-    const {switchScreen, playVoice, assignOwner, nextTurn} = this;
+    const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation} = this;
 
     if (!room.players.length) room.players=testing.players;
 
@@ -132,6 +141,7 @@ export default class Speakeasy extends Component {
         return (
           <Map 
             {...props}
+            requestNewLocation={requestNewLocation}
           />
         )
       case screens.owner:

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {games} from './helpers/games';
+import {games} from '../../helpers/games';
 
 class Landing extends Component {
 
