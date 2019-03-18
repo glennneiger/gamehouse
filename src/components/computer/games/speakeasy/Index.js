@@ -25,7 +25,8 @@ export default class Speakeasy extends Component {
       successes: [],
       owner: null, //index
       agents: [], //indices,
-      availableLocations: [] // location indices. set in init()
+      availableLocations: [], // location indices. set in init()
+      location: null // index current location of speakeasy
     }
   }
 
@@ -71,7 +72,11 @@ export default class Speakeasy extends Component {
   requestNewLocation = ()=> {
     const {room} = this.props;
     const {owner, availableLocations} = this.state;
-    inputRequest(room, requests.speakeasy.newLocation, availableLocations, owner);
+    inputRequest(room, requests.speakeasy.newLocation, availableLocations, owner, this.setNewLocation);
+  }
+  setNewLocation = input => {
+    const location = input.message;
+    this.setState({location});
   }
 
   nextTurn = ()=> {

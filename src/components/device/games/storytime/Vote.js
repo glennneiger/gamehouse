@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {sendInput} from '../../actions';
+import {sendInput} from '../../../../actions';
 
 export default class StoryTimeVote extends Component {
 
@@ -11,7 +11,8 @@ export default class StoryTimeVote extends Component {
   }
 
   renderOptions() {
-    let options = Object.values(this.props.options);
+    const {message} = this.props.request;
+    let options = Object.values(message);
     return options.map((option, i)=>(
       <img alt={option.name} key={i} data-imgid={option.img} id={'img-' + i} src={`./assets/img/profiles/${('0' + option.img).slice(-2)}.jpg`}  onClick={()=>this.submitVote(option.index)}></img>
     ));

@@ -47,7 +47,7 @@ export function inputRequest(roomCode, requestType, requestMessage, playersToRec
 
   playersToReceive.forEach(playerIndex => {
     database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-      request: {requestType, requestMessage}
+      request: {type: requestType, message: requestMessage}
     });    
   });
   playersToReceive.forEach(index=>{
@@ -113,8 +113,10 @@ export function removeWatcher(roomCode, child) {
 }
 
 
-export function getValue(roomCode, value) {
-  return database.ref(`rooms/${roomCode}/${value}`).once('value');
+export async function getValue(roomCode, value) {
+  const data = await database.ref(`rooms/${roomCode}/${value}`).once('value');
+  const res = await data.toJSON();
+  return res;
 }
 
 

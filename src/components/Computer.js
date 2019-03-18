@@ -135,8 +135,7 @@ class Computer extends Component {
     } else {
       //if the host leaves, who is the new host?
       if (player.index===this.state.hostIndex) {
-        const data = await getValue(this.state.code, 'host/index');
-        const hostIndex = await data.toJSON();
+        const hostIndex = await getValue(this.state.code, 'host/index');
         this.setState({hostIndex});
       }
       players = players.filter(el=>el.index !== player.index);
