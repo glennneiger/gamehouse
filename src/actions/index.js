@@ -45,14 +45,20 @@ export function inputRequest(roomCode, requestType, requestMessage, playersToRec
     callback(input, index);
   }
 
-  playersToReceive.forEach(playerIndex => {
+  const sendRequest = playerIndex=> {
     database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
       request: {type: requestType, message: requestMessage}
     });    
-  });
-  playersToReceive.forEach(index=>{
-    watchForChange(roomCode, `players/${index}/input`, input=>handleInput(input, index));
-  });
+    watchForChange(roomCode, `players/${playerIndex}/input`, input=>handleInput(input, playerIndex));
+  }
+
+  if (Array.isArray(playersToReceive)) {
+    playersToReceive.forEach(playerIndex => {
+      sendRequest(playerIndex);
+    });
+  } else {
+    sendRequest(playersToReceive); // if only one player was passed as arg as int
+  }
 }
 
 

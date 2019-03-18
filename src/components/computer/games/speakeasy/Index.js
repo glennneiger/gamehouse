@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {screens} from './helpers';
+import {screens, assignAgents} from './helpers';
 
 import Breakdown from './Breakdown';
 import Final from './Final';
@@ -69,14 +69,37 @@ export default class Speakeasy extends Component {
     return owner;
   }
 
-  requestNewLocation = ()=> {
-    const {room} = this.props;
-    const {owner, availableLocations} = this.state;
-    inputRequest(room, requests.speakeasy.newLocation, availableLocations, owner, this.setNewLocation);
+  assignRoles = callback=> {
+    const {code} = this.props.room;
+    const players = this.props.room.players.slice();
+    const {owner} = this.state;
+    let playersWhoHaveAcknowledged = [];
+
+    const acknowledgeRole = (input, index)=> {
+      playersWhoHaveAcknowledged.push(index);
+      if (playersWhoHaveAcknowledged.length===players.length) {
+        callback();
+      }
+    }
+    const agents = assignAgents(players, owner);
+    this.setState({agents});
+    players.forEach(player => {
+      let role = 'Patron';
+      if (owner===player.index) role='Boss';
+      if (agents.includes(player.index)) role='Agent';
+      inputRequest(code, requests.speakeasy.acknowledgeRole, role, [player.index], acknowledgeRole);
+    });
   }
-  setNewLocation = input => {
-    const location = input.message;
-    this.setState({location});
+
+  requestNewLocation = callback=> {
+    const setNewLocation = input => {
+      const location = input.message;
+      this.setState({location});
+      callback();
+    }
+    const {code} = this.props.room;
+    const {owner, availableLocations} = this.state;
+    inputRequest(code, requests.speakeasy.newLocation, availableLocations, owner, setNewLocation);
   }
 
   nextTurn = ()=> {
@@ -96,10 +119,19 @@ export default class Speakeasy extends Component {
     this.props.playAudio('audio',`speakeasy/${filename}`, onFinish);
   }
 
+  animateOut = (elementId, nextScreen)=> {
+    let el = document.getElementById(elementId);
+    if (el) el.classList.add('slide-up');
+    setTimeout(() => {
+      this.switchScreen(nextScreen);
+    }, 1000);
+  }
+
+
   render() {
     const {turn, successes, screen, owner} = this.state;
     const {playAudio, playVideo, preloadMusic, preloadVideo, room} = this.props;
-    const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation} = this;
+    const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation, animateOut, assignRoles} = this;
 
     if (!room.players.length) room.players=testing.players;
 
@@ -113,7 +145,8 @@ export default class Speakeasy extends Component {
       preloadVideo,
       preloadMusic,
       successes,
-      owner
+      owner,
+      animateOut
     }
 
     switch (screen) {
@@ -121,6 +154,8 @@ export default class Speakeasy extends Component {
         return (
           <Breakdown
             {...props}
+            nextTurn = {nextTurn}
+            assignRoles={assignRoles}
           />
         )
       case screens.final:

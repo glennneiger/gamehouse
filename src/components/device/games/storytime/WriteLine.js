@@ -9,7 +9,7 @@ export default class StoryTimeWriteLine extends Component {
   }
 
   handleSubmit = ()=> {
-    let text = document.getElementById('write-line').value;
+    const text = document.getElementById('write-line').value;
     sendInput(this.props.code, this.props.playerIndex, text, true);
     this.props.handleSubmit();
   }

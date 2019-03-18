@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {screens} from './helpers';
+import {screens, getNumAgents} from './helpers';
 
 export default class Breakdown extends Component {
 
@@ -7,58 +7,53 @@ export default class Breakdown extends Component {
     super(props);
 
     const numPlayers = this.props.room.players.length;
-    let numAgents;
-    if (numPlayers < 8) {
-      numAgents = 2;
-    } else if (numPlayers < 11) {
-      numAgents = 3;
-    } else if (numPlayers < 14) {
-      numAgents = 4;
-    } else {
-      numAgents = 5;
-    }
+    const numAgents = getNumAgents(numPlayers) 
     this.state = {numAgents};
   }
 
   componentDidMount() {
-    this.props.playVideo('speakeasy/back');
     const {turn} = this.props;
     if (turn===-1) {
+      this.props.playVideo('speakeasy/back');
       this.explainRules();
+    } else if (turn===0) {
+      this.props.playVoice('roles/0');
+      this.slideIn('owner');
+      this.slideIn('agents', 'left');
+      this.slideIn('drinkers');
+      const next = ()=> {
+        this.props.nextTurn();
+        this.props.animateOut('breakdown', screens.map);
+      }
+      this.props.assignRoles(next);
     }
+  }
+
+  slideIn = (id, fromDirection)=> {
+    if (!fromDirection) fromDirection='right';
+    document.getElementById(id).classList.add(`slide-in-from-${fromDirection}`);
   }
 
   explainRules = ()=> {
 
-    const slideIn = id=> {
-      document.getElementById(id).classList.add('slide-in-from-right');
-    }
-
     const introduceOwner = ()=> {
       this.props.playVoice(`rules/breakdown/0`, introduceAgents);
-      slideIn('owner');
+      this.slideIn('owner');
     }
 
     const introduceAgents = ()=> {
       this.props.playVoice(`rules/breakdown/1-${this.state.numAgents}`, introduceDrinkers);
-      slideIn('agents');
+      this.slideIn('agents');
     }
 
     const introduceDrinkers = ()=> {
-      const next = ()=> {this.nextScreen(screens.rounds)}
+      const next = ()=> {this.props.animateOut('breakdown', screens.rounds)}
       this.props.playVoice(`rules/breakdown/2`, next);
-      slideIn('drinkers');
+      this.slideIn('drinkers');
     }
-
     introduceOwner();
   }
 
-  nextScreen = screen=> {
-    document.getElementById('breakdown').classList.add('slide-up');
-    setTimeout(() => {
-      this.props.switchScreen(screen);
-    }, 1000);
-  }
 
   render() {
     const {numAgents} = this.state;
@@ -74,7 +69,7 @@ export default class Breakdown extends Component {
             <div id='agents' className="line">{numAgents} Agents</div> 
           </div>
           <div className="v-25">
-            <div id='drinkers' className="line">{numPlayers-numAgents-1} Drinkers</div>
+            <div id='drinkers' className="line">{numPlayers-numAgents-1} Patrons</div>
           </div>
         </div>
       </div>

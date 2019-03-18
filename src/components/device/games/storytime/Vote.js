@@ -5,7 +5,7 @@ import {sendInput} from '../../../../actions';
 export default class StoryTimeVote extends Component {
 
   submitVote = vote=> {
-    let {code, playerIndex} = this.props;
+    const {code, playerIndex} = this.props;
     sendInput(code, playerIndex, vote, true);
     this.props.handleSubmit();
   }

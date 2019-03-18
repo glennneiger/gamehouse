@@ -14,7 +14,7 @@ export default class StoryTime extends Component {
 
   render() {
     const {request} = this.props;
-    if (request) {
+    if (request !== null) {
       switch (request.type) {
 
         case requests.storyTime.writeLine:

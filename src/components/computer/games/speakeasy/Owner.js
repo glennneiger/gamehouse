@@ -8,16 +8,9 @@ export default class Owner extends Component {
 
   componentDidMount() {
     this.props.assignOwner();
-
-    this.props.playVoice('owner/0', this.nextScreen);
+    this.props.playVoice('owner/0', ()=>{this.props.animateOut('owner-card', screens.map)});
   }
 
-  nextScreen = ()=> {
-    document.getElementById('owner-card').classList.add('slide-up');
-    setTimeout(() => {
-      this.props.switchScreen(screens.map);
-    }, 1000);
-  }
 
   renderOwnerCard = ()=> {
     const {owner, room} = this.props;

@@ -4,7 +4,8 @@ export const requests = {
     vote: 'story-time-vote'
   },
   speakeasy: {
-    newLocation: 'new-location'
+    newLocation: 'new-location',
+    acknowledgeRole: 'acknowledge-role'
   },
   playAgain: 'story-time-play-again'
 }

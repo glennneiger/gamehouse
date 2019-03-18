@@ -27,7 +27,7 @@ class Device extends Component {
       code: '',  //room code
       playerIndex: 0,
       request: null,
-      game: games.newRoom,
+      game: null,
       showMenu: false
     }
 
@@ -41,16 +41,18 @@ class Device extends Component {
     const roomCode = localStorage.getItem('roomCode');
     if (roomCode) {
       this.refreshGame(roomCode);
+    } else {
+      this.setState({game: games.newRoom});
     }
   }
 
 
   // called if a player refreshes browser
   refreshGame = async (code)=> {
-
     const exists = await roomExists(code);
     if (!exists) { // room no longer exists
       localStorage.clear();
+      this.setState({game: games.newRoom});
       return;
     }
 
@@ -210,7 +212,7 @@ class Device extends Component {
           </div>
         )
       default: 
-        return <Ad />
+        return null;
     }
   }
 }

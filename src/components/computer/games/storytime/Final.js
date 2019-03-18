@@ -19,8 +19,6 @@ class Final extends Component {
   }
 
   handleReceiveInput = input=>{
-    if(input===null) return;
-
     if (input.message===true) { //playAgain
       this.props.switchScreen(screens.intro);
     } else {

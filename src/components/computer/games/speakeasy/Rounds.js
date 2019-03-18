@@ -40,19 +40,10 @@ export default class Rounds extends Component {
 
     const explainWin = ()=> {
       this.setState({successes:[true,false,true,false,true]})
-      const next = ()=> {this.nextScreen(screens.slides)}
-      this.props.playVoice(`rules/rounds/2`, next);
+      this.props.playVoice(`rules/rounds/2`, ()=>{this.props.animateOut('board', screens.slides)});
     }
-
+    
     introduceRounds();
-  }
-
-
-  nextScreen = screen=> {
-    document.getElementById('board').classList.add('slide-up');
-    setTimeout(() => {
-      this.props.switchScreen(screen);
-    }, 900);
   }
 
   renderBoard = ()=> {

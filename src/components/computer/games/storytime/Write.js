@@ -71,40 +71,22 @@ class Write extends Component {
     }
   }
 
-  updateText = (input, index)=> {
-    if (input===null) {
-      return;
+  sendWriteRequests = ()=> {    
+    const updateText = (input, index)=> {
+      let {texts} = this.state;
+      texts[index] = input.message;
+      this.setState({texts});
+      if (input.closeRequest) {
+        this.handleSubmissions(index);
+      }
     }
-    let {texts} = this.state;
-    texts[index] = input.message;
-    this.setState({texts});
-    if (input.closeRequest) {
-      this.handleSubmissions(index);
-    }
-  }
-
-  recordVote = async (input, voter)=> {
-    if (input === null) {
-      return;
-    } 
-    const vote = input.message;
-    let {votes} = this.state;
-    if (votes[vote]===undefined) {
-      return;
-    }
-    votes[vote].push(voter);
-    this.setState({votes});
-    this.handleSubmissions(voter);
-  }
-
-  sendWriteRequests = ()=> {
     // sends notif to phones to request input
     let playersToReceive = [];
     this.state.writers.forEach(writer => {
       playersToReceive.push(writer.index);
     });
     const {room, prompt} = this.props;
-    inputRequest(room.code, requests.storyTime.writeLine, prompt, playersToReceive, this.updateText);
+    inputRequest(room.code, requests.storyTime.writeLine, prompt, playersToReceive, updateText);
   }
 
   handleSubmissions = index=> {
@@ -139,10 +121,18 @@ class Write extends Component {
   }
 
   handleAllVotersSubmitted = ()=> {
+    const seeIfTie = ()=> {
+      if (this.state.tie) {
+        this.props.playVoice('tie/0', this.nextScreen);
+      } else {
+        this.nextScreen()
+      } 
+    }
+
     this.setState({startTimer: false});
     const {turn} = this.props;
     
-    this.props.playVoice(`voteclose/${turn}`, this.seeIfTie);
+    this.props.playVoice(`voteclose/${turn}`, seeIfTie);
 
     const {votes, texts} = this.state;
     const {writers} = this.props;
@@ -162,14 +152,6 @@ class Write extends Component {
     this.setState({winner, winningText, tie});
   }
 
-  seeIfTie = ()=> {
-    if (this.state.tie) {
-      this.props.playVoice('tie/0', this.nextScreen);
-    } else {
-      this.nextScreen()
-    } 
-  }
-
 
   nextScreen = ()=> {
     const {winner, winningText} = this.state;
@@ -179,6 +161,16 @@ class Write extends Component {
   
 
   openVoting = ()=> {
+    const recordVote = async (input, voter)=> {
+      const vote = input.message;
+      let {votes} = this.state;
+      if (votes[vote]===undefined) {
+        return;
+      }
+      votes[vote].push(voter);
+      this.setState({votes});
+      this.handleSubmissions(voter);
+    }
 
     let voters = [];
 
@@ -199,7 +191,7 @@ class Write extends Component {
       timerSeconds: 30
     });
 
-    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters, this.recordVote);
+    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters, recordVote);
   }
 
   renderWriterCards = ()=> {
