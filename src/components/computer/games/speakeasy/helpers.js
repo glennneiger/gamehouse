@@ -3,6 +3,7 @@ export const screens = {
   breakdown: 'breakdown',
   map: 'map',
   owner: 'owner',
+  party: 'party',
   rounds: 'rounds',
   slides: 'slides',
   final: 'final'
@@ -14,10 +15,8 @@ export const getNumAgents = numPlayers=> {
     numAgents = 2;
   } else if (numPlayers < 11) {
     numAgents = 3;
-  } else if (numPlayers < 14) {
-    numAgents = 4;
   } else {
-    numAgents = 5;
+    numAgents = 4;
   }
   return numAgents;
 }

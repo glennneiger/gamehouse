@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
 import Card from './ProfileCard';
 
+/*
+
+PROPS:
+
+max: int,
+rows: int,
+players: array[player{}]
+hideNames: bool
+
+*/
 
 class PlayerGrid extends Component {
   constructor(props) {

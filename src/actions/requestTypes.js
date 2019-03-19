@@ -5,7 +5,9 @@ export const requests = {
   },
   speakeasy: {
     newLocation: 'new-location',
-    acknowledgeRole: 'acknowledge-role'
+    acknowledgeRole: 'acknowledge-role',
+    invitation: 'invitation',
+    whereToGo: 'where-to-go'
   },
   playAgain: 'story-time-play-again'
 }

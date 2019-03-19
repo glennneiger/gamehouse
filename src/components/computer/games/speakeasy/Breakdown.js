@@ -7,7 +7,7 @@ export default class Breakdown extends Component {
     super(props);
 
     const numPlayers = this.props.room.players.length;
-    const numAgents = getNumAgents(numPlayers) 
+    const numAgents = getNumAgents(numPlayers); 
     this.state = {numAgents};
   }
 
@@ -15,6 +15,7 @@ export default class Breakdown extends Component {
     const {turn} = this.props;
     if (turn===-1) {
       this.props.playVideo('speakeasy/back');
+      this.props.preloadVideo('speakeasy/drinking');
       this.explainRules();
     } else if (turn===0) {
       this.props.playVoice('roles/0');

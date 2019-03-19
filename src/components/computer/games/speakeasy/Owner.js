@@ -8,7 +8,9 @@ export default class Owner extends Component {
 
   componentDidMount() {
     this.props.assignOwner();
-    this.props.playVoice('owner/0', ()=>{this.props.animateOut('owner-card', screens.map)});
+    this.props.playAudio('music', 'speakeasy/happy0');
+    this.props.playVoice('newlocation/0', ()=>{this.props.animateOut('owner-card', screens.map)});
+    this.props.preloadMusic('speakeasy/drinking0');
   }
 
 
