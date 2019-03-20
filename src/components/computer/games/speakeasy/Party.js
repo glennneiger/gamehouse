@@ -4,6 +4,8 @@ import PlayerGrid from '../../PlayerGrid';
 
 import {screens} from './helpers';
 
+import {getPlayersFromIndices} from '../../../../helpers/functions';
+
 export default class Party extends Component {
 
   constructor(props) {
@@ -58,7 +60,7 @@ export default class Party extends Component {
 
   showInvited = ()=> {
     document.getElementById('party-full-screen').classList.add('darken');
-    const playersShown = this.getPlayersFromIndices(this.state.guestList);
+    const playersShown = getPlayersFromIndices(this.state.guestList, this.props.players);
     this.setState({playersShown});
     const numWhoSnuckIn = this.state.playersWhoHaveFoundSpeakeasy.length - this.state.guestList.length;
     setTimeout(() => {
@@ -68,12 +70,11 @@ export default class Party extends Component {
 
   showWhoSnuckIn = ()=> {
     const {playersWhoHaveFoundSpeakeasy, guestList} = this.state;
-    console.log(this)
     if (playersWhoHaveFoundSpeakeasy.length > guestList.length) {
       const playersToAdd = playersWhoHaveFoundSpeakeasy.filter(player=>{
         return !guestList.includes(player);
       });
-      const playersShown = this.state.playersShown.concat(this.getPlayersFromIndices(playersToAdd));
+      const playersShown = this.state.playersShown.concat(getPlayersFromIndices(playersToAdd, this.props.players));
       this.setState({playersShown});
     }
 
@@ -90,10 +91,10 @@ export default class Party extends Component {
     if (this.state.wasRaided) {
       this.props.playVideo(`speakeasy/raid${this.state.numPreviousRaids}`);
       this.props.preloadVideo('speakeasy/back');
-      if (this.state.playersWhoHaveFoundSpeakeasy.length===1) {
-        voice = 'raid/onlyone/0';
-      } else if (this.state.numPreviousRaids===2) {
+      if (this.state.numPreviousRaids===2) {
         voice = 'raid/final/0';
+      } else if (this.state.playersWhoHaveFoundSpeakeasy.length===1) {
+        voice = 'raid/onlyone/0';
       } else {
         voice = `raid/${this.props.numSnitches}`;
       }
@@ -109,13 +110,6 @@ export default class Party extends Component {
     setTimeout(()=>{
       this.props.switchScreen(screens.rounds);
     }, 3500);
-  }
-
-  getPlayersFromIndices = arr=> {
-    const players = this.props.room.players.slice();
-    return arr.map(el=>{
-      return players[el];
-    });
   }
 
   render() {

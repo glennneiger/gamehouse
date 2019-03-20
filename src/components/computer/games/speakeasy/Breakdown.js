@@ -6,7 +6,7 @@ export default class Breakdown extends Component {
   constructor(props) {
     super(props);
 
-    const numPlayers = this.props.room.players.length;
+    const numPlayers = this.props.players.length;
     const numAgents = getNumAgents(numPlayers); 
     this.state = {numAgents};
   }
@@ -58,7 +58,7 @@ export default class Breakdown extends Component {
 
   render() {
     const {numAgents} = this.state;
-    const numPlayers = this.props.room.players.length;
+    const numPlayers = this.props.players.length;
     return (
       <div className="Speakeasy Breakdown center-screen">
         <div className="column" id="breakdown">

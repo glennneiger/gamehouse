@@ -82,3 +82,27 @@
   &.darken 
     background-color: rgba(0,0,0,.5)
     
+.Speakeasy.Final
+  height: 100vh 
+  width: 100vw 
+  display: flex 
+  flex-direction: column
+  justify-content: center 
+  align-items: center 
+  .header 
+    font-size: 48pt 
+    @media screen and (max-width: $xl)
+      font-size: 40pt
+    @media screen and (max-width: $lg)
+      font-size: 36pt
+
+  #grid
+    width: 65vw 
+  #play-again 
+    font-size: 30pt
+    display: none
+    @media screen and (max-width: $xl)
+      font-size: 24pt
+    @media screen and (max-width: $lg)
+      font-size: 20pt
+  

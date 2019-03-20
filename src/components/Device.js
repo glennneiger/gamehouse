@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import JoinRoom from './device/JoinRoom';
 import SelectGame from './device/SelectGame';
-import PlayAgain from './device/PlayAgain';
 import StoryTime from './device/games/storytime/Index';
 import Speakeasy from './device/games/speakeasy/Index';
 import MenuLink from './device/MenuLink';
@@ -13,7 +12,6 @@ import Logo from './device/Logo';
 
 import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../actions';
 import {games} from '../helpers/games';
-import {requests} from '../actions/requestTypes';
 
 class Device extends Component {
 
@@ -187,6 +185,7 @@ class Device extends Component {
     const gameProps = {request, code, playerIndex, handleSubmit: ()=>this.setState({request: null})}
 
     switch (game) {
+
       case games.gameRoom:
         return <SelectGame host={host} hostName={hostName} code={code} playerIndex={playerIndex} />
 
@@ -199,9 +198,6 @@ class Device extends Component {
       case games.speakEasy:
         return <Speakeasy {...gameProps} />
 
-      case requests.playAgain:
-        return <PlayAgain code={code} playerIndex={playerIndex} />
-
 
       case 'thank-you':
         return (
@@ -211,6 +207,7 @@ class Device extends Component {
             <div className="btn" onClick={()=>this.setState({game: games.newRoom})}>Join New Game</div>
           </div>
         )
+
       default: 
         return null;
     }

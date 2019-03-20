@@ -188,7 +188,8 @@ class Computer extends Component {
   renderContent() {
 
     const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound} = this;
-    const room = this.state;
+    const {game, gameSelection, players, code, hostIndex} = this.state;
+    const room = {game, gameSelection, players, code, hostIndex};
     const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound}
 
     switch (this.state.game) {

@@ -120,18 +120,14 @@ export default class Rounds extends Component {
     const successIndicators = [];
     for (let i=0; i<5; i++) {
       let css = "indicator";
-      let content = '';
       if (successes[i]) {
         css += ' success';
-        content = <div><i className="fas fa-wine-glass-alt"></i></div>
       } else if (successes[i]===false) {
         css += ' fail';
-        content = <div><i className="fas fa-taxi"></i></div>
       } else {
         css += ' number';
-        content = <div>{i+1}</div>
       }
-      successIndicators.push(<div className={css} key={i}>{content}</div>)
+      successIndicators.push(<div className={css} key={i}><div>{i+1}</div></div>)
     }
     return (
       <div className="slide-in-from-bottom">

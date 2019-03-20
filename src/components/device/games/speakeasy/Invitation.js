@@ -20,8 +20,8 @@ export default class Speakeasy extends Component {
       options.push(<div className="btn" key={player.index} onClick={()=>this.handleSend(player.index)}>{player.name}</div>)
     });
 
-    return <div className="Speakeasy column">
-      <div className="font-large">Send Invitation:</div>
+    return <div className="Speakeasy Invitation column">
+      <div className="font-large header">Send Invitation:</div>
       {options}
     </div>
   }

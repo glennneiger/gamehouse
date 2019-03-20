@@ -22,7 +22,8 @@ class StoryTime extends Component {
       turn: 0,
       writers: [],
       prompt: '',
-      winner: {}
+      winner: {},
+      restart: false
     });
   }
 
@@ -38,7 +39,14 @@ class StoryTime extends Component {
     this.props.playVideo('storytime/intro');
 
     const next = ()=> {this.switchScreen(screens.read)};
-    this.playVoice('intro/0', next);
+    
+    let restart = false;
+    let voice = 0; 
+    if (this.state.turn > 0) {
+      voice = 1; //shorter intro if you're restarting the game
+      restart = true;
+    }
+    this.playVoice(`intro/${voice}`, next);
 
     this.props.preloadMusic('storytime/1');
     this.props.preloadVideo('storytime/read00');
@@ -57,6 +65,7 @@ class StoryTime extends Component {
       prompt,
       winner: {},
       screen: screens.intro,
+      restart
     });
 
     incrementGame(games.storyTime);

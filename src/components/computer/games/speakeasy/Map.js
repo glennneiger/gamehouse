@@ -35,8 +35,8 @@ export default class Map extends Component {
 
   decideWhoGetsInvitation = ()=> {
 
-    const {playersWhoHaveFoundSpeakeasy, room} = this.props;
-    if (playersWhoHaveFoundSpeakeasy.length === room.players.length-1) {
+    const {playersWhoHaveFoundSpeakeasy, players} = this.props;
+    if (playersWhoHaveFoundSpeakeasy.length === players.length-1) {
       // all players (minus owner) have already found the speakeasy. No need for invites!
       this.props.playVoice('sendinvitation/alreadyfull/0', this.goToParty);
       return;

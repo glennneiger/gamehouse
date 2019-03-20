@@ -36,9 +36,9 @@ class Read extends Component {
 
   handleFinishReading = ()=> {
     this.setState({reading:false});
-    let {turn} = this.props;
+    let {turn, restart} = this.props;
 
-    if (turn===0 || turn===7) {
+    if ((turn===0 && !restart) || turn===7) {
       this.props.playVoice(`read/${turn}`, this.nextScreen);
     } else {
       this.nextScreen();

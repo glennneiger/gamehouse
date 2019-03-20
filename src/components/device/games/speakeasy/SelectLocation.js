@@ -83,14 +83,13 @@ export default class Speakeasy extends Component {
   
       }
     }
-    console.log(this.props);
     const availableLocations = Object.values(this.props.request.message.availableLocations);
     let options = [];
     availableLocations.forEach(location => {
       options.push(<div className="btn" key={location} onClick={()=>handleSelectLocation(location)}>{this.locationNames[location]}</div>)
     });
     return <div className="column">
-      <div className="font-large">Select Location:</div>
+      <div className="font-large header">Select Location:</div>
       {options}
     </div>
   }
@@ -99,7 +98,8 @@ export default class Speakeasy extends Component {
     const {correctLocation} = this.props.request.message;
 
     return <div className="column">
-      <div>You have been invited to {this.locationNames[correctLocation]}!</div>
+      <div className="caption no-padding">You have been invited to</div>
+      <div className="font-large header">{`${this.locationNames[correctLocation]}!`}</div>
       <div className="btn" onClick={()=>this.setState({displayIndex: 2, found: true})}>Accept</div>
     </div>
 
@@ -124,15 +124,18 @@ export default class Speakeasy extends Component {
     const ok = <div onClick={handleClickOK} className="btn">OK</div>
 
     const raid = <div className="column">
-      <div className="font-large">Raid?</div>
-      <div className="btn btn-half" onClick={()=>handleRaid(true)}>Yes</div>
-      <div className="btn btn-half" onClick={()=>handleRaid(false)}>No</div>
+      <div className="font-large header">Raid?</div>
+      <div className="row">
+        <div className="btn btn-half" onClick={()=>handleRaid(true)}>Yes</div>
+        <div className="btn btn-half" onClick={()=>handleRaid(false)}>No</div>
+      </div>
     </div>
 
 
+
     return <div className="column">
-      <div className="font-large">{found ? 'Welcome!' : 'Sorry!'}</div>
-      <div>{found ? 'You have found the speakeasy!' : 'Nothing to see here!' }</div>
+      <div className="font-large header">{found ? 'Welcome!' : 'Sorry!'}</div>
+      <div className="caption">{found ? 'You have found the speakeasy!' : 'Nothing to see here!' }</div>
       {(isAgent && found) ? raid : ok}
     </div>
   
@@ -140,7 +143,7 @@ export default class Speakeasy extends Component {
 
   render() {
 
-    return <div className="Speakeasy column">
+    return <div className="Speakeasy SelectLocation column">
       {this.renderContent(this.state.displayIndex)}
     </div>
   }

@@ -73,24 +73,15 @@ export function sendInput(roomCode, playerIndex, message, closeRequest) {
   });
 }
 
-export function timeOutRequest(roomCode, playerIndex) {
-  database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
-    const player = await data.toJSON();
-    if (!player) return;
-    if (player.request && player.request !== 'expired') {
-      database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
-      database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
-        request: 'expired',
-        input: null 
-      });
-    }
-  });
-}
+
 export async function closeRequest(roomCode, playerIndex) {
   await database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
     const player = await data.toJSON();
     if (!player) return;
     await database.ref(`rooms/${roomCode}/players/${playerIndex}/input`).off();
+    await database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({  //send 'expired' first so that device gets notified to clear
+      request: 'expired'
+    });
     database.ref(`rooms/${roomCode}/players/${playerIndex}`).update({
       request: null,
       input: null 

@@ -6,6 +6,8 @@ import React, {Component} from 'react';
 import SelectLocation from './SelectLocation';
 import Role from './Role';
 import Invitation from './Invitation';
+import PlayAgain from '../PlayAgain';
+import Skip from '../Skip';
 
 import Ad from '../../Ad';
 
@@ -25,6 +27,10 @@ export default class Speakeasy extends Component {
           return <Role {...this.props} />
         case requests.speakeasy.invitation:
           return <Invitation {...this.props} />
+        case requests.playAgain:
+          return <PlayAgain {...this.props} />
+        case requests.skip:
+          return <Skip {...this.props} />
           
         default:
           return null;

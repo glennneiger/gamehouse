@@ -895,6 +895,61 @@ div.StoryTime .WriterCard .speech-bubble:after {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.Speakeasy.Final {
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Speakeasy.Final .header {
+  font-size: 48pt;
+}
+
+@media screen and (max-width: 1400px) {
+  .Speakeasy.Final .header {
+    font-size: 40pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Speakeasy.Final .header {
+    font-size: 36pt;
+  }
+}
+
+.Speakeasy.Final #grid {
+  width: 65vw;
+}
+
+.Speakeasy.Final #play-again {
+  font-size: 30pt;
+  display: none;
+}
+
+@media screen and (max-width: 1400px) {
+  .Speakeasy.Final #play-again {
+    font-size: 24pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Speakeasy.Final #play-again {
+    font-size: 20pt;
+  }
+}
+
 a {
   display: block;
   text-decoration: none;
@@ -1443,15 +1498,6 @@ body.device img.logo {
   margin: 15px 0 25px 0;
 }
 
-body.device .StoryTime textarea {
-  font-family: "Nunito", verdana, arial, sans-serif;
-  font-size: 14pt;
-  padding: 0 4pt;
-  width: 98vw;
-  margin: 10px auto 24px;
-  max-width: 300px;
-}
-
 .SelectGame {
   margin-bottom: 18px;
 }
@@ -1546,5 +1592,32 @@ body.device div.vote img {
   margin: 5px 5px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+body.device .StoryTime textarea {
+  font-family: "Nunito", verdana, arial, sans-serif;
+  font-size: 14pt;
+  padding: 0 4pt;
+  width: 98vw;
+  margin: 10px auto 24px;
+  max-width: 300px;
+}
+
+body.device .Speakeasy.Role #role {
+  font-size: 44pt;
+  padding: 14pt 0 24pt 0;
+}
+
+body.device .Speakeasy.Invitation .header, body.device .Speakeasy.SelectLocation .header {
+  padding-bottom: 12px;
+}
+
+body.device .Speakeasy.SelectLocation .caption {
+  font-size: 16pt;
+  padding-bottom: 14pt;
+}
+
+body.device .Speakeasy.SelectLocation .caption.no-padding {
+  padding-bottom: 0;
 }
 /*# sourceMappingURL=style.css.map */

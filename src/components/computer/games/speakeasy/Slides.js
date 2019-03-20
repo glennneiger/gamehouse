@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {screens} from './helpers';
+import {closeRequest} from '../../../../actions/index';
 
 export default class Slides extends Component {
 
@@ -37,6 +38,8 @@ export default class Slides extends Component {
 
     if (counter===slides.length) {
       setTimeout(() => {
+        const {code, hostIndex} = this.props.room;
+        closeRequest(code, hostIndex); // close out option to Skip
         this.props.nextTurn();
         this.props.switchScreen(screens.owner);
       }, 1000);

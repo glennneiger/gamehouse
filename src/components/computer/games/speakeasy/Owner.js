@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import ProfileCard from '../../ProfileCard';
 
 import {screens} from './helpers';
+import {getPlayersFromIndices} from '../../../../helpers/functions';
 
 export default class Owner extends Component {
 
@@ -15,9 +16,9 @@ export default class Owner extends Component {
 
 
   renderOwnerCard = ()=> {
-    const {owner, room} = this.props;
-    if (owner) {
-      const {img, name} = room.players[owner];
+    const {owner, players} = this.props;
+    if (owner || owner===0) {
+      const {img, name} = getPlayersFromIndices(owner, players);
       return <div className="slide-in-from-right" id="owner-card">
         <ProfileCard img={img} name={name} />
       </div>

@@ -9,5 +9,6 @@ export const requests = {
     invitation: 'invitation',
     whereToGo: 'where-to-go'
   },
-  playAgain: 'story-time-play-again'
+  playAgain: 'play-again',
+  skip: 'skip'
 }

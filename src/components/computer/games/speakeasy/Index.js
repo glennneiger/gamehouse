@@ -20,11 +20,13 @@ export default class Speakeasy extends Component {
   constructor(props) {
     super(props);
     this.state={
+      players: [],
       turn: -1, // -1=rules. 0=set up (who's who). 1=first turn
       screen: screens.intro,
       successes: [],
       numRaids: 0,
       owner: null, //index
+      owners: [], //keep track of everyone who has been an owner. This way we won't make the same person owner twice in a row
       agents: [], //indices,
       availableLocations: [], // location indices. set in init()
       location: null, // index current location of speakeasy
@@ -44,17 +46,35 @@ export default class Speakeasy extends Component {
 
     let {turn} = this.state;
     let next;
+
     if (turn===-1) { //turn is -1 if you just loaded game from lobby. 
+
       const next2 = ()=> {this.switchScreen(screens.breakdown)};
-      next = ()=> {this.playVoice('intro/1', next2);};
+
+      next = ()=> {
+        this.playVoice('intro/1', next2);
+        // give host option to skip 
+        const {code, hostIndex} = this.props.room;
+        inputRequest(code, requests.skip, null, hostIndex, this.handleSkip);
+      };
+
+      this.playVoice('intro/0', next);
+
     } else { // turn is > -1 if you're restarting the game to play again.
       turn=0; // in which case, no need to explain the rules again. Skip to turn 0 (first turn)
-      next = ()=> {this.switchScreen(screens.map)};
+      next = ()=> {
+        this.props.playVideo('speakeasy/back');
+        this.props.preloadVideo('speakeasy/drinking');
+        this.switchScreen(screens.owner);
+      };
+      this.playVoice('restart/0', next);
     }
-    this.playVoice('intro/0', next);
 
     this.props.preloadMusic('speakeasy/happy0');
     this.props.preloadVideo('speakeasy/back');
+
+    //take up to 12 players
+    const players = this.props.room.players.slice(0, 12);
 
     this.setState({
       turn, 
@@ -62,22 +82,41 @@ export default class Speakeasy extends Component {
       successes: [],
       numRaids: 0,
       availableLocations: [0,1,2,3,4,5,6,7,8], 
-      playersWhoHaveFoundSpeakeasy: []
+      playersWhoHaveFoundSpeakeasy: [],
+      players
     });
 
     incrementGame(games.speakEasy);
   }
 
+  handleSkip = ()=> {
+    if (this.state.screen === screens.intro) {
+      this.props.playVideo('speakeasy/back');
+      this.props.preloadVideo('speakeasy/drinking');
+    }
+    this.setState({turn: 0});
+    this.switchScreen(screens.owner);
+  }
+
   assignOwner = ()=> {
-    const {players} = this.props.room;
-    const owner = Math.floor(Math.random()*players.length);
-    this.setState({owner});
+    const {players} = this.state;
+    let owners = this.state.owners.slice();
+    if (owners.length >= players.length) {
+      owners = [];
+    }
+    let owner = null;
+    while (!owner) {
+      let index = players[Math.floor(Math.random()*players.length)].index;
+      if (!owners.includes(index)) owner = index;
+    }
+    owners.push(owner);
+    this.setState({owner, owners});
     return owner;
   }
 
   assignRoles = callback=> {
     const {code} = this.props.room;
-    const players = this.props.room.players.slice();
+    const players = this.state.players.slice();
     const {owner} = this.state;
     let playersWhoHaveAcknowledged = [];
 
@@ -118,7 +157,8 @@ export default class Speakeasy extends Component {
       callback();
     }
 
-    const {code, players} = this.props.room;
+    const {code} = this.props.room;
+    const {players} = this.state;
     const {owner, playersWhoHaveFoundSpeakeasy} = this.state;
     let playersWhoCanBeInvited = [];
     players.forEach(player=> {
@@ -134,7 +174,7 @@ export default class Speakeasy extends Component {
   getWhoGoesWhere = callback=> {
     let playersWhoHaveResponded = [];
 
-    const players = this.props.room.players.slice();
+    const players = this.state.players.slice();
 
     const handleResponse = (input, index)=> {
 
@@ -228,7 +268,7 @@ export default class Speakeasy extends Component {
 
 
   render() {
-    const {turn, successes, screen, owner, agents, numRaids, playersWhoHaveFoundSpeakeasy, guestList, numSnitches} = this.state;
+    const {turn, successes, screen, owner, agents, numRaids, playersWhoHaveFoundSpeakeasy, guestList, numSnitches, players} = this.state;
     const {playAudio, playVideo, preloadMusic, preloadVideo, room} = this.props;
     const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation, animateOut, assignRoles, getWhoGoesWhere, getInvitation, getRaid} = this;
 
@@ -247,7 +287,8 @@ export default class Speakeasy extends Component {
       numRaids,
       owner,
       animateOut,
-      playersWhoHaveFoundSpeakeasy
+      playersWhoHaveFoundSpeakeasy,
+      players
     }
 
     switch (screen) {

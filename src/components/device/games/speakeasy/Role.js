@@ -17,9 +17,9 @@ export default class Speakeasy extends Component {
 
     const role = this.props.request.message;
 
-    return <div className="Speakeasy column">
-      <div>Your Role:</div>
-      <div className="font-large">{role}</div>
+    return <div className="Speakeasy Role column">
+      <div className="font-large">Your Role:</div>
+      <div id="role">{role}</div>
       <div className="btn" onClick={this.handleAcknowledge}>Continue</div>
     </div>
   }

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 
-import {sendInput, selectGame} from '../../actions';
-import {games} from '../../helpers/games';
+import {sendInput, selectGame} from '../../../actions';
+import {games} from '../../../helpers/games';
 
 export default class PlayAgain extends Component {
 
   respond = playAgain=> {
-    const {code, playerIndex} = this.props;
+    const {code, playerIndex, handleSubmit} = this.props;
+    handleSubmit();
     sendInput(code, playerIndex, playAgain, true);
     if (!playAgain) {
       selectGame(code, games.gameRoom);

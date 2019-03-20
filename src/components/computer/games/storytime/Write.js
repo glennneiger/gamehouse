@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import WriterCard from './WriterCard';
 import Timer from '../../Timer';
 
-import {inputRequest, timeOutRequest} from '../../../../actions';
+import {inputRequest, closeRequest} from '../../../../actions';
 import {requests} from '../../../../actions/requestTypes';
 import {screens, findWinners} from './helpers';
 
@@ -53,7 +53,7 @@ class Write extends Component {
       writers.forEach(writer=>{
         if (!submitted.includes(writer.index)) {
           submitted.push(writer.index);
-          timeOutRequest(this.props.room.code, writer.index);
+          closeRequest(this.props.room.code, writer.index);
         }
       });
       this.setState({submitted});
@@ -63,7 +63,7 @@ class Write extends Component {
       voters.forEach(voter=>{
         if (!submitted.includes(voter)) {
           submitted.push(voter);
-          timeOutRequest(this.props.room.code, voter);
+          closeRequest(this.props.room.code, voter);
         }
       });
       this.setState({submitted});
