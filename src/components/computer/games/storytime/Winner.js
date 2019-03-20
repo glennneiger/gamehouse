@@ -47,10 +47,12 @@ class Winner extends Component {
 
 
   render() {
+    const {winningText, winner} = this.props;
+
     return (
       <div className="StoryTime Winner">
         <div className="center-screen">
-          <WriterCard name={this.props.winner.name} img={this.props.winner.img} text={this.props.winningText} />
+          <WriterCard name={winner.name} img={winner.img} text={winningText} />
         </div>
       </div>
     )

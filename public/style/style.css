@@ -1571,6 +1571,10 @@ body.device .font-large {
   font-size: 19pt;
 }
 
+body.device .header {
+  padding-bottom: 12px;
+}
+
 body.device div.vote {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1606,10 +1610,6 @@ body.device .StoryTime textarea {
 body.device .Speakeasy.Role #role {
   font-size: 44pt;
   padding: 14pt 0 24pt 0;
-}
-
-body.device .Speakeasy.Invitation .header, body.device .Speakeasy.SelectLocation .header {
-  padding-bottom: 12px;
 }
 
 body.device .Speakeasy.SelectLocation .caption {

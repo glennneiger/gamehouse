@@ -73,7 +73,7 @@ class StoryTime extends Component {
 
 
   declareWinner = (winner, winningText)=> {
-    let {story, prompt} = this.state;
+    let {story, prompt, turn} = this.state;
 
     winningText = winningText.trim();
 
@@ -83,11 +83,12 @@ class StoryTime extends Component {
       winningText += '.';
     }
 
-    let newPrompt = getPrompt(story.length);
 
     story.push(`${prompt}, ${winningText}`);
 
-    this.setState({story, prompt: newPrompt, winner});
+    if (turn < 7) prompt = getPrompt(story.length-1);
+
+    this.setState({story, prompt, winner});
   }
 
   nextTurn = ()=> {
@@ -145,11 +146,16 @@ class StoryTime extends Component {
             {...props}
           />
         )
-      case screens.winner:
+      case screens.winner:    
+        let winningText = story[story.length-1];
+        if (turn===7) {
+          winningText = winningText.slice(31);
+          winningText = winningText.charAt(0).toUpperCase() + winningText.slice(1);
+        }
         return (
           <Winner 
             winner={winner}
-            winningText={story[story.length-1]}
+            winningText={winningText}
             nextTurn={this.nextTurn}
             {...props}
           />

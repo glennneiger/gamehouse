@@ -17,9 +17,11 @@ export default class PlayAgain extends Component {
   render() {
     return (
       <div className="column">
-        <p>Play Again?</p>
-        <div className="btn" onClick={()=>this.respond(true)}>Yes</div>
-        <div className="btn" onClick={()=>this.respond(false)}>No</div>
+        <div className="font-large header">Play Again?</div>
+        <div className="row">
+          <div className="btn btn-half" onClick={()=>this.respond(true)}>Yes</div>
+          <div className="btn btn-half" onClick={()=>this.respond(false)}>No</div>
+        </div>
       </div>
     )
   }
