@@ -14,6 +14,7 @@ export default class Account extends Component {
             <p>Under Construction</p>
           </div>
           <Link to="/" className="btn">Back</Link>
+          <br/>
         </div>
       </div>
     )

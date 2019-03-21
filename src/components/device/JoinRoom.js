@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {joinRoom, selectGame, incrementSessions} from '../../actions';
-import {signInWithGoogle} from '../../actions/auth';
+// import {signInWithGoogle} from '../../actions/auth';
 import {games} from '../../helpers/games';
 import ImgSelection from './ImgSelection';
 import {Link} from 'react-router-dom';
@@ -98,25 +98,25 @@ class JoinRoom extends Component {
             <div>Room Code:</div>
             <input type="text" className="textbox" id="room-code" maxLength="4" autoComplete="off" spellCheck={false}></input>
 
-            <div id="sign-in">
+            {/* <div id="sign-in">
               <div>Sign In (Optional):</div>
               <div className="row">
                 <div id="facebook"><i className="fab fa-facebook-square"></i></div>
                 <div id="google" onClick={()=>signInWithGoogle(this.getUser)}><i className="fab fa-google-plus-square"></i></div>
               </div>
-            </div>
+            </div> */}
 
 
-            <div id="guest-header">Play as Guest:</div>
+            {/* <div id="guest-header">Play as Guest:</div> */}
 
-            <div id="guest-box">
+            {/* <div id="guest-box"> */}
               <div>Name:</div>
               <input type="text" className="textbox" id="player-name" maxLength="12" autoComplete="off" spellCheck={false}></input>
 
               <div>Picture:</div>
 
               <ImgSelection />
-            </div>
+            {/* </div> */}
 
             <div className="btn" onClick={this.joinRoom}>Join the Party!</div>   
             <Link to="/" className="btn-link">Back</Link>

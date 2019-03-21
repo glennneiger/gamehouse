@@ -1690,6 +1690,14 @@ div.v-100 {
   margin: 15px 0;
 }
 
+.device.deviceLanding .btn {
+  margin: 10px auto 24px;
+}
+
+.device.deviceLanding .btn-small {
+  margin-bottom: 8px;
+}
+
 .device .SelectGame {
   margin-bottom: 18px;
 }
@@ -1723,7 +1731,7 @@ div.v-100 {
   background-color: #3fa9f5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#57b4f6), to(#279ef4));
   background-image: linear-gradient(#57b4f6, #279ef4);
-  line-height: 75px;
+  line-height: 70px;
   width: 86vw;
   max-width: 330px;
   border-radius: 40px;
@@ -1731,6 +1739,9 @@ div.v-100 {
   margin: 0 auto 8px;
   -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
+  border: 5px solid #e0ebfa;
+  -webkit-box-shadow: 2px 6px 15px #aaa;
+          box-shadow: 2px 6px 15px #aaa;
 }
 
 .device .btn:hover {
@@ -1744,6 +1755,12 @@ div.v-100 {
   margin-left: 6px;
   margin-right: 6px;
   line-height: 60px;
+}
+
+.device .btn-small {
+  line-height: 60px;
+  font-size: 16pt;
+  width: 82vw;
 }
 
 .device .btn-link {

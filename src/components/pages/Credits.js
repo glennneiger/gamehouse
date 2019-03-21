@@ -14,10 +14,11 @@ export default class Credits extends Component {
             <p>Party House Games</p>
             <p>Created By:<br /><span className="font-large">Jacob Garcia</span></p>
             <p>Music By:<br />
-            Kevin MacLeod (incompetech.com)<br />
+            <span className="font-large">Kevin MacLeod</span> (incompetech.com)<br />
             Licensed under the Creative Commons 3.0:<br />By Attribution license.</p>
           </div>
           <Link to="/" className="btn">Back</Link>
+          <br/>
         </div>
       </div>
     )

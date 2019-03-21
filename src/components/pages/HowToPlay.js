@@ -19,6 +19,7 @@ export default class HowToPlay extends Component {
             <p>Games involve music, voice, and sound effects, so make sure your computer or TV volume is turned on for the best experience.</p>
           </div>
           <Link to="/" className="btn">Back</Link>
+          <br/>
         </div>
       </div>
     )
