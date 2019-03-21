@@ -61,15 +61,21 @@ class Video extends Component {
     
   }
 
+  handleOnPlay = async ()=>{
+    if (this.props.handleOnPlay) {
+      this.props.handleOnPlay();
+    }
+  }
+
   render () {
     return (
       <div>
-        <video id="video-player-1" className="bg-video" loop muted>
+        <video id="video-player-1" className="bg-video" loop muted onLoadedData={this.handleOnPlay}>
           <source id="video-src-1" src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
-        <video id="video-player-2" className="bg-video" loop muted>
+        <video id="video-player-2" className="bg-video" loop muted onLoadData={this.handleOnPlay}>
           <source id="video-src-2" src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>

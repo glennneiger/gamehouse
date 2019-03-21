@@ -1,6 +1,7 @@
-body.device
+.device
   .JoinRoom 
     font-size: 20pt
+    overflow: hidden
     input.textbox
       width: 100vw
       max-width: 300px
@@ -15,24 +16,42 @@ body.device
     input#player-name
       font-size: 42pt
     .pictures
-      display: block
+      display: flex 
+      justify-content: space-around 
+      align-items: space-around
+      flex-wrap: wrap
       max-width: 330px
       max-height: 330px
       width: 99vw
       height: 99vw 
-      margin: 8px auto 24px
+      margin: 8px auto 0
       padding: 0
     img 
       max-width: 100px
       max-height: 100px 
       width: 28vw 
       height: 28vw
-      padding: 0
-      margin: 2px 5px
       filter: brightness(30%)
-      border-radius: 6px
+      border-radius: 8px
       transition-duration: 300ms
       cursor: pointer
     img.selected 
       filter: brightness(120%)
-
+    .btn 
+      margin: 0 auto 24px
+    div#sign-in 
+      i
+        font-size: 52pt
+        padding: 0 8px 18px
+      #facebook 
+        color: #3b5998
+      #google 
+        color: #cc3333
+    div#guest-box
+      display: block
+      width: 100vw
+      max-width: 400px
+      margin: 12px 0 8px
+      padding: 10px 0 4px
+      background-color: #def
+      background-image: linear-gradient(#def, white)

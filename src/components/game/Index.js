@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 
-import Audio from './computer/Audio';
-import Video from './computer/VideoBackground';
+import Audio from './media/Audio';
+import Video from './media/VideoBackground';
 
-import Landing from './computer/Landing';
-import NewRoom from './computer/NewRoom';
-import Lobby from './computer/Lobby';
-import StoryTime from './computer/games/storytime/Index';
-import Speakeasy from './computer/games/speakeasy/Index';
+import NewRoom from './lobby/NewRoom';
+import Lobby from './lobby/Lobby';
+import StoryTime from './games/storytime/Index';
+import Speakeasy from './games/speakeasy/Index';
 
-import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../actions';
+import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../../actions';
 
-import {games} from '../helpers/games';
+import {games} from '../../helpers/games';
 
 
 class Computer extends Component {
@@ -20,12 +19,13 @@ class Computer extends Component {
     super(props);
 
     this.state={
-      game: games.landing,
+      game: games.newRoom,
       gameSelection: 0,
       players: [],
       code: '',
       sound: '',
-      onSoundFinish: ()=>{},
+      onSoundFinish: null,
+      onVideoPlay: null,
       music: '',
       preloadedMusic: '',
       video: '',
@@ -44,48 +44,30 @@ class Computer extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.onUnload);
-  }
-  componentDidMount() {
-    window.addEventListener("beforeunload", this.onUnload);
-
-    this.init();
-  }
-
-  init = ()=> {
     const {code} = this.state;
     if (code) {
+      deleteRoom(code);
       removeWatcher(code, 'game');
       removeWatcher(code, 'players');
     }
-    this.setState({
-      game: games.landing,
-      gameSelection: 0,
-      players: [],
-      code: '',
-      sound: 'stop',
-      onSoundFinish: ()=>{},
-      music: 'stop',
-      preloadedMusic: 'newroom',
-      video: 'home',
-      preloadedVideo: 'newroom'
-    });
-  };
+  }
+
+  componentDidMount() {
+    window.addEventListener("beforeunload", this.onUnload);
+    this.createRoom();
+  }
 
 
   switchGame = game=> {
     this.setState({game});
     this.stopSound();
-
-    if (game===games.newRoom) {
-      this.createRoom();
-    }
   }
+
 
   createRoom = ()=> {
     let code = this.generateCode();
     
     this.setState({code});
-
     createNewRoom(code);
     watchForChangeInPlayers(code, this.updatePlayers);
     watchForChange(code, 'game', this.updateGame);
@@ -113,7 +95,7 @@ class Computer extends Component {
   updateGame = game=> {
     if (game===null) return;
     if (game===games.landing) {
-      this.init();
+      this.props.history.push('/');
     } else {
       this.setState({game});  
     }
@@ -148,7 +130,7 @@ class Computer extends Component {
     if (type==='music') {
       this.setState({music: audio});
     } else {
-      let callback = ()=>{};
+      let callback = null;
       if (onSoundFinish) callback = onSoundFinish;
       this.setState({sound: audio, onSoundFinish: callback});
     }
@@ -163,8 +145,10 @@ class Computer extends Component {
     this.setState({preloadedMusic: music})
   }
 
-  playVideo = video=> {
-    this.setState({video});
+  playVideo = (video, onPlay)=> {
+    let callback = null;
+    if (onPlay) callback = onPlay;
+    this.setState({video, onVideoPlay: callback});
   }
 
   preloadVideo = video=> {
@@ -179,7 +163,7 @@ class Computer extends Component {
     return (
       <div>
         <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={this.clearAudio} callback={this.state.onSoundFinish} />
-        <Video video={this.state.video} preload={this.state.preloadedVideo} />
+        <Video video={this.state.video} preload={this.state.preloadedVideo} handleOnPlay={this.state.onVideoPlay} />
         {this.renderContent()}
       </div>
     )
@@ -207,7 +191,7 @@ class Computer extends Component {
         return <Speakeasy {...props} />
     
       default:
-        return <Landing switchGame={this.switchGame} useAsDevice={this.props.useAsDevice} />
+        return null
     }
   }
 }

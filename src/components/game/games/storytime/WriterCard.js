@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ProfileCard from '../../ProfileCard';
+import ProfileCard from '../../other/ProfileCard';
 
 class WriterCard extends Component {
 

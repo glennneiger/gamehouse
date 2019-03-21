@@ -75,7 +75,9 @@ class Audio extends Component {
 
   handleFinishAudio = async ()=>{
     await this.props.clearAudio();
-    this.props.callback();
+    if (this.props.callback) {
+      this.props.callback();
+    }
   }
 
   render() {

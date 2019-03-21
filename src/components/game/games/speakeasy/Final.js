@@ -1,4 +1,4 @@
-import PlayerGrid from '../../PlayerGrid';
+import PlayerGrid from '../../other/PlayerGrid';
 
 import React, {Component} from 'react';
 

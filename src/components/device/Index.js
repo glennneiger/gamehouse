@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-import JoinRoom from './device/JoinRoom';
-import SelectGame from './device/SelectGame';
-import StoryTime from './device/games/storytime/Index';
-import Speakeasy from './device/games/speakeasy/Index';
-import MenuLink from './device/MenuLink';
+import JoinRoom from './JoinRoom';
+import SelectGame from './SelectGame';
+import StoryTime from './games/storytime/Index';
+import Speakeasy from './games/speakeasy/Index';
+import MenuLink from './MenuLink';
 
-import Ad from './device/Ad';
+import Ad from './Ad';
 
-import Logo from './device/Logo';
+import Logo from './Logo';
 
-import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../actions';
-import {games} from '../helpers/games';
+import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../../actions';
+import {games} from '../../helpers/games';
 
 class Device extends Component {
 
@@ -32,9 +32,6 @@ class Device extends Component {
   }
 
   componentDidMount() {
-    //this class will turn body bg color white instead of black
-    document.querySelector('body').classList.add('device');
-
     // see if player is already in room (if they refreshed browser)
     const roomCode = localStorage.getItem('roomCode');
     if (roomCode) {
@@ -168,7 +165,7 @@ class Device extends Component {
       }
     }
     return (
-      <div>
+      <div className="device">
         <Logo />
         {this.renderContent()}
         {menu}

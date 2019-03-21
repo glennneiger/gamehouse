@@ -1,11 +1,15 @@
 .Landing
   font-family: 'Comfortaa', sans-serif
-  div 
-    padding-top: 0
+  background-color: #091588
+  background-image: radial-gradient(lighten(#091588, 15%), darken(#091588, 15%))
+  overflow: hidden
+  div.logo 
+    display: block
   img.logo 
-    margin: 5vh 0 5vh 0
-    width: 17vw 
-    max-width: 250px
+    display: block
+    margin: 0 auto 5vh auto
+    width: 18vw 
+    max-width: 2350px
     min-width: 150px
   p 
     max-width: 640px
@@ -21,19 +25,11 @@
     font-size: 20pt
     line-height: 36pt
     width: 450px
-    margin: 44px 0 54px
     @media screen and (max-width: $lg)
       font-size: 16pt
       line-height: 20pt 
       margin: 10px 0 30px
       width: 400px
-  div.instructions 
-    margin: 44px 0 54px
-    @media screen and (max-width: $lg)
-      margin: 0 0 20px
-  span.song-titles 
-    font-weight: 100 
-    font-style: italic 
   .option
     width: 320px
     height: 340px

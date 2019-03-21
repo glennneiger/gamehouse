@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import ProfileCard from '../../ProfileCard';
+import ProfileCard from '../../other/ProfileCard';
 
 import {screens} from './helpers';
 import {getPlayersFromIndices} from '../../../../helpers/functions';

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PlayerGrid from '../../PlayerGrid';
+import PlayerGrid from '../../other/PlayerGrid';
 import {screens} from './helpers';
 
 class Next extends Component {

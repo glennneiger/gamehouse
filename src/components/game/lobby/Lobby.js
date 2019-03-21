@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {gameDetails} from '../../helpers/games';
-import {watchForChange, closeRequest, selectGame} from '../../actions';
+import {gameDetails} from '../../../helpers/games';
+import {watchForChange, closeRequest, selectGame} from '../../../actions';
 
 import GameSelector from './GameSelector';
 import GameDisplay from './GameDisplay';
-import PlayerGrid from './PlayerGrid';
+import PlayerGrid from '../other/PlayerGrid';
 
 
 export default class Lobby extends Component {

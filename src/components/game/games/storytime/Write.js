@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import WriterCard from './WriterCard';
-import Timer from '../../Timer';
+import Timer from '../../other/Timer';
 
 import {inputRequest, closeRequest} from '../../../../actions';
 import {requests} from '../../../../actions/requestTypes';
