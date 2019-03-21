@@ -15,11 +15,51 @@ body {
   padding: 0;
 }
 
+div.page {
+  background-color: white;
+  color: black;
+  min-height: 100vh;
+  font-size: 19pt;
+}
+
+div.page .content {
+  padding: 16px 0 32px;
+}
+
+div.page p {
+  padding: 9pt 0;
+  max-width: 720px;
+}
+
 .Landing {
   font-family: 'Comfortaa', sans-serif;
   background-color: #091588;
   background-image: radial-gradient(#0e20d0, #040a40);
   overflow: hidden;
+  min-height: 100vh;
+}
+
+.Landing div.navbar {
+  width: 60vw;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  font-size: 20pt;
+  line-height: 80pt;
+}
+
+@media screen and (max-width: 1400px) {
+  .Landing div.navbar {
+    font-size: 14pt;
+    line-height: 56pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .Landing div.navbar {
+    font-size: 10pt;
+    line-height: 40pt;
+  }
 }
 
 .Landing div.logo {
@@ -28,7 +68,7 @@ body {
 
 .Landing img.logo {
   display: block;
-  margin: 0 auto 5vh auto;
+  margin: 1vh auto 5vh auto;
   width: 18vw;
   max-width: 2350px;
   min-width: 150px;
@@ -127,6 +167,7 @@ body {
 
 @media screen and (max-width: 1040px) {
   .Landing .btn {
+    margin-top: 0;
     font-size: 17pt;
     width: 300px;
   }
@@ -1682,7 +1723,7 @@ div.v-100 {
   background-color: #3fa9f5;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#57b4f6), to(#279ef4));
   background-image: linear-gradient(#57b4f6, #279ef4);
-  line-height: 80px;
+  line-height: 75px;
   width: 86vw;
   max-width: 330px;
   border-radius: 40px;
@@ -1719,9 +1760,9 @@ div.v-100 {
 }
 
 .device p {
-  width: 95vw;
+  width: 80vw;
   max-width: 400px;
-  font-size: 19pt;
+  font-size: 16pt;
   padding: 6pt 0 18pt;
 }
 

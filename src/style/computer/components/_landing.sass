@@ -3,11 +3,23 @@
   background-color: #091588
   background-image: radial-gradient(lighten(#091588, 15%), darken(#091588, 15%))
   overflow: hidden
+  min-height: 100vh
+  div.navbar
+    width: 60vw
+    justify-content: space-evenly
+    font-size: 20pt
+    line-height: 80pt
+    @media screen and (max-width: $xl)
+      font-size: 14pt
+      line-height: 56pt
+    @media screen and (max-width: $lg)
+      font-size: 10pt
+      line-height: 40pt
   div.logo 
     display: block
   img.logo 
     display: block
-    margin: 0 auto 5vh auto
+    margin: 1vh auto 5vh auto
     width: 18vw 
     max-width: 2350px
     min-width: 150px
@@ -69,6 +81,7 @@
     transition-property: border-color
     transition-duration: 300ms
     @media screen and (max-width: $lg) 
+      margin-top: 0
       font-size: 17pt
       width: 300px
     &:hover

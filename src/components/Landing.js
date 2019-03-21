@@ -18,7 +18,6 @@ class Landing extends Component {
         <p className="notice">Party House is an interactive, multiplayer party game featuring music, voice, and sound effects.</p>
         <Link to="/game" className="btn">Start the Party!</Link>
         <div className="btn" onClick={()=>this.setState({showNotice: false})}>Back</div>
-        <div className="v-10"></div>
       </div>
     } else {
       content = <div className="row">
@@ -34,13 +33,18 @@ class Landing extends Component {
     }
 
     return (
-      <div className="Landing center-screen">
+      <div className="Landing">
+        <div className="navbar row">
+          <Link to="/howtoplay">How to Play</Link>
+          <Link to="/credits">Credits</Link>
+          <Link to="/store">Games</Link>
+          <Link to="/account">My Account</Link>
+        </div>
         <div>
           <div className="logo">
             <img className="logo" src="./assets/img/logo.svg" alt="Party House" />
           </div>
           {content}
-          <div className="v-10"></div>
         </div>
       </div>
     )
