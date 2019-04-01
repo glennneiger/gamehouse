@@ -24,7 +24,7 @@ export default class ImgSelection extends Component {
   
   render() {
     return (
-      <div className="pictures">
+      <div className="ImgSelection pictures">
         {this.renderPictures()}
       </div>
     )

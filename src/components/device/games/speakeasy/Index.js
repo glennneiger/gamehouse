@@ -9,7 +9,7 @@ import Invitation from './Invitation';
 import PlayAgain from '../PlayAgain';
 import Skip from '../Skip';
 
-import Ad from '../../Ad';
+import Ad from '../../other/Ad';
 
 import {requests} from '../../../../actions/requestTypes';
 

@@ -7,7 +7,7 @@ import Vote from './Vote';
 import WriteLine from './WriteLine';
 import PlayAgain from '../PlayAgain';
 
-import Ad from '../../Ad';
+import Ad from '../../other/Ad';
 
 import {requests} from '../../../../actions/requestTypes';
 

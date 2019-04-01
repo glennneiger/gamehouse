@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 
-import JoinRoom from './JoinRoom';
-import SelectGame from './SelectGame';
+import JoinRoom from './other/JoinRoom';
+import Joined from './other/Joined';
+import SelectGame from './other/SelectGame';
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';
-import MenuLink from './MenuLink';
+import MenuLink from './other/MenuLink';
 
-import Ad from './Ad';
+import Ad from './other/Ad';
 
-import Logo from './Logo';
+import Logo from './other/Logo';
 
 import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../../actions';
+import {getSignIn} from '../../actions/auth';
 import {games} from '../../helpers/games';
 
 class Device extends Component {
@@ -26,12 +28,15 @@ class Device extends Component {
       playerIndex: 0,
       request: null,
       game: null,
-      showMenu: false
+      showMenu: false,
+      user: false // {name, img} (if signed in)
     }
 
   }
 
   componentDidMount() {
+    getSignIn(this.getUser);
+
     // see if player is already in room (if they refreshed browser)
     const roomCode = localStorage.getItem('roomCode');
     if (roomCode) {
@@ -41,6 +46,9 @@ class Device extends Component {
     }
   }
 
+  getUser = user=> {
+    this.setState({user});
+  }
 
   // called if a player refreshes browser
   refreshGame = async (code)=> {
@@ -177,7 +185,7 @@ class Device extends Component {
 
 
   renderContent = ()=> {
-    const {host, code, entered, hostName, request, playerIndex, game} = this.state;
+    const {host, code, entered, hostName, request, playerIndex, game, user} = this.state;
 
     const gameProps = {request, code, playerIndex, handleSubmit: ()=>this.setState({request: null})}
 
@@ -187,7 +195,7 @@ class Device extends Component {
         return <SelectGame host={host} hostName={hostName} code={code} playerIndex={playerIndex} />
 
       case games.newRoom:
-        return <JoinRoom setRoom = {this.setRoom} code={code} entered={entered} hostName={hostName} host={host} />
+        return entered ? <Joined hostName={hostName} host={host} code={code} /> : <JoinRoom setRoom = {this.setRoom} user={user} /> 
 
       case games.storyTime:
         return <StoryTime {...gameProps} />

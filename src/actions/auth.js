@@ -1,27 +1,48 @@
 import * as firebase from 'firebase';
-import { auth } from '../Firebase';
+import { auth, database } from '../Firebase';
 
 
-export const signInWithGoogle = (callback)=> {
+export const signInWithGoogle = ()=> {
   var provider = new firebase.auth.GoogleAuthProvider();
-  provider.addScope('profile');
-  provider.addScope('email');
-  provider.addScope('https://www.googleapis.com/auth/plus.me');
+
+  provider.addScope('https://www.googleapis.com/auth/plus.login');
 
   auth.signInWithRedirect(provider);
+}
 
-  auth.getRedirectResult().then(function(result) {
-    if (result.credential) {
-      callback(result);
-    }
+export const signOut = async ()=> {
+  let res = await auth.signOut().then(function() {
+    res = true;
   }).catch(function(error) {
-    console.log(error);
+    res = error;
   });
+  return res;
+}
 
-  auth.onAuthStateChanged(function(user) {
+export const getSignIn = callback => {
+
+  const getUserInfo = auth=> {
+      let userNode = database.ref(`users/${auth.uid}`);
+      return userNode.once('value', async data => {
+      const user = await data.toJSON();
+      if (user) {
+        return user;
+      } else {
+        const newUser = {
+          name: auth.displayName.split(' ')[0],
+          img: auth.photoURL
+        }
+        userNode.set(newUser);
+        return newUser;
+      }
+    });
+  }
+
+  auth.onAuthStateChanged(async auth=> {
     let res;
-    if (user) {
-      res=user;  
+    if (auth) {
+      const data = await getUserInfo(auth);  
+      res = await data.toJSON();
     } else {
      // User is signed out.
       res = null;

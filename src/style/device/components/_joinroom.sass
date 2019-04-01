@@ -15,6 +15,26 @@
       text-transform: uppercase
     input#player-name
       font-size: 42pt
+    #profile-picture-container 
+      position: relative
+      width: 95vw
+      max-width: 250px
+      margin: 12px auto 24px
+      img 
+        border-radius: 10%
+        width: 100%
+        box-shadow: 2px 6px 15px #aaa
+      #change
+        height: 60px 
+        width: 60px 
+        line-height: 60px
+        border-radius: 50% 
+        background: rgba(220,220,220,0.8) 
+        color: #888
+        position: absolute
+        top: 8px
+        right: 8px
+        cursor: pointer
     .pictures
       display: flex 
       justify-content: space-around 
@@ -26,17 +46,17 @@
       height: 99vw 
       margin: 8px auto 0
       padding: 0
-    img 
-      max-width: 100px
-      max-height: 100px 
-      width: 28vw 
-      height: 28vw
-      filter: brightness(30%)
-      border-radius: 8px
-      transition-duration: 300ms
-      cursor: pointer
-    img.selected 
-      filter: brightness(120%)
+      img 
+        max-width: 100px
+        max-height: 100px 
+        width: 28vw 
+        height: 28vw
+        filter: brightness(30%)
+        border-radius: 8px
+        transition-duration: 300ms
+        cursor: pointer
+      img.selected 
+        filter: brightness(120%)
     .btn 
       margin: 0 auto 24px
     div#sign-in 

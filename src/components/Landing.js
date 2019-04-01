@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
-import Ad from './device/Ad';
+import Ad from './device/other/Ad';
 
 
 class Landing extends Component {

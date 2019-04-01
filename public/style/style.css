@@ -1619,6 +1619,33 @@ div.v-100 {
   font-size: 42pt;
 }
 
+.device .JoinRoom #profile-picture-container {
+  position: relative;
+  width: 95vw;
+  max-width: 250px;
+  margin: 12px auto 24px;
+}
+
+.device .JoinRoom #profile-picture-container img {
+  border-radius: 10%;
+  width: 100%;
+  -webkit-box-shadow: 2px 6px 15px #aaa;
+          box-shadow: 2px 6px 15px #aaa;
+}
+
+.device .JoinRoom #profile-picture-container #change {
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  border-radius: 50%;
+  background: rgba(220, 220, 220, 0.8);
+  color: #888;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
 .device .JoinRoom .pictures {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1638,7 +1665,7 @@ div.v-100 {
   padding: 0;
 }
 
-.device .JoinRoom img {
+.device .JoinRoom .pictures img {
   max-width: 100px;
   max-height: 100px;
   width: 28vw;
@@ -1651,7 +1678,7 @@ div.v-100 {
   cursor: pointer;
 }
 
-.device .JoinRoom img.selected {
+.device .JoinRoom .pictures img.selected {
   -webkit-filter: brightness(120%);
           filter: brightness(120%);
 }
@@ -1812,6 +1839,63 @@ div.v-100 {
   margin: 5px 5px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 84px;
+}
+
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 6px;
+  width: 13px;
+  background: #3fa9f5;
+  -webkit-animation: lds-facebook 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+          animation: lds-facebook 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+  left: 6px;
+  -webkit-animation-delay: -0.24s;
+          animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+  left: 26px;
+  -webkit-animation-delay: -0.12s;
+          animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+  left: 45px;
+  -webkit-animation-delay: 0;
+          animation-delay: 0;
+}
+
+@-webkit-keyframes lds-facebook {
+  0% {
+    top: 6px;
+    height: 51px;
+  }
+  50%, 100% {
+    top: 19px;
+    height: 26px;
+  }
+}
+
+@keyframes lds-facebook {
+  0% {
+    top: 6px;
+    height: 51px;
+  }
+  50%, 100% {
+    top: 19px;
+    height: 26px;
+  }
 }
 
 .device .StoryTime textarea {

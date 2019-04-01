@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Ad from './Ad';
 
-import {sendInput} from '../../actions';
+import {sendInput} from '../../../actions';
 
 class SelectGame extends Component {
 

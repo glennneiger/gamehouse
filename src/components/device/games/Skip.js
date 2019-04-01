@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {sendInput} from '../../../actions';
-import Ad from '../Ad';
+import Ad from '../other/Ad';
 
 export default class PlayAgain extends Component {
 
