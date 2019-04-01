@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {joinRoom} from '../../../actions';
-import {signInWithGoogle} from '../../../actions/auth';
+import {signInWithGoogle, updateUser} from '../../../actions/auth';
 import ImgSelection from './ImgSelection';
+import ImgCrop from './ImgCrop';
 import {Link} from 'react-router-dom';
+import ProfilePicture from './ProfilePicture';
 
 class JoinRoom extends Component {
 
@@ -10,7 +12,9 @@ class JoinRoom extends Component {
     super(props);
     this.state={
       roomCode: '',
-      playerName: ''
+      playerName: '',
+      userImg: null,
+      uploadedImg: null
     }
   }
 
@@ -26,20 +30,24 @@ class JoinRoom extends Component {
   componentDidUpdate(oldProps) {
     const {user} = this.props;
     if(user && (!oldProps.user || user.name !== oldProps.user.name)) {
-      this.setState({playerName: user.name.substring(0, 12)})
+      const playerName = user.name.substring(0, 12)
+      this.setState({playerName, userImg: user.img});
     }
   }
 
   joinRoom = async () => {
 
     let roomCode = this.state.roomCode.toUpperCase();
+    let playerName = this.state.playerName.trim();
+
+    if (this.props.user) updateUser({name: playerName});
+
     //ROOM CODE validation
     if (!roomCode.trim()) {
       alert('Enter Room Code');
       return;
     }
 
-    let playerName = this.state.playerName.trim();
     // NAME validation
     if (!playerName) {
       alert('Enter Name');
@@ -47,7 +55,12 @@ class JoinRoom extends Component {
     }
 
     //img id
-    let img = document.querySelector('.selected').dataset.imgid;
+    let img;
+    if (this.props.user) {
+      img = this.state.userImg;
+    } else {
+      img = parseInt(document.querySelector('.selected').dataset.imgid);
+    }
 
     
     //join room
@@ -78,8 +91,17 @@ class JoinRoom extends Component {
     });
   }
 
+  handleNewImage = img=> {
+    if (img) {
+      this.setState({userImg: img});
+      updateUser({img});
+    };
+    this.setState({uploadedImg: null});
+  }
+
   renderContent = ()=> {
     const {user} = this.props;
+    const {userImg, uploadedImg, playerName} = this.state;
     const nameInput = <input 
       type="text" 
       className="textbox" 
@@ -88,7 +110,7 @@ class JoinRoom extends Component {
       autoComplete="off" 
       spellCheck={false} 
       name="playerName" 
-      value={this.state.playerName}
+      value={playerName}
       onChange={this.handleInputChange}
     />
     const join = <div className="btn" onClick={this.joinRoom}>Join the Party!</div>
@@ -96,18 +118,19 @@ class JoinRoom extends Component {
     if (user===false) {
       return <div><div className="lds-facebook"><div></div><div></div><div></div></div></div>
     } else if (user) {
-      return (
-        <div className="column">
-          <div>Name:</div>
-          {nameInput}
-          <div>Picture:</div>
-          <div id="profile-picture-container">
-            <div id="change"><i className="fas fa-camera"></i></div>
-            <img alt={`${user.name}'s Profile`} src={user.img} className="selected" />
+      if (uploadedImg) {
+        return <div><ImgCrop img={uploadedImg} returnImage={this.handleNewImage} /></div>;
+      } else {
+        return (
+          <div className="column">
+            <div>Name:</div>
+            {nameInput}
+            <div>Picture:</div>
+            <ProfilePicture img={userImg} name={user.name} handleFileSelect={uploadedImg=>this.setState({uploadedImg})}/>
+            {join}
           </div>
-          {join}
-        </div>
-      )
+        )
+      }
     } else {
       return (
         <div className="column">

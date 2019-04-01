@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import JoinRoom from './other/JoinRoom';
-import Joined from './other/Joined';
+import JoinRoom from './joinroom/JoinRoom';
+import Joined from './joinroom/Joined';
 import SelectGame from './other/SelectGame';
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';

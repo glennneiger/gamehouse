@@ -50,3 +50,8 @@ export const getSignIn = callback => {
     callback(res);
   })
 }
+
+
+export const updateUser = (update) => {
+  database.ref(`users/${auth.currentUser.uid}`).update(update);
+}
