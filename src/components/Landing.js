@@ -55,8 +55,8 @@ class Landing extends Component {
       <div className="device deviceLanding">
         <img className="logo" src="./assets/img/logo2.svg" alt="Party House" />
         <Link to="/connect" className="btn">Join Party!</Link>
-        {/* <Link to="/account" className="btn btn-small">My Account</Link>
-        <Link to="/store" className="btn btn-small">Browse Games</Link> */}
+        <Link to="/account" className="btn btn-small">My Account</Link>
+        {/* <Link to="/store" className="btn btn-small">Browse Games</Link> */}
         <Link to="/howtoplay" className="btn btn-small">How to Play</Link>
         <Link to="/credits" className="btn btn-small">Credits</Link>
         <Ad />
