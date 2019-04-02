@@ -13,6 +13,9 @@ import Account from './components/pages/Account';
 
 import {getSignIn} from './actions/auth';
 
+import ScrollToTop from './components/ScrollToTop';
+
+
 class App extends Component {
 
   constructor(props) {
@@ -29,7 +32,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <ScrollToTop>
           <Route exact path="/" component={ Landing } />
           <Route exact path="/game" component={ Game } />
           <Route exact path="/connect" render={props => <Device {...props} user={this.state.user} />}/>
@@ -37,7 +40,7 @@ class App extends Component {
           <Route exact path="/credits" component={ Credits } />
           <Route exact path="/store" component={ Store } />
           <Route exact path="/account" render={props => <Account {...props} user={this.state.user} />}/>
-        </div>
+        </ScrollToTop>
       </BrowserRouter>
     )
   }
@@ -45,3 +48,5 @@ class App extends Component {
 }
 
 export default App;
+
+
