@@ -11,6 +11,7 @@ export const signInWithGoogle = ()=> {
 }
 
 export const signOut = async ()=> {
+  if (auth.currentUser) database.ref(`users/${auth.currentUser.uid}`).off();
   let res = await auth.signOut().then(function() {
     res = true;
   }).catch(function(error) {
@@ -19,36 +20,62 @@ export const signOut = async ()=> {
   return res;
 }
 
-export const getSignIn = callback => {
+export const deleteAccount = async ()=> {
+  database.ref(`users/${auth.currentUser.uid}`).remove();
+  let res = await auth.currentUser.delete().then(function() {
+    res = true;
+  }).catch(function(error) {
+    res = error;
+  });
+  signOut();
+  return res;
+}
 
-  const getUserInfo = auth=> {
-      let userNode = database.ref(`users/${auth.uid}`);
-      return userNode.once('value', async data => {
+export const getSignIn = async callback => {
+  const getUserInfo = async auth=> {
+    let res=null;
+    let userNode = database.ref(`users/${auth.uid}`);
+    await userNode.once('value', async data => {
       const user = await data.toJSON();
       if (user) {
-        return user;
+        res = user;
       } else {
         const newUser = {
-          name: auth.displayName.split(' ')[0],
+          name: auth.displayName.split(' ')[0].substring(0, 12), // take first name, limit to 12 chars
           img: auth.photoURL
         }
         userNode.set(newUser);
-        return newUser;
+        res = newUser;
+      }
+    });
+    return res;
+  }
+
+  if (callback) {
+
+    auth.onAuthStateChanged(async auth=> {
+
+      if (auth) {
+
+        database.ref(`users/${auth.uid}`).on('value', async data => {
+          const value = await data.toJSON();
+          callback(value);
+        }); 
+
+        getUserInfo(auth); 
+
+      } else {
+      // User is signed out.
+        callback(null);
       }
     });
   }
 
-  auth.onAuthStateChanged(async auth=> {
-    let res;
-    if (auth) {
-      const data = await getUserInfo(auth);  
-      res = await data.toJSON();
-    } else {
-     // User is signed out.
-      res = null;
-    }
-    callback(res);
-  })
+  let res=null;
+  if (auth.currentUser) {
+    res=await getUserInfo(auth.currentUser);
+  }
+  return res;
 }
 
 

@@ -12,7 +12,6 @@ import Ad from './other/Ad';
 import Logo from './other/Logo';
 
 import {watchForChange, getValue, roomExists, selectGame, removeWatcher, leaveRoom, deleteRoom} from '../../actions';
-import {getSignIn} from '../../actions/auth';
 import {games} from '../../helpers/games';
 
 class Device extends Component {
@@ -28,15 +27,12 @@ class Device extends Component {
       playerIndex: 0,
       request: null,
       game: null,
-      showMenu: false,
-      user: false // {name, img} (if signed in)
+      showMenu: false
     }
 
   }
 
   componentDidMount() {
-    getSignIn(this.getUser);
-
     // see if player is already in room (if they refreshed browser)
     const roomCode = localStorage.getItem('roomCode');
     if (roomCode) {
@@ -44,10 +40,6 @@ class Device extends Component {
     } else {
       this.setState({game: games.newRoom});
     }
-  }
-
-  getUser = user=> {
-    this.setState({user});
   }
 
   // called if a player refreshes browser
@@ -185,7 +177,7 @@ class Device extends Component {
 
 
   renderContent = ()=> {
-    const {host, code, entered, hostName, request, playerIndex, game, user} = this.state;
+    const {host, code, entered, hostName, request, playerIndex, game} = this.state;
 
     const gameProps = {request, code, playerIndex, handleSubmit: ()=>this.setState({request: null})}
 
@@ -195,7 +187,7 @@ class Device extends Component {
         return <SelectGame host={host} hostName={hostName} code={code} playerIndex={playerIndex} />
 
       case games.newRoom:
-        return entered ? <Joined hostName={hostName} host={host} code={code} /> : <JoinRoom setRoom = {this.setRoom} user={user} /> 
+        return entered ? <Joined hostName={hostName} host={host} code={code} /> : <JoinRoom setRoom = {this.setRoom} user={this.props.user} /> 
 
       case games.storyTime:
         return <StoryTime {...gameProps} />

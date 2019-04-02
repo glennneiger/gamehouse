@@ -99,7 +99,7 @@ export function watchForChangeInPlayers(roomCode, callback) {
 
 export function watchForChange(roomCode, child, callback, notifyEvenIfNull) {
   database.ref(`rooms/${roomCode}/${child}`).on('value', async data => {
-    const value = data.toJSON();
+    const value = await data.toJSON();
     if (!value && !notifyEvenIfNull) return;
     callback(value);
   });

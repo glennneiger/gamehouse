@@ -1,0 +1,22 @@
+.cover-screen 
+  z-index: 10
+  position: fixed
+  width: 100vw 
+  height: 100vh 
+  background: rgba(0,0,0,0.94)
+  top: 0
+  left: 0
+  display: flex 
+  justify-content: center 
+  align-items: center
+  color: white    
+  .btn 
+    box-shadow: none !important
+    background-color: $brand-dark
+    background-image: linear-gradient(lighten($brand-dark, 5%), darken($brand-dark, 5%))
+    &:hover
+      background-color: lighten($brand-dark, 10%)
+  .btn-link 
+    color: #ddd !important
+    &:hover 
+      color: white !important
