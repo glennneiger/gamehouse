@@ -11,11 +11,22 @@ export default class StoryTimeVote extends Component {
   }
 
   renderOptions() {
+    
     const {message} = this.props.request;
     let options = Object.values(message);
-    return options.map((option, i)=>(
-      <img alt={option.name} key={i} data-imgid={option.img} id={'img-' + i} src={`./assets/img/profiles/${('0' + option.img).slice(-2)}.jpg`}  onClick={()=>this.submitVote(option.index)}></img>
-    ));
+    return options.map((option, i)=>{
+      const {img} = option;
+      let src;
+      // img is either an index (representing an animal pic) or a constum img url
+      if (Number.isInteger(img)) {
+        src=`./assets/img/profiles/${('0' + img).slice(-2)}.jpg`;
+      } else {
+        src = img;
+      }
+      return (
+        <img alt={option.name} key={i} id={'img-' + i} src={src}  onClick={()=>this.submitVote(option.index)}></img>
+      )
+    });
   }
 
   render() {

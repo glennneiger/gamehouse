@@ -75,7 +75,7 @@ class Video extends Component {
           Your browser does not support the video tag.
         </video>
 
-        <video id="video-player-2" className="bg-video" loop muted onLoadData={this.handleOnPlay}>
+        <video id="video-player-2" className="bg-video" loop muted onLoadedData={this.handleOnPlay}>
           <source id="video-src-2" src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>
