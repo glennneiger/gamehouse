@@ -1,0 +1,43 @@
+.Artist
+  max-height: 100vh
+  overflow: hidden
+  .round-counter-container
+    display: flex
+    flex-wrap: wrap 
+    justify-content: center
+    align-content: center 
+    height: 50vw
+    &.length-2
+      width: 29vw 
+    &.length-3
+      width: 43vw 
+    &.length-4
+      width: 57vw 
+    &.length-5
+      width: 71vw 
+    .round-counter 
+      width: 11vw
+      height: 11vw
+      font-size: 5vw
+      border: 0.3vw solid black 
+      border-radius: 50% 
+      background-color: rgba(0,25,0,.88) 
+      color: black
+      text-align: center 
+      line-height: 10vw
+      margin: 0.5vw 1.5vw
+      transition: background-color 300ms
+      &.highlighted 
+        background-color: rgba(0,175,0,.88) 
+  .presentation 
+    .item 
+      position: absolute
+      top: 0 
+      left: 0
+      transition: transform 500ms
+      &.bottom
+        transform: translateY(25vh)
+      &.top
+        transform: translateY(-25vh)
+
+

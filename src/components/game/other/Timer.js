@@ -1,18 +1,24 @@
 import React, {Component} from 'react';
 
-
+import {updateRoom} from '../../../actions/index';
 
 export default class Timer extends Component {
 
   constructor(props) {
     super(props);
     
-    this.clock = null;
-    this.state = {startTimer: false}
+    this.progressBarInterval = null;
+    this.countdownInterval = null;
+
+    this.state = {
+      startTimer: null, 
+      secondsRemaining: null
+    };
   }
 
+  componentDidUpdate(oldProps) {
+    if (oldProps.startTimer===this.props.startTimer) return;
 
-  componentDidUpdate() {
     if (this.props.startTimer && !this.state.startTimer) {
       this.setState({startTimer: true});
       this.startTimer();
@@ -26,23 +32,35 @@ export default class Timer extends Component {
   }
 
   stopTimer = ()=> {
-    clearInterval(this.clock);
+    clearInterval(this.progressBarInterval);
+    clearInterval(this.countdownInterval);
+    updateRoom(this.props.code, {timer: 0});
     this.setState({startTimer: false});
     document.querySelector('.Timer').style.display="none";
   }
 
   startTimer = ()=> {
+    const seconds = this.props.seconds || 60;
+    const {code}=this.props;
+
+    this.setState({secondsRemaining: seconds});
+
     let timer = document.getElementById('timer');
     timer.style.width="100vw";
     timer.style.backgroundColor="#44cc44";
     timer.parentElement.style.display="block";
 
     let width = 100;
-    const seconds = this.props.seconds || 30;
-    const interval = seconds;
+    updateRoom(code, {timer: seconds});
 
+    this.countdownInterval = setInterval(()=>{
+      let {secondsRemaining} = this.state;
+      secondsRemaining--;
+      updateRoom(code, {timer: secondsRemaining});
+      this.setState({secondsRemaining});
+    }, 1000);
     
-    this.clock = setInterval(()=>{
+    this.progressBarInterval = setInterval(()=>{
       width-=0.1;
       timer.style.width=`${width}vw`;
       if (parseInt(width)===50) {
@@ -60,7 +78,7 @@ export default class Timer extends Component {
         const onFinish = this.props.onFinish || doNothing; 
         onFinish();
       }
-    }, interval);
+    }, seconds);
 
   }
 

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {sendInput} from '../../../../actions';
 
+import Timer from '../../other/Timer';
+
 export default class StoryTimeVote extends Component {
 
   submitVote = vote=> {
@@ -32,6 +34,7 @@ export default class StoryTimeVote extends Component {
   render() {
     return (
       <div className="StoryTime column">
+        <Timer code={this.props.code} />
         <div className="font-large">Vote!</div>
         <div className="row vote">{this.renderOptions()}</div>
       </div>

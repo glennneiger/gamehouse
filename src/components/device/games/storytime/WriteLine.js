@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {sendInput} from '../../../../actions';
 
+import Timer from '../../other/Timer';
+
 export default class StoryTimeWriteLine extends Component {
 
   updateText = e=> {
@@ -18,6 +20,7 @@ export default class StoryTimeWriteLine extends Component {
     const prompt = this.props.request.message;
     return (
       <div className="StoryTime">
+        <Timer code={this.props.code} />
         <div>Fill in the blank:</div>
         <div className="font-large">{prompt}...</div>
         <textarea className="textbox" id="write-line" maxLength="120" rows="2" onChange={this.updateText}></textarea>

@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import JoinRoom from './joinroom/JoinRoom';
 import Joined from './joinroom/Joined';
 import SelectGame from './other/SelectGame';
+
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';
+import Artist from './games/artist/Index';
+
 import MenuLink from './other/MenuLink';
 
 import Ad from './other/Ad';
@@ -150,6 +153,7 @@ class Device extends Component {
     let menu = null;
 
     if (entered) {
+
       if (game===games.gameRoom || game===games.newRoom) {
         menu = [];
         menu.push(
@@ -164,6 +168,7 @@ class Device extends Component {
         menu=<MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='Exit the current game and return to the lobby?' caption='Return to Lobby' />
       }
     }
+
     return (
       <div className="device">
         <Logo />
@@ -194,6 +199,9 @@ class Device extends Component {
 
       case games.speakEasy:
         return <Speakeasy {...gameProps} />
+
+        case games.artist:
+          return <Artist {...gameProps} />
 
 
       case 'thank-you':

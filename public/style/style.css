@@ -979,6 +979,80 @@ div.StoryTime .WriterCard .speech-bubble:after {
   }
 }
 
+.Artist {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.Artist .round-counter-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  height: 50vw;
+}
+
+.Artist .round-counter-container.length-2 {
+  width: 29vw;
+}
+
+.Artist .round-counter-container.length-3 {
+  width: 43vw;
+}
+
+.Artist .round-counter-container.length-4 {
+  width: 57vw;
+}
+
+.Artist .round-counter-container.length-5 {
+  width: 71vw;
+}
+
+.Artist .round-counter-container .round-counter {
+  width: 11vw;
+  height: 11vw;
+  font-size: 5vw;
+  border: 0.3vw solid black;
+  border-radius: 50%;
+  background-color: rgba(0, 25, 0, 0.88);
+  color: black;
+  text-align: center;
+  line-height: 10vw;
+  margin: 0.5vw 1.5vw;
+  -webkit-transition: background-color 300ms;
+  transition: background-color 300ms;
+}
+
+.Artist .round-counter-container .round-counter.highlighted {
+  background-color: rgba(0, 175, 0, 0.88);
+}
+
+.Artist .presentation .item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition: -webkit-transform 500ms;
+  transition: -webkit-transform 500ms;
+  transition: transform 500ms;
+  transition: transform 500ms, -webkit-transform 500ms;
+}
+
+.Artist .presentation .item.bottom {
+  -webkit-transform: translateY(25vh);
+          transform: translateY(25vh);
+}
+
+.Artist .presentation .item.top {
+  -webkit-transform: translateY(-25vh);
+          transform: translateY(-25vh);
+}
+
 a {
   display: block;
   text-decoration: none;
@@ -1593,6 +1667,7 @@ div.v-100 {
   max-width: 100vw;
   min-height: 100vh;
   text-align: center;
+  padding-bottom: 24px;
 }
 
 .device .JoinRoom {
@@ -1769,8 +1844,17 @@ div.v-100 {
   margin-top: 20px !important;
 }
 
-.device {
-  padding-bottom: 24px;
+.device .DeviceTimer .circle {
+  width: 70px;
+  height: 70px;
+  border: 5px solid #3fa9f5;
+  background-color: white;
+  border-radius: 35px;
+  color: #3fa9f5;
+  line-height: 60px;
+  font-size: 16pt;
+  font-weight: 900;
+  margin: 0 0 8px;
 }
 
 .device .btn {
@@ -1783,7 +1867,7 @@ div.v-100 {
   max-width: 330px;
   border-radius: 40px;
   color: white;
-  margin: 0 auto 8px;
+  margin: 0 auto 16px;
   -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
   border: 5px solid #e0ebfa;
@@ -1808,6 +1892,7 @@ div.v-100 {
   line-height: 60px;
   font-size: 16pt;
   width: 82vw;
+  padding-bottom: 8px;
 }
 
 .device .btn-link {
@@ -1836,6 +1921,15 @@ div.v-100 {
 
 .device .header {
   padding-bottom: 12px;
+}
+
+.device textarea {
+  font-family: "Nunito", verdana, arial, sans-serif;
+  font-size: 14pt;
+  padding: 0 4pt;
+  width: 98vw;
+  margin: 10px auto 12px;
+  max-width: 300px;
 }
 
 .device div.vote {
@@ -1958,15 +2052,6 @@ div.v-100 {
   color: white !important;
 }
 
-.device .StoryTime textarea {
-  font-family: "Nunito", verdana, arial, sans-serif;
-  font-size: 14pt;
-  padding: 0 4pt;
-  width: 98vw;
-  margin: 10px auto 24px;
-  max-width: 300px;
-}
-
 .device .Speakeasy.Role #role {
   font-size: 44pt;
   padding: 14pt 0 24pt 0;
@@ -1979,5 +2064,12 @@ div.v-100 {
 
 .device .Speakeasy.SelectLocation .caption.no-padding {
   padding-bottom: 0;
+}
+
+.device .Artist .canvas-container {
+  border: 1px black solid;
+  margin: 0 0 12px;
+  -webkit-box-shadow: 2px 6px 15px #aaa;
+          box-shadow: 2px 6px 15px #aaa;
 }
 /*# sourceMappingURL=style.css.map */

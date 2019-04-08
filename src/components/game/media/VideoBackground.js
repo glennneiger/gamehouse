@@ -5,7 +5,11 @@ class Video extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {currentPlayer: 1};
+    this.state = {currentPlayer: 1,
+      playerSources: {
+        1: null,
+        2: null
+      }, preloaded: false};
   }
 
   componentDidMount() {
@@ -17,7 +21,7 @@ class Video extends Component {
 
     //new video
     if(oldProps.video !== newProps.video) {
-      let {currentPlayer} = this.state;
+      let {currentPlayer, playerSources} = this.state;
       let {video} = newProps;
       let {preload} = oldProps;
 
@@ -27,7 +31,7 @@ class Video extends Component {
       player.pause();
 
       // see if the new music has already been preloaded. This can be done to cut down on load time
-      if (video===preload) {
+      if (video===preload && this.state.preloaded && playerSources[currentPlayer]===video) {
         // if so, switch to the player that has it preloaded (there are 2)
         player.style.display = "none";
         currentPlayer===1 ? currentPlayer = 2 : currentPlayer = 1;
@@ -39,15 +43,18 @@ class Video extends Component {
         // if not, load it
         document.querySelector(`#video-src-${currentPlayer}`).src=(`assets/video/${video}.mp4`);
         player.load();
+        playerSources[currentPlayer] = video;
+        this.setState({playerSources});
       }
       player.play();
     }
 
     // new preload 
     if(oldProps.preload !== newProps.preload) {
+      this.setState({preloaded: false});
       setTimeout(() => {  
         let {preload} = newProps;
-        let {currentPlayer} = this.state;
+        let {currentPlayer, playerSources} = this.state;
         let backupPlayer = 1;
         if (currentPlayer===1) {
           backupPlayer = 2;
@@ -56,12 +63,17 @@ class Video extends Component {
         if (!player) return;
         document.querySelector(`#video-src-${backupPlayer}`).src=(`assets/video/${preload}.mp4`);
         player.load();
-      }, 500);
+        playerSources[currentPlayer] = preload;
+        this.setState({playerSources});
+      }, 200);
     }
     
   }
 
-  handleOnPlay = async ()=>{
+  onLoaded = async e=>{
+    if (e.target.dataset.id !== this.state.currentPlayer) {
+      this.setState({preloaded:true});
+    }
     if (this.props.handleOnPlay) {
       this.props.handleOnPlay();
     }
@@ -70,12 +82,12 @@ class Video extends Component {
   render () {
     return (
       <div>
-        <video id="video-player-1" className="bg-video" loop muted onLoadedData={this.handleOnPlay}>
+        <video id="video-player-1" data-id={1} className="bg-video" loop muted onLoadedData={this.onLoaded}>
           <source id="video-src-1" src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
-        <video id="video-player-2" className="bg-video" loop muted onLoadedData={this.handleOnPlay}>
+        <video id="video-player-2" data-id={2} className="bg-video" loop muted onLoadedData={this.onLoaded}>
           <source id="video-src-2" src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>

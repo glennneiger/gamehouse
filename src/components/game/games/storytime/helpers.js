@@ -1,3 +1,6 @@
+import {shuffle} from '../../../../helpers/functions';
+
+
 export const screens = {
   intro: 'intro',
   read: 'read',
@@ -74,7 +77,9 @@ export const getStoryStart = ()=>{
     'a boy named Jacob who came from a poor family',
     'a racecar driver named Jacob',
     'a brilliant scientist named Jacob',
-    'a student named Jacob who took his assignments very seriously'
+    'a student named Jacob who took his assignments very seriously',
+    'a man named Jacob who worked at a pet store',
+    'a zookeeper named Jacob'
   ]
 
   const makeMale = text=> {
@@ -125,13 +130,6 @@ export const getWritersPerTurn = numPlayers=> {
   return breakdown;
 }
 
-export const shuffle = arr=> {
-  for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
 
 
 export const getPrompt = turn=> {

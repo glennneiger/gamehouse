@@ -5,7 +5,14 @@ class Audio extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {currentMusicPlayer: 1};
+    this.state = {
+      currentMusicPlayer: 1,
+      musicPlayerSources: {
+        1: null,
+        2: null
+      },
+      preloaded: false
+    };
   }
 
 
@@ -37,12 +44,14 @@ class Audio extends Component {
       player.pause();
 
       if (music !== 'stop') {
+        let {musicPlayerSources} = this.state;
+
         //switch the player (there are 2)
         currentMusicPlayer===1 ? currentMusicPlayer = 2 : currentMusicPlayer = 1;
         player = document.querySelector(`#music-player-${currentMusicPlayer}`);
 
         // see if the new music has already been preloaded. This can be done to cut down on load time
-        if (music!==preload) {
+        if (music!==preload || !this.state.preloaded || musicPlayerSources[currentMusicPlayer]!==music) {
           // if not, load it
           document.querySelector(`#music-${currentMusicPlayer}-source-ogg`).src=(`assets/music/${music}.ogg`);
           document.querySelector(`#music-${currentMusicPlayer}-source-mp3`).src=(`assets/music/${music}.mp3`);
@@ -50,15 +59,17 @@ class Audio extends Component {
         }
         player.volume=.6;
         player.play();
-        this.setState({currentMusicPlayer});
+        musicPlayerSources[currentMusicPlayer] = music;
+        this.setState({currentMusicPlayer, musicPlayerSources});
       }
     }
 
     // new preload 
     if(newProps.preload && oldProps.preload !== newProps.preload) {
+      this.setState({preloaded:false});
       setTimeout(() => {  
         let {preload} = newProps;
-        let {currentMusicPlayer} = this.state;
+        let {currentMusicPlayer, musicPlayerSources} = this.state;
         let backupPlayer = 1;
         if (currentMusicPlayer===1) {
           backupPlayer = 2;
@@ -68,7 +79,9 @@ class Audio extends Component {
         document.querySelector(`#music-${backupPlayer}-source-ogg`).src=(`assets/music/${preload}.ogg`);
         document.querySelector(`#music-${backupPlayer}-source-mp3`).src=(`assets/music/${preload}.mp3`);
         player.load();
-      }, 500);
+        musicPlayerSources[currentMusicPlayer] = preload;
+        this.setState({musicPlayerSources});
+      }, 200);
     }
     
   }
@@ -77,6 +90,12 @@ class Audio extends Component {
     await this.props.clearAudio();
     if (this.props.callback) {
       this.props.callback();
+    }
+  }
+
+  onLoaded = async e=>{
+    if (e.target.dataset.id !== this.state.currentPlayer) {
+      this.setState({preloaded:true});
     }
   }
 
@@ -90,12 +109,12 @@ class Audio extends Component {
           Your browser does not support the audio element.
         </audio>  
 
-        <audio id="music-player-1" className="music-player" loop >
+        <audio id="music-player-1" className="music-player" loop data-id={1} onLoadedData={this.onLoaded}>
           <source id="music-1-source-ogg" src='' type="audio/ogg" />
           <source id="music-1-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>  
-        <audio id="music-player-2" className="music-player" loop >
+        <audio id="music-player-2" className="music-player" loop data-id={2} onLoadedData={this.onLoaded}>
           <source id="music-2-source-ogg" src='' type="audio/ogg" />
           <source id="music-2-source-mp3" src='' type="audio/mpeg" />
           Your browser does not support the audio element.

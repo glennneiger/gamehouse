@@ -31,6 +31,7 @@ export function selectGame(roomCode, game) {
 }
 
 
+// used by game to request input from device
 export function inputRequest(roomCode, requestType, requestMessage, playersToReceive, callback) {
   const handleInput = (input, index)=> {
 
@@ -62,7 +63,9 @@ export function inputRequest(roomCode, requestType, requestMessage, playersToRec
 }
 
 
-export function sendInput(roomCode, playerIndex, message, closeRequest) {
+
+// used by device to send input to game. 
+export function sendInput(roomCode, playerIndex, message, closeRequest/*boolean*/) {
   database.ref(`rooms/${roomCode}`).once('value', async data => {
     const room = await data.toJSON();
     if (!room) return;
@@ -73,7 +76,7 @@ export function sendInput(roomCode, playerIndex, message, closeRequest) {
   });
 }
 
-
+// used by game to close an open request, if for example, time runs out to submit
 export async function closeRequest(roomCode, playerIndex) {
   await database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
     const player = await data.toJSON();
@@ -159,6 +162,7 @@ export async function joinRoom(roomCode, name, img) {
 
   return res.toJSON();
 };
+
 
 export function leaveRoom(roomCode, index) {
   if(!roomCode) return;

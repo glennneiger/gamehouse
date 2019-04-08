@@ -21,7 +21,7 @@ class Write extends Component {
       winningText: '',
       tie: false,
       startTimer: false,
-      timerSeconds: 60
+      timerSeconds: 90
     }
   }
 
@@ -161,7 +161,7 @@ class Write extends Component {
   
 
   openVoting = ()=> {
-    const recordVote = async (input, voter)=> {
+    const recordVote = (input, voter)=> {
       const vote = input.message;
       let {votes} = this.state;
       if (votes[vote]===undefined) {
@@ -213,7 +213,7 @@ class Write extends Component {
     let {timerSeconds, startTimer} = this.state;
     return (
       <div className="StoryTime">
-        <Timer onFinish={this.timeOut} seconds={timerSeconds} startTimer={startTimer} />
+        <Timer onFinish={this.timeOut} seconds={timerSeconds} startTimer={startTimer} code={this.props.room.code}/>
 
         <div className="row">
           <div className="story-text">

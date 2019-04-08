@@ -7,6 +7,7 @@ import NewRoom from './lobby/NewRoom';
 import Lobby from './lobby/Lobby';
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';
+import Artist from './games/artist/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../../actions';
 
@@ -189,6 +190,12 @@ class Computer extends Component {
 
       case games.speakEasy:
         return <Speakeasy {...props} />
+
+      case games.artist:
+        return <Artist {...props} />
+
+      // case games.dankU:
+      //   return <DankU {...props} />
     
       default:
         return null

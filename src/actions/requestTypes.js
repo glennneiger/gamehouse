@@ -9,6 +9,10 @@ export const requests = {
     invitation: 'invitation',
     whereToGo: 'where-to-go'
   },
+  artist: {
+    draw: 'draw',
+    type: 'type'
+  },
   playAgain: 'play-again',
   skip: 'skip'
 }
