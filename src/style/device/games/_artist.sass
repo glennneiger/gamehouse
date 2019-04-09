@@ -1,6 +1,26 @@
 .device
   .Artist 
+    .header 
+      max-width: 300px
     .canvas-container 
       border: 1px black solid
-      margin: 0 0 12px
-      box-shadow: 2px 6px 15px #aaa
+      box-shadow: 2px 4px 8px #aaa
+      margin: 0 0 12px 
+    .picker 
+      width: 300px
+      display: flex 
+      flex-wrap: wrap 
+      margin: 6px auto
+      .color 
+        width: 30px 
+        height: 30px
+        display: block
+        cursor: pointer
+      .swatch 
+        width: 60px 
+        height: 60px
+        display: flex 
+        justify-content: center 
+        align-items: center
+        cursor: pointer
+        border: 1px solid black

@@ -5,22 +5,26 @@ export default class Present extends Component {
 
   constructor(props) {
     super(props);
+
+    const width = Math.round(window.innerWidth/3);
+
     this.state={
       canvasProps: {
         loadTimeOffset: 0,
         lazyRadius: 0,
         brushRadius: 2,
         brushColor: "#000",
-        catenaryColor: "#0a0302",
-        gridColor: "rgba(150,150,150,0.17)",
         hideGrid: true,
-        canvasWidth: 500,
-        canvasHeight: 500,
+        canvasWidth: width,
+        canvasHeight: width,
         disabled: true,
         imgSrc: "",
         immediateLoading: true
       },
-      displayItems: []
+      displayItems: [
+        <div className="flex-item small-item" key="placeholder1"></div>,
+        <div className="flex-item small-item" key="placeholder2"></div>
+      ]
     }
   }
 
@@ -34,38 +38,44 @@ export default class Present extends Component {
     let index = 0;
     let round = 0;
 
-    const clearItem = index=> {
-      let item = document.getElementById(`item-${index}`);
-      if (!item) return;
-      item.classList.add('slide-up');
+    const removeItem = removeAdditional=> {
+      let itemToRemove = document.querySelector('.flexbox').lastChild;
+      if (removeAdditional) itemToRemove = itemToRemove.previousSibling;
+      itemToRemove.classList.remove('new-item');
+      itemToRemove.classList.add('remove-item');
       setTimeout(() => {
         let displayItems = this.state.displayItems.slice();
-        displayItems.shift();
+        displayItems.pop();
         this.setState({displayItems});
       }, 900);
     }
 
     const addItem = (round, index)=> {
       const {roundContent, playerOrder} = this.props;
-      let displayItems = this.state.displayItems.slice();
-      let newItem;
+
+      let size = 'small';
+
+      let innerContent;
       let content = roundContent[round][playerOrder[index]];
-      if (round%2===0) {
-        newItem = <Canvas saveData={content} {...this.state.canvasProps} />
+      if (round%2===0) { 
+        size = 'large'
+        innerContent = <Canvas saveData={content} {...this.state.canvasProps} />
       } else {
-        newItem=<div className="caption">{content}</div>
+        innerContent = <div className="caption">{content}</div>
       }
-      if (displayItems.length>0) {
-        let lastItem = document.getElementById(`item-${round-1}`);
-        if (lastItem) {
-          lastItem.classList.remove('bottom');
-          lastItem.classList.add('top');
-        }
+      
+      const newItem = <div key={round} className={`flex-item new-item ${size}-item`} id={`item-${round}`}>{innerContent}</div>;
+
+      let displayItems = this.state.displayItems.slice();
+
+      if (round===0) {
+        removeItem(true);
+        const blankItem=<div className="flex-item new-item small-item" key="placeholder"></div>;
+        displayItems.unshift(blankItem)
       }
-      if (displayItems.length>1) {
-        clearItem(round-2);
-      }
-      displayItems.push(<div key={round} className="item bottom slide-in-from-bottom" id={`item-${round}`}><div className="center-screen">{newItem}</div></div>);
+
+      removeItem();
+      displayItems.unshift(newItem);
       this.setState({displayItems});
     }
 
@@ -74,8 +84,6 @@ export default class Present extends Component {
       index++;
       let max = this.props.playerOrder.length;
       if (round>=max) {
-        clearItem(round-1);
-        clearItem(round-2);
         round=0;
         index++;
       }
@@ -89,19 +97,16 @@ export default class Present extends Component {
     setInterval(() => {
       increment();
       addItem(round, index);
-    }, 3000);
+    }, 5000);
   }
 
-  renderItems = ()=> {
-    return <div className="presentation">
-      {this.state.displayItems}
-    </div>
-  }
 
   render() {
     return (
       <div className="Artist">
-        {this.renderItems()}
+        <div className="flexbox">
+          {this.state.displayItems}
+        </div>
       </div>
     )
   }

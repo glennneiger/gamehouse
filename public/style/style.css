@@ -15,6 +15,12 @@ body {
   padding: 0;
 }
 
+.game-display {
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 div.page {
   background-color: white;
   color: black;
@@ -330,22 +336,6 @@ div.page p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-.PlayerGrid .flex-item:first-child {
-  border-left: none;
-}
-
-.PlayerGrid .hover-collapse-item {
-  white-space: nowrap;
-  background: rgba(150, 0, 150, 0.3);
-}
-
-.PlayerGrid .flexbox:hover .hover-collapse-item {
-  /* 0 does not work so we have to use a small number */
-  -webkit-box-flex: .00001;
-      -ms-flex: .00001;
-          flex: .00001;
 }
 
 .PlayerGrid .new-item {
@@ -979,12 +969,13 @@ div.StoryTime .WriterCard .speech-bubble:after {
   }
 }
 
-.Artist {
-  max-height: 100vh;
+.game-display .Artist *, .game-display .Artist *:before, .game-display .Artist *:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
-.Artist .round-counter-container {
+.game-display .Artist .round-counter-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -998,23 +989,23 @@ div.StoryTime .WriterCard .speech-bubble:after {
   height: 50vw;
 }
 
-.Artist .round-counter-container.length-2 {
+.game-display .Artist .round-counter-container.length-2 {
   width: 29vw;
 }
 
-.Artist .round-counter-container.length-3 {
+.game-display .Artist .round-counter-container.length-3 {
   width: 43vw;
 }
 
-.Artist .round-counter-container.length-4 {
+.game-display .Artist .round-counter-container.length-4 {
   width: 57vw;
 }
 
-.Artist .round-counter-container.length-5 {
+.game-display .Artist .round-counter-container.length-5 {
   width: 71vw;
 }
 
-.Artist .round-counter-container .round-counter {
+.game-display .Artist .round-counter-container .round-counter {
   width: 11vw;
   height: 11vw;
   font-size: 5vw;
@@ -1029,28 +1020,129 @@ div.StoryTime .WriterCard .speech-bubble:after {
   transition: background-color 300ms;
 }
 
-.Artist .round-counter-container .round-counter.highlighted {
+.game-display .Artist .round-counter-container .round-counter.highlighted {
   background-color: rgba(0, 175, 0, 0.88);
 }
 
-.Artist .presentation .item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transition: -webkit-transform 500ms;
-  transition: -webkit-transform 500ms;
-  transition: transform 500ms;
-  transition: transform 500ms, -webkit-transform 500ms;
+.game-display .Artist .flexbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  height: 100vh;
+  width: 100vw;
 }
 
-.Artist .presentation .item.bottom {
-  -webkit-transform: translateY(25vh);
-          transform: translateY(25vh);
+.game-display .Artist .flexbox .large-item div {
+  background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.Artist .presentation .item.top {
-  -webkit-transform: translateY(-25vh);
-          transform: translateY(-25vh);
+.game-display .Artist .flexbox .large-item div canvas {
+  position: relative !important;
+}
+
+.game-display .Artist .flexbox .large-item div canvas:nth-child(1), .game-display .Artist .flexbox .large-item div canvas:nth-child(3), .game-display .Artist .flexbox .large-item div canvas:nth-child(4) {
+  display: none !important;
+}
+
+.game-display .Artist .flex-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow: hidden;
+  -webkit-transition: all 900ms linear;
+  transition: all 900ms linear;
+}
+
+.game-display .Artist .new-item {
+  /* 0 does not work so we have to use a small number */
+  /* Start our small */
+  -webkit-box-flex: .00001;
+      -ms-flex: .00001;
+          flex: .00001;
+}
+
+.game-display .Artist .new-item.small-item {
+  -webkit-animation: flexGrow 600ms ease forwards;
+  animation: flexGrow 600ms ease forwards;
+}
+
+.game-display .Artist .new-item.large-item {
+  -webkit-animation: flexGrow-large 600ms ease forwards;
+  animation: flexGrow-large 600ms ease forwards;
+}
+
+.game-display .Artist .remove-item {
+  -webkit-animation: flexShrink-artist 800ms ease forwards;
+  animation: flexShrink-artist 800ms ease forwards;
+}
+
+.game-display .Artist .remove-item.small-item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.game-display .Artist .remove-item.large-item {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+}
+
+.game-display .Artist .caption {
+  font-size: 4vw;
+  color: black;
+}
+
+@-webkit-keyframes flexShrink-artist {
+  to {
+    -webkit-box-flex: .01;
+            flex: .01;
+    -webkit-box-flex: .00001;
+            flex: .00001;
+    -webkit-transform: translateY(-20vh);
+            transform: translateY(-20vh);
+  }
+}
+
+@keyframes flexShrink-artist {
+  to {
+    -webkit-box-flex: .01;
+        -ms-flex: .01;
+            flex: .01;
+    -webkit-box-flex: .00001;
+        -ms-flex: .00001;
+            flex: .00001;
+    -webkit-transform: translateY(-20vh);
+            transform: translateY(-20vh);
+  }
+}
+
+@-webkit-keyframes flexGrow-large {
+  to {
+    -webkit-box-flex: 3;
+            flex: 3;
+  }
+}
+
+@keyframes flexGrow-large {
+  to {
+    -webkit-box-flex: 3;
+        -ms-flex: 3;
+            flex: 3;
+  }
 }
 
 a {
@@ -1571,6 +1663,21 @@ div.v-100 {
           animation: 1000ms ease-out 0s 1 slideRight forwards;
 }
 
+@-webkit-keyframes flexGrow {
+  to {
+    -webkit-box-flex: 1;
+            flex: 1;
+  }
+}
+
+@keyframes flexGrow {
+  to {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+}
+
 @-webkit-keyframes flexGrow-4 {
   to {
     -webkit-box-flex: 1;
@@ -2066,10 +2173,47 @@ div.v-100 {
   padding-bottom: 0;
 }
 
+.device .Artist .header {
+  max-width: 300px;
+}
+
 .device .Artist .canvas-container {
   border: 1px black solid;
+  -webkit-box-shadow: 2px 4px 8px #aaa;
+          box-shadow: 2px 4px 8px #aaa;
   margin: 0 0 12px;
-  -webkit-box-shadow: 2px 6px 15px #aaa;
-          box-shadow: 2px 6px 15px #aaa;
+}
+
+.device .Artist .picker {
+  width: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 6px auto;
+}
+
+.device .Artist .picker .color {
+  width: 30px;
+  height: 30px;
+  display: block;
+  cursor: pointer;
+}
+
+.device .Artist .picker .swatch {
+  width: 60px;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  border: 1px solid black;
 }
 /*# sourceMappingURL=style.css.map */

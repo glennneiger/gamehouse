@@ -102,13 +102,12 @@ export default class Draw extends Component {
     let {startTimer, round} = this.state;
     let seconds;
     if (round===0) {
-      seconds=90;
+      seconds=80;
     } else if (round%2===0) {
       seconds=70;
     } else {
       seconds=25;
     }
-    seconds=15;
 
     return (
       <div className="Artist center-screen">

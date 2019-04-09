@@ -1,6 +1,11 @@
-.Artist
-  max-height: 100vh
-  overflow: hidden
+.game-display .Artist
+    
+  *, *:before, *:after 
+    -moz-box-sizing: border-box
+    -webkit-box-sizing: border-box
+    box-sizing: border-box
+    overflow: hidden
+
   .round-counter-container
     display: flex
     flex-wrap: wrap 
@@ -29,15 +34,90 @@
       transition: background-color 300ms
       &.highlighted 
         background-color: rgba(0,175,0,.88) 
-  .presentation 
-    .item 
-      position: absolute
-      top: 0 
-      left: 0
-      transition: transform 500ms
-      &.bottom
-        transform: translateY(25vh)
-      &.top
-        transform: translateY(-25vh)
 
 
+  .flexbox 
+    display: flex
+    flex-direction: column-reverse
+    height: 100vh
+    width: 100vw
+    .large-item div 
+      background-color: rgba(0,0,0,0) !important //override canvas bg
+      canvas 
+        position: relative !important
+        &:nth-child(1), &:nth-child(3), &:nth-child(4)
+          display: none !important
+
+  .flex-item  
+    display: flex
+    align-items: center
+    justify-content: center
+    flex: 1
+    overflow: hidden
+
+    transition: all 900ms linear
+
+  .new-item 
+    /* 0 does not work so we have to use a small number */
+    /* Start our small */
+    flex: .00001
+
+    &.small-item
+      -webkit-animation: flexGrow 600ms ease forwards
+      -o-animation: flexGrow 600ms ease forwards
+      animation: flexGrow 600ms ease forwards
+    &.large-item
+      -webkit-animation: flexGrow-large 600ms ease forwards
+      -o-animation: flexGrow-large 600ms ease forwards
+      animation: flexGrow-large 600ms ease forwards
+
+  
+  .remove-item 
+    -webkit-animation: flexShrink-artist 800ms ease forwards
+    -o-animation: flexShrink-artist 800ms ease forwards
+    animation: flexShrink-artist 800ms ease forwards
+    &.small-item
+      flex: 1
+    &.large-item
+      flex: 3
+
+    
+
+  .caption
+    font-size: 4vw
+    color: black 
+
+
+  
+  @-webkit-keyframes flexShrink-artist 
+    to 
+      flex: .01
+      flex: .00001
+      transform: translateY(-20vh)
+    
+
+  @-o-keyframes flexShrink-artist 
+    to 
+      flex: .01
+      flex: .00001
+      transform: translateY(-20vh)
+    
+
+  @keyframes flexShrink-artist
+    to 
+      flex: .01
+      flex: .00001
+      transform: translateY(-20vh)
+
+    
+  @-webkit-keyframes flexGrow-large
+    to 
+      flex: 3
+
+  @-o-keyframes flexGrow-large
+    to 
+      flex: 3
+    
+  @keyframes flexGrow-large
+    to 
+      flex: 3

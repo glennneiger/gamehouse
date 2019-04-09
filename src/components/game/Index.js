@@ -162,7 +162,7 @@ class Computer extends Component {
 
   render() {
     return (
-      <div>
+      <div className="game-display">
         <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={this.clearAudio} callback={this.state.onSoundFinish} />
         <Video video={this.state.video} preload={this.state.preloadedVideo} handleOnPlay={this.state.onVideoPlay} />
         {this.renderContent()}
