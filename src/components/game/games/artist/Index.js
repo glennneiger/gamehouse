@@ -31,17 +31,18 @@ export default class Speakeasy extends Component {
   }
   
   init = ()=> { 
-    this.props.playAudio('music', `${title}/0`);
-    this.props.playVideo(`${title}/intro`);
+    const {playAudio, playVideo, preloadMusic, preloadVideo, room} = this.props;
+    playAudio('music', `${title}/0`);
+    playVideo(`${title}/intro`);
 
     let next = ()=>this.switchScreen(screens.rounds);
 
     this.playVoice('intro/0', next);
 
-    this.props.preloadMusic(`${title}/1`);
-    //this.props.preloadVideo(`${title}/back`);
+    preloadMusic(`${title}/1`);
+    preloadVideo('lobby');
 
-    const players = this.props.room.players.slice();
+    const players = room.players.slice();
 
     const playerIndices = players.map(player=>player.index);
     const playerOrder = shuffle(playerIndices);
@@ -99,7 +100,8 @@ export default class Speakeasy extends Component {
       preloadMusic,
       players,
       recordContent,
-      playerOrder
+      playerOrder,
+      title
     }
 
     switch (screen) {
@@ -115,6 +117,7 @@ export default class Speakeasy extends Component {
         return (
           <Present
             {...props}
+            nextScreen={()=>this.setState({screen: screens.final})}
           />
         )
       case screens.final:

@@ -26,6 +26,12 @@ export default class Draw extends Component {
   startRound = round=> {
     const {playVoice, room, players, roundContent, prevPlayer} = this.props;
 
+    let content = {};
+    players.forEach(player=>{
+      content[player.index] = '';
+    });
+    this.setState({content});
+
     const next = ()=>{
       this.setState({startTimer: true});
       players.forEach(player => {
@@ -37,7 +43,32 @@ export default class Draw extends Component {
       });
     }; 
 
+    const changeSong = ()=> {
+      const numOfRounds = players.length;
+      let index;
+      let preload='final';
+      if (round===2) {
+        index=1;
+        if (numOfRounds>6) preload = 2;
+      } else if (round===6) {
+        index=2;
+        if (numOfRounds>10) preload = 3;
+      } else if (round===10) {
+        index=3;
+        if (numOfRounds>14) preload = 0;
+      } else if (round===14) {
+        index=0;
+      } else {
+        return;
+      };
+      const {title, playAudio, preloadMusic} = this.props;
+      playAudio('music', `${title}/${index}`);
+      preloadMusic(`${title}/${preload}`);
+    }
+
     playVoice(`rounds/${round}`, next);
+
+    changeSong();
   }
 
   concludeRound = ()=> {
@@ -108,6 +139,7 @@ export default class Draw extends Component {
     } else {
       seconds=25;
     }
+    seconds=12;
 
     return (
       <div className="Artist center-screen">

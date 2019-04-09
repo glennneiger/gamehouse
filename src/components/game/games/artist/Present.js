@@ -1,26 +1,12 @@
 import React, {Component} from 'react';
-import Canvas from 'react-canvas-draw';
+import Picture from './Picture';
 
 export default class Present extends Component {
 
   constructor(props) {
     super(props);
 
-    const width = Math.round(window.innerWidth/3);
-
     this.state={
-      canvasProps: {
-        loadTimeOffset: 0,
-        lazyRadius: 0,
-        brushRadius: 2,
-        brushColor: "#000",
-        hideGrid: true,
-        canvasWidth: width,
-        canvasHeight: width,
-        disabled: true,
-        imgSrc: "",
-        immediateLoading: true
-      },
       displayItems: [
         <div className="flex-item small-item" key="placeholder1"></div>,
         <div className="flex-item small-item" key="placeholder2"></div>
@@ -30,6 +16,10 @@ export default class Present extends Component {
 
 
   componentDidMount(){
+    const {title, playAudio, preloadMusic} = this.props;
+    playAudio('music', `${title}/final`);
+    preloadMusic(`lobby`);
+
     this.startPresentation();
   }
 
@@ -37,9 +27,12 @@ export default class Present extends Component {
 
     let index = 0;
     let round = 0;
+    let counter = 0;
 
     const removeItem = removeAdditional=> {
-      let itemToRemove = document.querySelector('.flexbox').lastChild;
+      let flexbox = document.querySelector('.flexbox');
+      if (!flexbox) return;
+      let itemToRemove = flexbox.lastChild;
       if (removeAdditional) itemToRemove = itemToRemove.previousSibling;
       itemToRemove.classList.remove('new-item');
       itemToRemove.classList.add('remove-item');
@@ -59,7 +52,7 @@ export default class Present extends Component {
       let content = roundContent[round][playerOrder[index]];
       if (round%2===0) { 
         size = 'large'
-        innerContent = <Canvas saveData={content} {...this.state.canvasProps} />
+        innerContent = <Picture src={content} />
       } else {
         innerContent = <div className="caption">{content}</div>
       }
@@ -71,7 +64,7 @@ export default class Present extends Component {
       if (round===0) {
         removeItem(true);
         const blankItem=<div className="flex-item new-item small-item" key="placeholder"></div>;
-        displayItems.unshift(blankItem)
+        displayItems.unshift(blankItem);
       }
 
       removeItem();
@@ -80,10 +73,17 @@ export default class Present extends Component {
     }
 
     const increment =()=>{
+      let max = this.props.playerOrder.length;
       round++;
       index++;
-      let max = this.props.playerOrder.length;
       if (round>=max) {
+        counter++;
+        if (counter===max) {
+          counter = -1;
+          this.props.nextScreen();
+          clearInterval(interval);
+          return;
+        }
         round=0;
         index++;
       }
@@ -94,8 +94,9 @@ export default class Present extends Component {
 
     addItem(0,0);
 
-    setInterval(() => {
+    const interval = setInterval(() => {
       increment();
+      if (counter===-1) return;
       addItem(round, index);
     }, 5000);
   }

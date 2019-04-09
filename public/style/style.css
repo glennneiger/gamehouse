@@ -954,7 +954,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
 
 .Speakeasy.Final #play-again {
   font-size: 30pt;
-  display: none;
 }
 
 @media screen and (max-width: 1400px) {
@@ -969,10 +968,31 @@ div.StoryTime .WriterCard .speech-bubble:after {
   }
 }
 
+.game-display .Artist {
+  color: black;
+}
+
+.game-display .Artist i {
+  font-size: 8vw;
+  color: #3fa9f5;
+}
+
 .game-display .Artist *, .game-display .Artist *:before, .game-display .Artist *:after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.game-display .Artist .Picture div {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.game-display .Artist .Picture div canvas {
+  position: relative !important;
+}
+
+.game-display .Artist .Picture div canvas:nth-child(1), .game-display .Artist .Picture div canvas:nth-child(3), .game-display .Artist .Picture div canvas:nth-child(4) {
+  display: none !important;
 }
 
 .game-display .Artist .round-counter-container {
@@ -1012,7 +1032,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
   border: 0.3vw solid black;
   border-radius: 50%;
   background-color: rgba(0, 25, 0, 0.88);
-  color: black;
   text-align: center;
   line-height: 10vw;
   margin: 0.5vw 1.5vw;
@@ -1034,18 +1053,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
           flex-direction: column-reverse;
   height: 100vh;
   width: 100vw;
-}
-
-.game-display .Artist .flexbox .large-item div {
-  background-color: rgba(0, 0, 0, 0) !important;
-}
-
-.game-display .Artist .flexbox .large-item div canvas {
-  position: relative !important;
-}
-
-.game-display .Artist .flexbox .large-item div canvas:nth-child(1), .game-display .Artist .flexbox .large-item div canvas:nth-child(3), .game-display .Artist .flexbox .large-item div canvas:nth-child(4) {
-  display: none !important;
 }
 
 .game-display .Artist .flex-item {
@@ -1103,7 +1110,52 @@ div.StoryTime .WriterCard .speech-bubble:after {
 
 .game-display .Artist .caption {
   font-size: 4vw;
-  color: black;
+}
+
+.game-display .Artist .caption-small {
+  font-size: 2.5vw;
+}
+
+.game-display .Artist #play-again {
+  font-size: 30pt;
+}
+
+@media screen and (max-width: 1400px) {
+  .game-display .Artist #play-again {
+    font-size: 24pt;
+  }
+}
+
+@media screen and (max-width: 1040px) {
+  .game-display .Artist #play-again {
+    font-size: 20pt;
+  }
+}
+
+.game-display .Artist .left, .game-display .Artist .center, .game-display .Artist .right, .game-display .Artist .bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.game-display .Artist .left, .game-display .Artist .right {
+  width: 43vw;
+}
+
+.game-display .Artist .center {
+  width: 14vw;
 }
 
 @-webkit-keyframes flexShrink-artist {
@@ -2214,6 +2266,12 @@ div.v-100 {
       -ms-flex-align: center;
           align-items: center;
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid #ccc;
+  border-radius: 25%;
+}
+
+.device .Artist .picker .swatch.selected {
+  border: 3px solid black;
+  border-radius: 0;
 }
 /*# sourceMappingURL=style.css.map */

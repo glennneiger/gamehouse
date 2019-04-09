@@ -87,6 +87,7 @@ class Device extends Component {
 
   setRoom = async (code, playerIndex)=> {
     let host = await getValue(code, `host`);
+
     if (!host) host=0;
     let isHost = host.index === playerIndex;
     this.setState({code, playerIndex, entered: true, host: isHost, hostName: host.name});

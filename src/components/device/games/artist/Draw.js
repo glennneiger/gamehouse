@@ -15,7 +15,7 @@ export default class Draw extends Component {
       canvasProps: {
         loadTimeOffset: 0,
         lazyRadius: 0,
-        brushRadius: 2,
+        brushRadius: 1,
         brushColor: "#000",
         hideGrid: true,
         canvasWidth: 300,
@@ -45,8 +45,11 @@ export default class Draw extends Component {
     const sizes = [2, 6, 16, 30, 50];
     const swatches = sizes.map((size, i)=>{
       const style={width: `${size}px`, height: `${size}px`, backgroundColor: this.state.canvasProps.brushColor, borderRadius: '50%'}
+      const brushRadius = size/2;
+      let className = "swatch";
+      if (brushRadius===this.state.canvasProps.brushRadius) className+=' selected';
       return (
-        <div key={i} onClick={()=>this.pickSwatch(size/2)} className="swatch">
+        <div key={i} onClick={()=>this.pickSwatch(brushRadius)} className={className}>
           <div style={style}></div>
         </div>
       )
@@ -74,7 +77,7 @@ export default class Draw extends Component {
   
   render() {
 
-    const {message} = this.props.request;
+    let {message} = this.props.request;
 
     return <div className="Artist">
       <div className="row">
