@@ -55,10 +55,14 @@ class Landing extends Component {
       <div className="device deviceLanding">
         <img className="logo" src="./assets/img/logo2.svg" alt="Party House" />
         <Link to="/connect" className="btn">Join Party!</Link>
-        <Link to="/account" className="btn btn-small">My Account</Link>
-        {/* <Link to="/store" className="btn btn-small">Browse Games</Link> */}
-        <Link to="/howtoplay" className="btn btn-small">How to Play</Link>
-        <Link to="/credits" className="btn btn-small">Credits</Link>
+        <div className="row">
+          <Link to="/account"><div className="btn-square"><div><i className="fas fa-user"></i></div><div>My Account</div></div></Link>
+          <Link to="/store"><div className="btn-square"><div><i class="fas fa-dice"></i></div><div>Browse Games</div></div></Link>
+        </div>
+        <div className="row">
+          <Link to="/howtoplay"><div className="btn-square"><div><i class="fas fa-question-circle"></i></div><div>How to Play</div></div></Link>
+          <Link to="/credits"><div className="btn-square"><div></div><i class="fas fa-trophy"></i><div>Credits</div></div></Link>
+        </div>
         <Ad />
         <br/>
       </div>

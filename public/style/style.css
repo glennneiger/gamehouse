@@ -458,11 +458,12 @@ div.page p {
 }
 
 .GameSelector {
-  padding-top: 2vh;
+  width: 20vw;
 }
 
 .GameSelector p {
   font-size: 2.4rem;
+  line-height: 2.6rem;
   margin: 1vw 0;
   color: #bba;
   font-weight: 100;
@@ -476,6 +477,7 @@ div.page p {
 
 @media screen and (max-width: 1400px) {
   .GameSelector p {
+    line-height: 2rem;
     font-size: 1.8rem;
   }
   .GameSelector p.selected {
@@ -485,6 +487,7 @@ div.page p {
 
 @media screen and (max-width: 1040px) {
   .GameSelector p {
+    line-height: 1.8rem;
     font-size: 1.6rem;
   }
   .GameSelector p.selected {
@@ -494,6 +497,7 @@ div.page p {
 
 @media screen and (max-width: 800px) {
   .GameSelector p {
+    line-height: 1.6rem;
     font-size: 1.4rem;
   }
   .GameSelector p.selected {
@@ -2030,8 +2034,8 @@ div.v-100 {
   -webkit-transition: background-color 300ms;
   transition: background-color 300ms;
   border: 5px solid #e0ebfa;
-  -webkit-box-shadow: 2px 6px 15px #aaa;
-          box-shadow: 2px 6px 15px #aaa;
+  -webkit-box-shadow: 2px 4px 6px #aaa;
+          box-shadow: 2px 4px 6px #aaa;
 }
 
 .device .btn:hover {
@@ -2065,6 +2069,37 @@ div.v-100 {
 .device .btn-link:hover {
   color: #04d;
   cursor: pointer;
+}
+
+.device .btn-square {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 45vw;
+  height: 45vw;
+  max-width: 150px;
+  max-height: 150px;
+  border: #3fa9f5 2px solid;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 0 3px #0a76c4;
+          box-shadow: 0 0 3px #0a76c4;
+  color: #0a76c4;
+  margin: 4px;
+  font-size: 14pt;
+  line-height: 12pt;
+}
+
+.device .btn-square i {
+  font-size: 42pt;
+  padding-bottom: 18px;
+  color: #3fa9f5;
 }
 
 .device p {

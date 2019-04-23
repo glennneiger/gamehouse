@@ -4,8 +4,8 @@ export const games = {
   gameRoom: 'game-room',
   storyTime: 'storytime',
   speakEasy: 'speakeasy',
-  artist: 'travellingartist',
-  dankU: 'danku'
+  artist: 'passtheart',
+  meme: 'meme'
 };
 
 export const gameDetails = [
@@ -18,27 +18,27 @@ export const gameDetails = [
     time: 20
   },
   {
-    id: games.dankU,
-    title: 'Dank U',
+    id: games.meme,
+    title: 'Meme U',
     description: "Turn your friends' photos into dank memes!",
     min: 3,
     max: 16,
+    time: 15
+  },
+  {
+    id: games.speakEasy,
+    title: 'Speakeasy',
+    description: 'A game for Prohibition era bootleggers! Keep the speakeasy in business. But let an undercover agent in by mistake and get shut down!',
+    min: 5,
+    max: 12,
     time: 20
   },
   {
     id: games.artist,
-    title: 'Travelling Artist',
+    title: 'Pass the Art',
     description: "A game of telephone for sketchers – Draw. Interpret. Repeat.",
     min: 5,
     max: 16,
-    time: 20
-  },
-  // {
-  //   id: games.speakEasy,
-  //   title: 'Speakeasy',
-  //   description: 'A game for Prohibition era bootleggers! Keep the speakeasy in business. But let an undercover agent in by mistake and get shut down!',
-  //   min: 5,
-  //   max: 12,
-  //   time: 30
-  // }
+    time: 15
+  }
 ];

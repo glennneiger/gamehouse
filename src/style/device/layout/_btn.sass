@@ -11,7 +11,7 @@
     margin: 0 auto 16px
     transition: background-color 300ms
     border: 5px solid #e0ebfa
-    box-shadow: 2px 6px 15px #aaa
+    box-shadow: 2px 4px 6px #aaa
     &:hover
       background-color: lighten($brand-blue, 10%)
       cursor: pointer
@@ -35,3 +35,22 @@
     &:hover
       color: #04d
       cursor: pointer
+  .btn-square 
+    display: flex 
+    flex-direction: column
+    justify-content: center
+    width: 45vw 
+    height: 45vw
+    max-width: 150px
+    max-height: 150px
+    border: $brand-blue 2px solid 
+    border-radius: 20px
+    box-shadow: 0 0 3px darken($brand-blue, 20%)
+    color: darken($brand-blue, 20%)
+    margin: 4px
+    font-size: 14pt
+    line-height: 12pt
+    i 
+      font-size: 42pt
+      padding-bottom: 18px
+      color: $brand-blue

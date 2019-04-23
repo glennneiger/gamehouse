@@ -65,7 +65,29 @@ export default class Draw extends Component {
   }
 
   renderColorPicker() {
-    const hexcodes = ['#000000','#ff0000','#ff9900','#F3EF00','#37CB00','#00E2F0','#001DF0','#A300FF','#FF00EF','#7C4F1C'];
+    const hexcodes = [
+      '#ff0000', //red
+      '#9B0014', //maroon
+      '#FF6000', //red orange
+      '#ff9900', //orange
+      '#F3EF00', //yellow
+      '#41EF00', //bright green
+      '#278E00',//dark green
+      '#00D4FF', //sky blue
+      '#001DF0', //blue
+      '#A300FF', // purple
+      '#000000', //black
+      '#606060', //grey
+      '#acacac', //light grey
+      '#f9f9f9', //white
+      '#573B1D', //dark brown
+      '#73522F', //brown
+      '#BC9B7C', //tan
+      '#F4D5BF', //light tan
+      '#FF00EF', // hot pink 
+      '#FF72BC' // salmon
+      
+    ];
     const colors = hexcodes.map((hexcode, i)=>{
       const style={backgroundColor: hexcode}
       return (

@@ -139,7 +139,6 @@ export default class Draw extends Component {
     } else {
       seconds=25;
     }
-    seconds=12;
 
     return (
       <div className="Artist center-screen">

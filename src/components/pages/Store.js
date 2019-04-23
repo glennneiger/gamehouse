@@ -12,6 +12,7 @@ export default class Store extends Component {
           <Logo />
           <div className="content">
             <p>Under Construction</p>
+            <p>Here you'll be able to browse new games as they're released!</p>
           </div>
           <Link to="/" className="btn">Back</Link>
           <br/>
