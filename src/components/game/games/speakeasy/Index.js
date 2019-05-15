@@ -41,7 +41,7 @@ export default class Speakeasy extends Component {
   }
   
   init = ()=> { 
-    this.props.playAudio('music', 'speakeasy/0');
+    this.props.playAudio('music', '0');
     this.props.playVideo('intro');
 
     let {turn} = this.state;
@@ -68,8 +68,6 @@ export default class Speakeasy extends Component {
       };
       this.playVoice('restart/0', next);
     }
-
-    this.props.preloadMusic('speakeasy/happy0');
 
     //take up to 12 players
     const players = this.props.room.players.slice(0, 12);
@@ -252,7 +250,7 @@ export default class Speakeasy extends Component {
     this.setState({screen});
   }
   playVoice = (filename, onFinish)=> {
-    this.props.playAudio('audio',`speakeasy/${filename}`, onFinish);
+    this.props.playAudio('audio', filename, onFinish);
   }
 
   animateOut = (elementId, nextScreen)=> {
@@ -266,7 +264,7 @@ export default class Speakeasy extends Component {
 
   render() {
     const {turn, successes, screen, owner, agents, numRaids, playersWhoHaveFoundSpeakeasy, guestList, numSnitches, players} = this.state;
-    const {playAudio, playVideo, preloadMusic, room} = this.props;
+    const {playAudio, playVideo, room} = this.props;
     const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation, animateOut, assignRoles, getWhoGoesWhere, getInvitation, getRaid} = this;
 
     if (!room.players.length) room.players=testing.players;
@@ -278,7 +276,6 @@ export default class Speakeasy extends Component {
       playVideo,
       playVoice,
       playAudio,
-      preloadMusic,
       successes,
       numRaids,
       owner,

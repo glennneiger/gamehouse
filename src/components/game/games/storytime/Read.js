@@ -14,15 +14,12 @@ class Read extends Component {
     let vidIndex = 0;
     
     if (turn===2) { 
-      this.props.playAudio('music', 'storytime/1');
-      this.props.preloadMusic('storytime/2');
+      this.props.playAudio('music', '1');
     } else if (turn===5) { 
-      this.props.playAudio('music', 'storytime/2');
-      this.props.preloadMusic('storytime/3');
+      this.props.playAudio('music', '2');
       vidIndex = 1;
     } else if (turn===7) {
-      this.props.playAudio('music', 'storytime/3');
-      this.props.preloadMusic('storytime/final');
+      this.props.playAudio('music', '3');
       vidIndex = 2;
     }
 

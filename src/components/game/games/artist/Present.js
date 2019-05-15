@@ -16,9 +16,8 @@ export default class Present extends Component {
 
 
   componentDidMount(){
-    const {title, playAudio, preloadMusic} = this.props;
-    playAudio('music', `${title}/final`);
-    preloadMusic(`lobby`);
+    const {playAudio} = this.props;
+    playAudio('music', 'final');
 
     this.startPresentation();
   }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import Audio from './media/Audio';
-import Video from './media/VideoBackground';
-import Loading from './media/Loading';
+import Media from './other/Media';
+import Loading from './other/Loading';
 
 import NewRoom from './lobby/NewRoom';
 import Lobby from './lobby/Lobby';
@@ -26,7 +25,6 @@ class Computer extends Component {
       gameSelection: 0,
       players: [],
       code: '',
-      sound: '',
       onSoundFinish: null,
       music: '',
       preloadedMusic: '',
@@ -34,6 +32,7 @@ class Computer extends Component {
       mediaFiles: {
         folder: null,
         video: {files: [], current: null}, 
+        music: {files: [], current: null},
         audio: {files: [], current: null}
       }
     };
@@ -66,17 +65,15 @@ class Computer extends Component {
     let mediaFiles = {
       folder: game,
       video: {files: gameMediaFiles[game].video, current: null}, 
-      audio: {files: gameMediaFiles[game].audio, current: null}
+      audio: {files: gameMediaFiles[game].audio, current: null},
+      music: {files: gameMediaFiles[game].music, current: null}
     }
-    console.log(game);
-    console.log(mediaFiles.video.files);
     this.setState({mediaFiles});
   }
 
 
   switchGame = game=> {
     this.setState({game});
-    this.stopSound();
   }
 
 
@@ -144,18 +141,18 @@ class Computer extends Component {
 
   playAudio = (type, audio, onSoundFinish)=> {
     //plays music or sound fx
+
+    let {mediaFiles} = this.state;
+
     if (type==='music') {
-      this.setState({music: audio});
+      mediaFiles.music.current = audio; 
+      this.setState({mediaFiles});
     } else {
       let callback = null;
       if (onSoundFinish) callback = onSoundFinish;
-      this.setState({sound: audio, onSoundFinish: callback});
+      mediaFiles.audio.current = audio; 
+      this.setState({mediaFiles, onSoundFinish: callback});
     }
-  }
-
-  stopSound = ()=> {
-    const onSoundFinish = ()=> {};
-    this.playAudio('sound', 'stop', onSoundFinish);
   }
 
   preloadMusic = music=> {
@@ -172,20 +169,21 @@ class Computer extends Component {
     this.setState({preloadedVideo: video})
   }
 
-  clearAudio = async ()=>{
-    await this.setState({sound: null})
-  }
-
-  handleFinishLoadingMedia = () => {
-    this.setState({loading: false});
-  }
-
   render() {
-    const {video, folder} = this.state.mediaFiles;
+    const {video, music, audio, folder} = this.state.mediaFiles;
     return (
       <div className="game-display">
-        <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={this.clearAudio} callback={this.state.onSoundFinish} />
-        <Video files={video.files} folder={folder} curVideo={video.current} handleFinishLoading={this.handleFinishLoadingMedia} />
+        <Media 
+          videos={video.files} 
+          musics={music.files} 
+          audios={audio.files} 
+          folder={folder} 
+          curVideo={video.current} 
+          curMusic={music.current} 
+          curAudio={audio.current} 
+          handleFinishLoading={()=>this.setState({loading: false})}  
+          callback={this.state.onSoundFinish}
+        />
         {this.renderContent()}
       </div>
     )
@@ -194,10 +192,10 @@ class Computer extends Component {
   renderContent() {
     if (this.state.loading) return <Loading />
 
-    const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound} = this;
+    const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo} = this;
     const {game, gameSelection, players, code, hostIndex} = this.state;
     const room = {game, gameSelection, players, code, hostIndex};
-    const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound}
+    const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo}
 
     switch (game) {
 

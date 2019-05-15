@@ -28,23 +28,21 @@ export default class Rounds extends Component {
 
       if (gameOver) {
 
-        this.props.playAudio('music', 'speakeasy/gameover');
-        this.props.preloadMusic('speakeasy/0');
+        this.props.playAudio('music', 'gameover');
         this.setState({gameOver});
 
       } else {
 
         const {successes} = this.props;
-        let music = 'speakeasy/';
+        let music = '';
         if (successes[successes.length-1]) { //if you just had a success
           //play happy music 
-          music += `happy${turn-numRaids}`;
+          music = `happy${turn-numRaids}`;
         } else {
           //play sad 
-          music += `bad${numRaids-1}`;
+          music = `bad${numRaids-1}`;
         }
         this.props.playAudio('music', music);
-        this.props.preloadMusic(`speakeasy/drinking${turn % 3}`);
       }
 
       this.animateBoard();

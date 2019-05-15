@@ -21,9 +21,8 @@ export default class Lobby extends Component {
     const {selection} = this.props;
     const {games} = this.state;
 
-    this.props.stopSound();
     this.props.playVideo('0');
-    this.props.playAudio('music','lobby');
+    this.props.playAudio('music','0');
     this.preload(games[selection]);
 
     // close any open requests, in case we left a game with requests open

@@ -44,26 +44,20 @@ export default class Draw extends Component {
     }; 
 
     const changeSong = ()=> {
-      const numOfRounds = players.length;
       let index;
-      let preload='final';
       if (round===2) {
         index=1;
-        if (numOfRounds>6) preload = 2;
       } else if (round===6) {
         index=2;
-        if (numOfRounds>10) preload = 3;
       } else if (round===10) {
         index=3;
-        if (numOfRounds>14) preload = 0;
       } else if (round===14) {
         index=0;
       } else {
         return;
       };
-      const {title, playAudio, preloadMusic} = this.props;
-      playAudio('music', `${title}/${index}`);
-      preloadMusic(`${title}/${preload}`);
+      const {playAudio} = this.props;
+      playAudio('music', index);;
     }
 
     playVoice(`rounds/${round}`, next);

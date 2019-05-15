@@ -36,23 +36,8 @@ export default class Party extends Component {
     }
 
     this.props.playVideo('drinking');
-    this.props.playAudio('music', `speakeasy/drinking${(turn-1) % 3}`);
+    this.props.playAudio('music', `drinking${(turn-1) % 3}`);
     this.props.playVoice(`party/intro/${voice}`, this.showInvited);
-
-    if (this.state.wasRaided) {
-      if (this.state.numPreviousRaids===2) {
-        this.props.preloadMusic('speakeasy/gameover');
-      } else {
-        this.props.preloadMusic(`speakeasy/bad${this.state.numPreviousRaids}`);
-      }
-    } else {
-      const numSuccesses = turn - this.state.numPreviousRaids;
-      if (numSuccesses===3) {
-        this.props.preloadMusic('speakeasy/gameover');
-      } else {
-        this.props.preloadMusic(`speakeasy/happy${numSuccesses}`);
-      }
-    }
 
   }
 

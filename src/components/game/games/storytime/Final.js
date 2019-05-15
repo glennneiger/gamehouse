@@ -9,8 +9,7 @@ class Final extends Component {
 
   componentDidMount() {
     this.props.playVideo('final');
-    this.props.playAudio('music', 'storytime/final');
-    this.props.preloadMusic('storytime/main');
+    this.props.playAudio('music', 'final');
 
     // ask host (player[hostIndex]) if play again
     const {code, hostIndex} = this.props;

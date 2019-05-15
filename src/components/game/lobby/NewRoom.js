@@ -7,6 +7,7 @@ class NewRoom extends Component {
 
   componentDidMount() {
     this.props.playVideo('0');
+    this.props.playAudio('music','0');
   }
 
   render () {
