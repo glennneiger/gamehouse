@@ -21,7 +21,7 @@ export default class Rounds extends Component {
       this.explainRules();
     } else {
 
-      this.props.playVideo('speakeasy/back');
+      this.props.playVideo('back');
 
       const {numRaids} = this.props;
       const gameOver = (numRaids===3 || (turn-numRaids)===3);
@@ -30,7 +30,6 @@ export default class Rounds extends Component {
 
         this.props.playAudio('music', 'speakeasy/gameover');
         this.props.preloadMusic('speakeasy/0');
-        this.props.preloadVideo('speakeasy/intro');
         this.setState({gameOver});
 
       } else {
@@ -46,8 +45,6 @@ export default class Rounds extends Component {
         }
         this.props.playAudio('music', music);
         this.props.preloadMusic(`speakeasy/drinking${turn % 3}`);
-        this.props.preloadVideo('speakeasy/drinking');
-
       }
 
       this.animateBoard();

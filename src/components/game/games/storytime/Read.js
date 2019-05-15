@@ -26,8 +26,7 @@ class Read extends Component {
       vidIndex = 2;
     }
 
-    this.props.playVideo('storytime/read0' + vidIndex);
-    this.props.preloadVideo('storytime/next');
+    this.props.playVideo('read0' + vidIndex);
     if (!this.state.reading) {
       read(story, this.handleFinishReading);
       this.setState({reading:true});

@@ -22,7 +22,7 @@ export default class Lobby extends Component {
     const {games} = this.state;
 
     this.props.stopSound();
-    this.props.playVideo('lobby');
+    this.props.playVideo('0');
     this.props.playAudio('music','lobby');
     this.preload(games[selection]);
 
@@ -46,7 +46,6 @@ export default class Lobby extends Component {
 
   preload = game=> {
     const {id} = game;
-    this.props.preloadVideo(`${id}/intro`);
     this.props.preloadMusic(`${id}/0`);
   }
 

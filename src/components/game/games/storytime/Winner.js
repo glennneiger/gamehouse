@@ -11,23 +11,16 @@ class Winner extends Component {
   }
 
   componentDidMount() {
-    this.props.playVideo('storytime/winner');
+    this.props.playVideo('winner');
 
     const {turn, winningText} = this.props;
 
     let nextScreen = screens.next; // the "who's next" screen. Usually the next screen after winner screen...
     if (turn===1 || turn===4 || turn===6) { // except on these turns, it goes to read story 
       nextScreen = screens.read;
-      let vidIndex = 0;
-      if (turn===4) vidIndex = 1;
-      if (turn===6) vidIndex = 2;
-      this.props.preloadVideo('storytime/read0' + vidIndex);
     } else if (turn===7) {
       nextScreen = screens.final; // and after last turn, it goes to final screen
-      this.props.preloadVideo('storytime/final');
-    } else {
-      this.props.preloadVideo('storytime/next');
-    }
+    } 
 
     this.setState({nextScreen});
 

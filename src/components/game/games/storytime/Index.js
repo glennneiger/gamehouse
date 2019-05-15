@@ -36,7 +36,7 @@ class StoryTime extends Component {
     const {players} = this.props.room;
     
     this.props.playAudio('music', 'storytime/0');
-    this.props.playVideo('storytime/intro');
+    this.props.playVideo('intro');
 
     const next = ()=> {this.switchScreen(screens.read)};
     
@@ -49,7 +49,6 @@ class StoryTime extends Component {
     this.playVoice(`intro/${voice}`, next);
 
     this.props.preloadMusic('storytime/1');
-    this.props.preloadVideo('storytime/read00');
 
     const storyStart = getStoryStart();
     const firstLine = `Once upon a time, there was ${storyStart}.`;
@@ -115,9 +114,9 @@ class StoryTime extends Component {
   render() {
 
     const {switchScreen, playVoice} = this;
-    const {playVideo, playAudio, preloadVideo, preloadMusic, room, switchGame} = this.props;
+    const {playVideo, playAudio, preloadMusic, room, switchGame} = this.props;
     const {turn, writers, prompt, story, winner} = this.state;
-    const props = {switchScreen, playVoice, playVideo, playAudio, preloadVideo, preloadMusic, turn}
+    const props = {switchScreen, playVoice, playVideo, playAudio, preloadMusic, turn}
 
     switch (this.state.screen) {
       case screens.read:

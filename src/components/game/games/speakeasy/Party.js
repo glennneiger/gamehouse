@@ -35,12 +35,11 @@ export default class Party extends Component {
       voice = turn;
     }
 
-    this.props.playVideo('speakeasy/drinking');
+    this.props.playVideo('drinking');
     this.props.playAudio('music', `speakeasy/drinking${(turn-1) % 3}`);
     this.props.playVoice(`party/intro/${voice}`, this.showInvited);
 
     if (this.state.wasRaided) {
-      this.props.preloadVideo(`speakeasy/raid${this.state.numPreviousRaids}`);
       if (this.state.numPreviousRaids===2) {
         this.props.preloadMusic('speakeasy/gameover');
       } else {
@@ -48,7 +47,6 @@ export default class Party extends Component {
       }
     } else {
       const numSuccesses = turn - this.state.numPreviousRaids;
-      this.props.preloadVideo('speakeasy/back');
       if (numSuccesses===3) {
         this.props.preloadMusic('speakeasy/gameover');
       } else {
@@ -89,8 +87,7 @@ export default class Party extends Component {
   showIfRaid = ()=> {
     let voice;
     if (this.state.wasRaided) {
-      this.props.playVideo(`speakeasy/raid${this.state.numPreviousRaids}`);
-      this.props.preloadVideo('speakeasy/back');
+      this.props.playVideo(`raid${this.state.numPreviousRaids}`);
       if (this.state.numPreviousRaids===2) {
         voice = 'raid/final/0';
       } else if (this.state.playersWhoHaveFoundSpeakeasy.length===1) {

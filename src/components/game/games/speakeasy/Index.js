@@ -42,7 +42,7 @@ export default class Speakeasy extends Component {
   
   init = ()=> { 
     this.props.playAudio('music', 'speakeasy/0');
-    this.props.playVideo('speakeasy/intro');
+    this.props.playVideo('intro');
 
     let {turn} = this.state;
     let next;
@@ -63,15 +63,13 @@ export default class Speakeasy extends Component {
     } else { // turn is > -1 if you're restarting the game to play again.
       turn=0; // in which case, no need to explain the rules again. Skip to turn 0 (first turn)
       next = ()=> {
-        this.props.playVideo('speakeasy/back');
-        this.props.preloadVideo('speakeasy/drinking');
+        this.props.playVideo('back');;
         this.switchScreen(screens.owner);
       };
       this.playVoice('restart/0', next);
     }
 
     this.props.preloadMusic('speakeasy/happy0');
-    this.props.preloadVideo('speakeasy/back');
 
     //take up to 12 players
     const players = this.props.room.players.slice(0, 12);
@@ -91,8 +89,7 @@ export default class Speakeasy extends Component {
 
   handleSkip = ()=> {
     if (this.state.screen === screens.intro) {
-      this.props.playVideo('speakeasy/back');
-      this.props.preloadVideo('speakeasy/drinking');
+      this.props.playVideo('back');
     }
     this.setState({turn: 0});
     this.switchScreen(screens.owner);
@@ -269,7 +266,7 @@ export default class Speakeasy extends Component {
 
   render() {
     const {turn, successes, screen, owner, agents, numRaids, playersWhoHaveFoundSpeakeasy, guestList, numSnitches, players} = this.state;
-    const {playAudio, playVideo, preloadMusic, preloadVideo, room} = this.props;
+    const {playAudio, playVideo, preloadMusic, room} = this.props;
     const {switchScreen, playVoice, assignOwner, nextTurn, requestNewLocation, animateOut, assignRoles, getWhoGoesWhere, getInvitation, getRaid} = this;
 
     if (!room.players.length) room.players=testing.players;
@@ -281,7 +278,6 @@ export default class Speakeasy extends Component {
       playVideo,
       playVoice,
       playAudio,
-      preloadVideo,
       preloadMusic,
       successes,
       numRaids,

@@ -14,8 +14,7 @@ export default class Breakdown extends Component {
   componentDidMount() {
     const {turn} = this.props;
     if (turn===-1) {
-      this.props.playVideo('speakeasy/back');
-      this.props.preloadVideo('speakeasy/drinking');
+      this.props.playVideo('back');
       this.explainRules();
     } else if (turn===0) {
       this.props.playVoice('roles/0');

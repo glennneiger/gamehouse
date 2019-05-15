@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Audio from './media/Audio';
 import Video from './media/VideoBackground';
+import Loading from './media/Loading';
 
 import NewRoom from './lobby/NewRoom';
 import Lobby from './lobby/Lobby';
@@ -11,7 +12,7 @@ import Artist from './games/artist/Index';
 
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../../actions';
 
-import {games} from '../../helpers/games';
+import {games, gameMediaFiles} from '../../helpers/games';
 
 
 class Computer extends Component {
@@ -20,18 +21,21 @@ class Computer extends Component {
     super(props);
 
     this.state={
+      loading: true,
       game: games.newRoom,
       gameSelection: 0,
       players: [],
       code: '',
       sound: '',
       onSoundFinish: null,
-      onVideoPlay: null,
       music: '',
       preloadedMusic: '',
-      video: '',
-      preloadedVideo: '',
-      hostIndex: 0
+      hostIndex: 0,
+      mediaFiles: {
+        folder: null,
+        video: {files: [], current: null}, 
+        audio: {files: [], current: null}
+      }
     };
 
   }
@@ -56,6 +60,17 @@ class Computer extends Component {
   componentDidMount() {
     window.addEventListener("beforeunload", this.onUnload);
     this.createRoom();
+  }
+
+  loadMediaFiles = game=> {
+    let mediaFiles = {
+      folder: game,
+      video: {files: gameMediaFiles[game].video, current: null}, 
+      audio: {files: gameMediaFiles[game].audio, current: null}
+    }
+    console.log(game);
+    console.log(mediaFiles.video.files);
+    this.setState({mediaFiles});
   }
 
 
@@ -98,7 +113,8 @@ class Computer extends Component {
     if (game===games.landing) {
       this.props.history.push('/');
     } else {
-      this.setState({game});  
+      this.setState({game, loading: true});
+      this.loadMediaFiles(game);  
     }
   }
 
@@ -146,10 +162,10 @@ class Computer extends Component {
     this.setState({preloadedMusic: music})
   }
 
-  playVideo = (video, onPlay)=> {
-    let callback = null;
-    if (onPlay) callback = onPlay;
-    this.setState({video, onVideoPlay: callback});
+  playVideo = video=> {
+    let {mediaFiles} = this.state;
+    mediaFiles.video.current = video; 
+    this.setState({mediaFiles});
   }
 
   preloadVideo = video=> {
@@ -160,24 +176,30 @@ class Computer extends Component {
     await this.setState({sound: null})
   }
 
+  handleFinishLoadingMedia = () => {
+    this.setState({loading: false});
+  }
+
   render() {
+    const {video, folder} = this.state.mediaFiles;
     return (
       <div className="game-display">
         <Audio sound={this.state.sound} music={this.state.music} preload={this.state.preloadedMusic} clearAudio={this.clearAudio} callback={this.state.onSoundFinish} />
-        <Video video={this.state.video} preload={this.state.preloadedVideo} handleOnPlay={this.state.onVideoPlay} />
+        <Video files={video.files} folder={folder} curVideo={video.current} handleFinishLoading={this.handleFinishLoadingMedia} />
         {this.renderContent()}
       </div>
     )
   }
 
   renderContent() {
+    if (this.state.loading) return <Loading />
 
     const {switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound} = this;
     const {game, gameSelection, players, code, hostIndex} = this.state;
     const room = {game, gameSelection, players, code, hostIndex};
     const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo, stopSound}
 
-    switch (this.state.game) {
+    switch (game) {
 
       case games.newRoom:
         return <NewRoom {...props} />

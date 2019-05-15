@@ -1,7 +1,7 @@
 export const games = {
   landing: 'landing',
-  newRoom: 'new-room',
-  gameRoom: 'game-room',
+  newRoom: 'newroom',
+  gameRoom: 'lobby',
   storyTime: 'storytime',
   speakEasy: 'speakeasy',
   artist: 'passtheart',
@@ -42,3 +42,26 @@ export const gameDetails = [
     time: 15
   }
 ];
+
+export const gameMediaFiles = {
+  [games.newRoom]: {
+    video: ['0'],
+    audio: ['0']
+  },
+  [games.gameRoom]: {
+    video: ['0'],
+    audio: ['0']
+  },
+  [games.storyTime]: {
+    video: ['final','intro','next','read00','read01','read02','winner','write01','write02','write03','write04','write05','write06','write07','write00'],
+    audio: ['0','1','2','3','final']
+  },
+  [games.artist]: {
+    video: ['intro'],
+    audio: ['0','1','2','3','final']
+  },
+  [games.speakEasy]: {
+    video: ['back','drinking','intro','raid0','raid1','raid2'],
+    audio: ['0','bad0','bad1','drinking0','drinking1','drinking2','gameover','happy0','happy1','happy2']
+  }
+}

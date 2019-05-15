@@ -49,14 +49,12 @@ class Audio extends Component {
         //switch the player (there are 2)
         currentMusicPlayer===1 ? currentMusicPlayer = 2 : currentMusicPlayer = 1;
         player = document.querySelector(`#music-player-${currentMusicPlayer}`);
-        console.log(player)
 
         // see if the new music has already been preloaded. This can be done to cut down on load time
         if (music!==preload || !this.state.preloaded || musicPlayerSources[currentMusicPlayer]!==music) {
           // if not, load it
           document.querySelector(`#music-${currentMusicPlayer}-source-ogg`).src=(`assets/music/${music}.ogg`);
           document.querySelector(`#music-${currentMusicPlayer}-source-mp3`).src=(`assets/music/${music}.mp3`);
-          console.log(music)
         }
         player.volume=.6;
         player.play();

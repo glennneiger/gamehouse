@@ -27,8 +27,7 @@ class Write extends Component {
 
   componentDidMount() {
     let {turn} = this.props;
-    this.props.playVideo(`storytime/write0${turn}`);
-    this.props.preloadVideo('storytime/winner');
+    this.props.playVideo(`write0${turn}`);
     
     this.sendWriteRequests();
 

@@ -8,9 +8,8 @@ import {screens} from './helpers';
 class Final extends Component {
 
   componentDidMount() {
-    this.props.playVideo('storytime/final');
+    this.props.playVideo('final');
     this.props.playAudio('music', 'storytime/final');
-    this.props.preloadVideo('storytime/intro');
     this.props.preloadMusic('storytime/main');
 
     // ask host (player[hostIndex]) if play again
