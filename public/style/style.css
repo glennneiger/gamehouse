@@ -270,6 +270,7 @@ div.page p {
 .ProfileCard img {
   border-radius: 10%;
   max-width: 14vw;
+  width: 200px;
   padding-bottom: 6px;
 }
 
@@ -2141,8 +2142,10 @@ div.v-100 {
 }
 
 .device div.vote img {
-  width: 40%;
-  height: 40%;
+  width: 40vw;
+  height: 40vw;
+  max-width: 150px;
+  max-height: 150px;
   padding: 0;
   margin: 5px 5px;
   border-radius: 8px;

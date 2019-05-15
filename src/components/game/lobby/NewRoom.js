@@ -12,10 +12,16 @@ class NewRoom extends Component {
   }
 
   componentDidMount() {
-    this.props.playAudio('music','newroom');
     this.props.playVideo('newroom', ()=>{this.setState({ready: true})});
-    this.props.preloadMusic('lobby');
-    this.props.preloadVideo('lobby');
+  }
+
+  componentDidUpdate(oldProps, oldState) {
+    if (this.state.ready && !oldState.ready) {
+      this.props.playAudio('music','newroom');
+      this.props.preloadMusic('lobby');
+      this.props.preloadVideo('lobby');
+
+    }
   }
 
   render () {
