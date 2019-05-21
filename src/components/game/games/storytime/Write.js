@@ -171,17 +171,11 @@ class Write extends Component {
       this.handleSubmissions(voter);
     }
 
-    let voters = [];
 
     // voters = [0, 1, 2, 3,]
-    const {players} = this.props.room;
-    const {writers} = this.state;
-
-    players.forEach(player=> {
-      if (!writers.includes(player)) {
-        voters.push(player.index);
-      }
-    });
+    const players = this.props.room.players.map(player=>player.index);
+    const writers = this.state.writers.map(writer=>writer.index);
+    const voters = players.filter(player=>!writers.includes(player));
 
     this.setState({
       voters,
@@ -190,7 +184,8 @@ class Write extends Component {
       timerSeconds: 30
     });
 
-    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, this.state.voters, recordVote);
+
+    inputRequest(this.props.room.code, requests.storyTime.vote, this.state.writers, voters, recordVote);
   }
 
   renderWriterCards = ()=> {

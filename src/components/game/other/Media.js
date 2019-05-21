@@ -50,10 +50,11 @@ class Video extends Component {
     if (curMusic && curMusic !== oldProps.curMusic) {
       if (oldProps.curMusic) {
         let oldPlayer = document.getElementById(`music-${folder}-${oldProps.curMusic}`);
-        if (oldPlayer) oldPlayer.stop();
+        if (oldPlayer) oldPlayer.pause();
       }
       let player = document.getElementById(`music-${folder}-${curMusic}`);
       if (player) {
+        player.volume = 0.5;
         player.play();
       }
     }

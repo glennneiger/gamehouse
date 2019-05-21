@@ -24,7 +24,7 @@ export default class Draw extends Component {
   }
 
   startRound = round=> {
-    const {playVoice, room, players, roundContent, prevPlayer} = this.props;
+    const {playVoice, room, players, prevPlayer} = this.props;
 
     let content = {};
     players.forEach(player=>{
@@ -36,7 +36,10 @@ export default class Draw extends Component {
       this.setState({startTimer: true});
       players.forEach(player => {
         let message = null;
-        if (round>0) message = `${roundContent[round-1][prevPlayer(player.index)]}`;
+        if (round>0) {
+          const {roundContent} = this.props;
+          message = `${roundContent[round-1][prevPlayer(player.index)]}`;
+        }
         let request;
         round % 2 === 0 ? request=requests.artist.draw : request=requests.artist.type;
         inputRequest(room.code, request, message, player.index, this.recordInput);
@@ -80,7 +83,9 @@ export default class Draw extends Component {
       let content = {};
       playerOrder.forEach(index=>{
         content[index]=`${this.state.content[index]}`;
-      })
+      });
+
+
       recordContent(content);
       if (round===players.length-1) {
         finish();

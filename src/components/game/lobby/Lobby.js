@@ -18,12 +18,9 @@ export default class Lobby extends Component {
   }
 
   componentDidMount() {
-    const {selection} = this.props;
-    const {games} = this.state;
 
     this.props.playVideo('0');
     this.props.playAudio('music','0');
-    this.preload(games[selection]);
 
     // close any open requests, in case we left a game with requests open
     const {players, code, hostIndex}= this.props.room;
@@ -41,11 +38,6 @@ export default class Lobby extends Component {
   componentWillUnmount() {
     const {code, hostIndex} = this.props.room;
     closeRequest(code, hostIndex);
-  }
-
-  preload = game=> {
-    const {id} = game;
-    this.props.preloadMusic(`${id}/0`);
   }
 
   handleReceiveCommand = input=> {
@@ -80,7 +72,6 @@ export default class Lobby extends Component {
         if (selection===-1) selection=games.length-1;
       } 
       selectGame(selection);
-      this.preload(games[selection]);
     }
   }
 
