@@ -14,7 +14,7 @@ import {shuffle} from '../../../../helpers/functions';
 const title = games.artist;
 
 
-export default class Speakeasy extends Component {
+export default class Artist extends Component {
 
   constructor(props) {
     super(props);

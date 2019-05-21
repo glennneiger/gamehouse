@@ -9,10 +9,10 @@ import {testing} from '../../../../helpers/testing';
 //import { requests } from '../../../../actions/requestTypes';
 
 
-const title = games.artist; //CHANGE
+const title = games.meme; 
 
 
-export default class Title extends Component {
+export default class Meme extends Component {
 
   constructor(props) {
     super(props);
