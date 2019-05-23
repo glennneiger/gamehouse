@@ -28,7 +28,7 @@ export default class Draw extends Component {
 
     let content = {};
     players.forEach(player=>{
-      content[player.index] = '';
+      content[player.index] = null;
     });
     this.setState({content});
 
@@ -85,7 +85,6 @@ export default class Draw extends Component {
         content[index]=`${this.state.content[index]}`;
       });
 
-
       recordContent(content);
       if (round===players.length-1) {
         finish();
@@ -101,6 +100,13 @@ export default class Draw extends Component {
     let {content} = this.state;
     content[playerIndex] = input.message;
     this.setState({content});
+
+    //see if all players' submissions have been received. If so, conclude round
+    const {players} = this.props;
+    players.forEach(player=>{
+      if (!(content[player.index] || content[player.index] === '')) return;
+    });
+    this.concludeRound();
   }
 
   renderRoundCounter = ()=> {
@@ -141,7 +147,7 @@ export default class Draw extends Component {
 
     return (
       <div className="Artist center-screen">
-        <Timer seconds={seconds} startTimer={startTimer} onFinish={this.concludeRound} code={this.props.room.code} />
+        <Timer seconds={seconds} startTimer={startTimer} code={this.props.room.code} />
         {this.renderRoundCounter()}
       </div>
     )
