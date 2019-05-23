@@ -28,7 +28,8 @@ export default class Timer extends Component {
   }
 
   componentWillUnmount() {
-    this.stopTimer();
+    clearInterval(this.progressBarInterval);
+    clearInterval(this.countdownInterval);
   }
 
   stopTimer = ()=> {
