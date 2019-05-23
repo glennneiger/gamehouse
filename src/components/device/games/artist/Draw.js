@@ -70,7 +70,7 @@ export default class Draw extends Component {
       '#9B0014', //maroon
       '#FF6000', //red orange
       '#ff9900', //orange
-      '#F3EF00', //yellow
+      '#F6EF00', //yellow
       '#41EF00', //bright green
       '#278E00',//dark green
       '#00D4FF', //sky blue
@@ -115,6 +115,9 @@ export default class Draw extends Component {
       </div>
       {this.renderColorPicker()}
       {this.renderSwatchPicker()}
+      <div className="row">
+        <div className="btn" onClick={this.handleSubmit}>Submit</div>
+      </div>
     </div>
   }
 }

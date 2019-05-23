@@ -75,7 +75,6 @@ export default class Draw extends Component {
         this.props.nextScreen();
       }, 900);
     }
-
     this.setState({startTimer:false});
     const {playVoice, recordContent, players, playerOrder} = this.props;
     let {round} = this.state;
@@ -103,10 +102,15 @@ export default class Draw extends Component {
 
     //see if all players' submissions have been received. If so, conclude round
     const {players} = this.props;
-    players.forEach(player=>{
-      if (!(content[player.index] || content[player.index] === '')) return;
-    });
-    this.concludeRound();
+
+    let concludeRound = true;
+    for (let i = 0; i<players.length; i++) {
+      if (!(content[players[i].index] || content[players[i].index] === '')) {
+        concludeRound=false;
+        break;
+      };
+    }
+    if (concludeRound) this.concludeRound();
   }
 
   renderRoundCounter = ()=> {
@@ -137,12 +141,10 @@ export default class Draw extends Component {
   render() {
     let {startTimer, round} = this.state;
     let seconds;
-    if (round===0) {
-      seconds=80;
-    } else if (round%2===0) {
-      seconds=70;
+    if (round%2===0) {
+      seconds=90;
     } else {
-      seconds=25;
+      seconds=30;
     }
 
     return (

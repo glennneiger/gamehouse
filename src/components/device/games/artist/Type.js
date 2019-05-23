@@ -48,6 +48,9 @@ export default class Type extends Component {
         <Canvas {...this.state.canvasProps} ref={canvasDraw => (this.loadableCanvas = canvasDraw)} />
       </div>
       <textarea className="textbox" id="write-caption" maxLength="100" rows="2" onChange={this.updateText} value={this.state.caption}></textarea>
+      <div className="row">
+        <div className="btn" onClick={this.handleSubmit}>Submit</div>
+      </div>
     </div>
   }
 }
