@@ -21,6 +21,13 @@
     transform: translateY(0)
 
 
+@keyframes crossZoomIn
+  0% 
+    transform: scale(10)
+  100% 
+    transform: scale(1)
+
+
 
 @keyframes slideLeft 
   0% 
@@ -57,6 +64,10 @@
   animation: 1000ms ease-out 0s 1 slideInFromRight
 [class*="slide-in-"]
   display: block !important
+
+.cross-zoom-in
+  animation: 600ms cubic-bezier(.15,1,.85,1) 0s 1 crossZoomIn
+
 
 .slide-up
   animation: 1000ms ease-out 0s 1 slideUp forwards

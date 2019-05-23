@@ -7,6 +7,7 @@ import SelectGame from './other/SelectGame';
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';
 import Artist from './games/artist/Index';
+import Meme from './games/meme/Index';
 
 import MenuLink from './other/MenuLink';
 
@@ -201,8 +202,11 @@ class Device extends Component {
       case games.speakEasy:
         return <Speakeasy {...gameProps} />
 
-        case games.artist:
-          return <Artist {...gameProps} />
+      case games.artist:
+        return <Artist {...gameProps} />
+
+      case games.meme:
+        return <Meme {...gameProps} />
 
 
       case 'thank-you':

@@ -6,7 +6,11 @@ import Final from './Final';
 import {incrementGame} from '../../../../actions';
 import {games} from '../../../../helpers/games';
 import {testing} from '../../../../helpers/testing';
+import Title from './Title';
+import Upload from './Upload';
+import Caption from './Caption';
 //import { requests } from '../../../../actions/requestTypes';
+
 
 
 const title = games.meme; 
@@ -18,8 +22,8 @@ export default class Meme extends Component {
     super(props);
     this.state={
       players: [],
-      turn: -1,
       screen: screens.intro,
+      memes: []
     }
   }
 
@@ -31,14 +35,13 @@ export default class Meme extends Component {
     this.props.playAudio('music', '0');
     this.props.playVideo('intro');
 
-    let next = ()=>this.switchScreen(screens.final);
+    let next = ()=>this.switchScreen(screens.upload);
 
     this.playVoice('intro/0', next);
 
     const players = this.props.room.players.slice();
 
     this.setState({
-      turn: 0, 
       screen: screens.intro,
       players
     });
@@ -47,10 +50,10 @@ export default class Meme extends Component {
   }
 
 
-  nextTurn = ()=> {
-    let {turn} = this.state;
-    turn++;
-    this.setState({turn});
+  receiveUpload = (image, playerIndex) => {
+    let memes = this.state.memes.slice();
+    memes.push({uploader: playerIndex, image, caption: null, captioner: null});
+    this.setState({memes});
   }
 
   switchScreen = screen=> {
@@ -62,20 +65,19 @@ export default class Meme extends Component {
   }
 
   playVoice = (filename, onFinish)=> {
-    this.props.playAudio('audio',`${title}/${filename}`, onFinish);
+    this.props.playAudio('audio', filename, onFinish);
   }
 
   render() {
-    const {turn, screen, players} = this.state;
+    const {screen, players} = this.state;
     const {playAudio, playVideo, room} = this.props;
-    const {switchScreen, playVoice} = this;
+    const {switchScreen, playVoice, receiveUpload} = this;
 
     if (!room.players.length) room.players=testing.players;
 
     const props = {
       room,
       switchScreen,
-      turn,
       playVideo,
       playVoice,
       playAudio,
@@ -83,6 +85,24 @@ export default class Meme extends Component {
     }
 
     switch (screen) {
+      case screens.intro:
+        return (
+          <Title lines={['Meme U']} />
+        )
+      case screens.upload:
+        return (
+          <div>
+            <Upload {...props} receiveUpload={receiveUpload} />
+            <Title lines={['Round One:','Upload']} />
+          </div>
+        )
+      case screens.caption:
+        return (
+          <div>
+            <Caption {...props} />
+            <Title lines={['Round Two:','Caption']} />
+          </div>
+        )
       case screens.final:
         return (
           <Final

@@ -97,6 +97,10 @@ const getAudio = (game) => {
     addFiles('sendinvitation/afterraid', 1, 2);
     addFiles('sendinvitation/alreadyfull', 0);
     addFiles('wheretogo', 1, 5);
+  } else if (game===games.meme){
+    addFiles('intro', 0);
+    addFiles('upload', 0);
+    addFiles('caption', 0);
   }
   return audio;
 }
@@ -121,6 +125,11 @@ export const gameMediaFiles = {
     video: ['intro'],
     music: ['0','1','2','3','final'],
     audio: getAudio(games.artist)
+  },
+  [games.meme]: {
+    video: ['intro','upload','caption','vote'],
+    music: ['0','1','2'],
+    audio: getAudio(games.meme)
   },
   [games.speakEasy]: {
     video: ['back','drinking','intro','raid0','raid1','raid2'],

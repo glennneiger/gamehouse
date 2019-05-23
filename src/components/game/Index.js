@@ -12,6 +12,7 @@ import Artist from './games/artist/Index';
 import {createNewRoom, watchForChange, deleteRoom, removeWatcher, watchForChangeInPlayers, getValue} from '../../actions';
 
 import {games, gameMediaFiles} from '../../helpers/games';
+import Meme from './games/meme/Index';
 
 
 class Computer extends Component {
@@ -214,8 +215,8 @@ class Computer extends Component {
       case games.artist:
         return <Artist {...props} />
 
-      // case games.dankU:
-      //   return <DankU {...props} />
+      case games.meme:
+        return <Meme {...props} />
     
       default:
         return null

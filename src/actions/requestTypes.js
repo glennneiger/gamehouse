@@ -4,14 +4,19 @@ export const requests = {
     vote: 'story-time-vote'
   },
   speakeasy: {
-    newLocation: 'new-location',
-    acknowledgeRole: 'acknowledge-role',
-    invitation: 'invitation',
-    whereToGo: 'where-to-go'
+    newLocation: 'speakeasy-new-location',
+    acknowledgeRole: 'speakeasy-acknowledge-role',
+    invitation: 'speakeasy-invitation',
+    whereToGo: 'speakeasy-where-to-go'
   },
   artist: {
-    draw: 'draw',
-    type: 'type'
+    draw: 'artist-draw',
+    type: 'artist-type'
+  },
+  meme: {
+    upload: 'meme-upload',
+    caption: 'meme-caption',
+    vote: 'meme-vote'
   },
   playAgain: 'play-again',
   skip: 'skip'
