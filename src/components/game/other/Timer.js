@@ -23,7 +23,6 @@ export default class Timer extends Component {
       this.setState({startTimer: true});
       this.startTimer();
     } else if (!this.props.startTimer && this.state.startTimer) {
-      console.log('stop');
       this.stopTimer();
     }
   }

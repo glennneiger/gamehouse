@@ -8,6 +8,7 @@ import {games} from '../../../../helpers/games';
 import {testing} from '../../../../helpers/testing';
 import Title from './Title';
 import Caption from './Caption';
+import Vote from './Vote';
 import { requests } from '../../../../actions/requestTypes';
 
 
@@ -53,9 +54,12 @@ export default class Meme extends Component {
 
     const receiveUpload = (input, playerIndex) => {
       let memes = this.state.memes.slice();
-      const image = input.message;
+      const images = input.message;
       const numPlayers = this.state.players.length;
-      memes.push({uploader: playerIndex, image, caption: null, captioner: null});
+      for (let i=0; i<2; i++) {
+        let meme = {uploader: playerIndex, image: images[i], caption: null, captioner: null}
+        memes.push(meme);
+      }
       this.setState({memes});
       if (memes.length === numPlayers *2) {
         const {players} = this.state;
@@ -85,6 +89,10 @@ export default class Meme extends Component {
     const memeReceived = input.message;
     memes[memeReceived.index].caption = memeReceived.caption;
     this.setState({memes});
+    const captionsReceived = memes.filter(meme=>meme.caption !== null);
+    if (captionsReceived.length===this.state.players.length*2) {
+      this.switchScreen(screens.vote);
+    }
   }
 
 
@@ -116,7 +124,8 @@ export default class Meme extends Component {
       playVideo,
       playVoice,
       playAudio,
-      players
+      players,
+      memes
     }
 
     switch (screen) {
@@ -133,7 +142,7 @@ export default class Meme extends Component {
       case screens.caption:
         return (
           <div id="caption">
-            <Caption {...props} memes={memes} receiveCaption={receiveCaption} />
+            <Caption {...props} receiveCaption={receiveCaption} />
             <div>
               <Title lines={['Round Two:','Caption']} />
             </div>
@@ -141,7 +150,7 @@ export default class Meme extends Component {
         )
       case screens.vote:
         return (
-          <Title lines={['Round Three:','Vote']} />
+          <Vote {...props} />
         )
       case screens.final:
         return (

@@ -54,7 +54,7 @@ class Video extends Component {
       }
       let player = document.getElementById(`music-${folder}-${curMusic}`);
       if (player) {
-        player.volume = 0.5;
+        player.volume = 0//.5;
         player.play();
       }
     }

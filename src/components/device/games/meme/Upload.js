@@ -20,7 +20,7 @@ export default class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uploads: 0,
+      uploads: [],
       currentImg: null
     }
   }
@@ -53,11 +53,10 @@ export default class Upload extends Component {
   handleSubmit = image => {
     const {code, playerIndex} = this.props;
     let {uploads} = this.state;
-    uploads++;
+    uploads.push(image);
     this.setState({uploads});
-    const done = uploads === 2;
-    sendInput(code, playerIndex, image, done);
-    if (done) {
+    if (uploads.length===2) {
+      sendInput(code, playerIndex, uploads, true);
       this.props.handleSubmit();
     }
   }
@@ -79,7 +78,7 @@ export default class Upload extends Component {
         <Timer code={this.props.code} />
       </div>
       <div className="row">
-        <div className="font-large header">{`Upload ${this.state.uploads+1} / 2`}</div>
+        <div className="font-large header">{`Upload ${this.state.uploads.length+1} / 2`}</div>
       </div>
       <div className="row">
         <div className="btn" onClick={this.handleFileSelect}>Select Image</div>

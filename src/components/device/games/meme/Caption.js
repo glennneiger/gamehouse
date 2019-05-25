@@ -10,7 +10,8 @@ export default class Caption extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      completed: 0
+      completed: 0,
+      caption: ''
     }
   }
 
@@ -23,7 +24,7 @@ export default class Caption extends Component {
     const meme = {index, caption};
     const {code, playerIndex} = this.props;
     completed++;
-    this.setState({completed});
+    this.setState({completed, caption: ''});
     const done = completed === 2;
     sendInput(code, playerIndex, meme, done);
     if (done) {
@@ -37,14 +38,14 @@ export default class Caption extends Component {
   
   render() {
     const memes = this.props.request.message;
-    const {completed} = this.state;
+    const {completed, caption} = this.state;
 
     return <div className="Meme column">
       <Timer code={this.props.code} onFinish={this.handleSubmit} />
       <div>
         <img alt="meme" src={memes[completed].image} />
       </div>
-      <textarea className="textbox" id="write-caption" maxLength="100" rows="2" onChange={this.updateText} value={this.state.caption}></textarea>
+      <textarea className="textbox" id="write-caption" maxLength="100" rows="2" onChange={this.updateText} value={caption}></textarea>
       <div className="row">
         <div className="btn" onClick={this.handleSubmit}>Submit</div>
       </div>

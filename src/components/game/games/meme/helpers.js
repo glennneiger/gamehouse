@@ -59,11 +59,43 @@ export const assignCaptionersToMemes = (memes, players) => {
   return memes;
 }
 
+// returns array of paired indices. e.g. [[1,4],[3,5]...]
+export const pairMemes = memes => {
+  let pairs = [];
+  let remainingIndices = memes.map((meme,i)=>i);
 
+  const getRndX = ()=> Math.floor(Math.random()*remainingIndices.length);
 
-
-
-
+  while (remainingIndices.length) {
+    let pair = [];
+    let rndX = getRndX();
+    const index1 = remainingIndices[rndX];
+    pair.push(index1);
+    remainingIndices.splice(rndX, 1);
+    while(true) {
+      rndX = getRndX();
+      const index2 = remainingIndices[rndX];
+      //don't let them have the same captioner
+      if (memes[index1].captioner === memes[index2].captioner) {
+        if (remainingIndices.length > 1) {
+          continue; 
+        } else {
+          //swap with the first one, which we already know won't be the same captioner bc each player only writes 2 captions
+          pair.push(pairs[0][0]);
+          pairs[0][0] = index2;
+          remainingIndices = [];
+          break;
+        }
+      } else {
+        pair.push(index2);
+        remainingIndices.splice(rndX, 1);
+        break;
+      }
+    }
+    pairs.push(pair);
+  }
+  return pairs;
+}
 
 
 
