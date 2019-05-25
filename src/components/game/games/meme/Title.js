@@ -20,6 +20,10 @@ export default class Title extends Component {
   }
 
   componentDidMount() {
+    this.animateWords();
+  }
+
+  animateWords = ()=> {
     let i=0;
     let j=0;
     const animate = setInterval(()=>{
@@ -34,6 +38,7 @@ export default class Title extends Component {
         }
       }
     }, 350);
+    
   }
 
   render() {

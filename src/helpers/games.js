@@ -19,7 +19,7 @@ export const gameDetails = [
   },
   {
     id: games.meme,
-    title: 'Meme U',
+    title: 'Dank U',
     description: "Turn your friends' photos into dank memes!",
     min: 3,
     max: 16,
@@ -122,7 +122,7 @@ export const gameMediaFiles = {
     audio: getAudio(games.storyTime)
   },
   [games.artist]: {
-    video: ['intro'],
+    video: ['intro','back'],
     music: ['0','1','2','3','final'],
     audio: getAudio(games.artist)
   },

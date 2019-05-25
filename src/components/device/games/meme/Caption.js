@@ -3,38 +3,32 @@ import  React, {Component} from 'react';
 
 import Timer from '../../other/Timer';
 
-import Canvas from 'react-canvas-draw';
-
 import {sendInput} from '../../../../actions';
 
-export default class Type extends Component {
+export default class Caption extends Component {
 
   constructor(props) {
     super(props);
-    this.state={
-      canvasProps: {
-        loadTimeOffset: 0,
-        lazyRadius: 0,
-        brushRadius: 2,
-        brushColor: "#000",
-        catenaryColor: "#0a0302",
-        gridColor: "rgba(150,150,150,0.17)",
-        hideGrid: true,
-        canvasWidth: 200,
-        canvasHeight: 200,
-        disabled: true,
-        imgSrc: "",
-        saveData: props.request.message,
-        immediateLoading: true
-      },
-      caption: ''
+    this.state = {
+      completed: 0
     }
   }
 
   handleSubmit = () => {
+    const memes = this.props.request.message;
+    let {completed} = this.state;
+
+    const index = memes[completed].index;
+    const caption = document.getElementById('write-caption').value;
+    const meme = {index, caption};
     const {code, playerIndex} = this.props;
-    sendInput(code, playerIndex, this.state.caption, true);
-    this.props.handleSubmit();
+    completed++;
+    this.setState({completed});
+    const done = completed === 2;
+    sendInput(code, playerIndex, meme, done);
+    if (done) {
+      this.props.handleSubmit();
+    }
   }
 
   updateText = e=> {
@@ -42,12 +36,18 @@ export default class Type extends Component {
   }
   
   render() {
-    return <div className="Artist column">
+    const memes = this.props.request.message;
+    const {completed} = this.state;
+
+    return <div className="Meme column">
       <Timer code={this.props.code} onFinish={this.handleSubmit} />
-      <div className="canvas-container">
-        <Canvas {...this.state.canvasProps} ref={canvasDraw => (this.loadableCanvas = canvasDraw)} />
+      <div>
+        <img alt="meme" src={memes[completed].image} />
       </div>
       <textarea className="textbox" id="write-caption" maxLength="100" rows="2" onChange={this.updateText} value={this.state.caption}></textarea>
+      <div className="row">
+        <div className="btn" onClick={this.handleSubmit}>Submit</div>
+      </div>
     </div>
   }
 }

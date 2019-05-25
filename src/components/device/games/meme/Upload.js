@@ -5,6 +5,8 @@ import Timer from '../../other/Timer';
 
 import {sendInput} from '../../../../actions';
 
+import Crop from './Crop';
+
 
 function buildFileSelector(){
   const fileSelector = document.createElement('input');
@@ -18,7 +20,8 @@ export default class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      uploads: 0
+      uploads: 0,
+      currentImg: null
     }
   }
 
@@ -32,7 +35,7 @@ export default class Upload extends Component {
     const file = this.fileSelector.files[0];
     let reader  = new FileReader();
     reader.addEventListener("load", ()=> {
-      this.handleSubmit(reader.result);
+      this.setState({currentImg: reader.result});
     }, false);
   
     if (file) {
@@ -59,10 +62,19 @@ export default class Upload extends Component {
     }
   }
 
+  handleNewImage = img => {
+    this.setState({currentImg:null});
+    if (img) {
+      this.handleSubmit(img);
+    }
+  }
+
   
   render() {
+    const {currentImg} = this.state;
 
-    return <div className="Artist">
+    return <div className="Meme">
+      {currentImg ? <Crop img={currentImg} returnImage={this.handleNewImage} /> : null}
       <div className="row">
         <Timer code={this.props.code} />
       </div>

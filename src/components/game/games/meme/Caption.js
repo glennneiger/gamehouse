@@ -11,7 +11,8 @@ export default class Caption extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startTimer: false
+      startTimer: false,
+      captionsReceived: 0
     }
   }
 
@@ -19,10 +20,30 @@ export default class Caption extends Component {
   componentDidMount() {
 
     const openRound = ()=> {
-      const {players, room} = this.props;
+      const receiveCaption = input => {
+        this.props.receiveCaption(input);
+        let {captionsReceived} = this.state;
+        captionsReceived++;
+        this.setState({captionsReceived});
+        if (captionsReceived===this.props.players.length*2) {
+          this.setState({startTimer:false});
+          this.props.switchScreen(screens.vote);
+        }
+      }
+
+      const {players, room, memes} = this.props;
+
+      let memesToSendToPlayer = {};
+      memes.forEach((meme, i)=>{
+        const {captioner} = meme;
+        if (!memesToSendToPlayer[captioner]) {
+          memesToSendToPlayer[captioner] = [];
+        }
+        memesToSendToPlayer[captioner].push({image: meme.image, index: i});
+      });
   
       players.forEach(player => {
-        inputRequest(room.code, requests.meme.caption, null, player.index, this.props.receiveUpload);
+        inputRequest(room.code, requests.meme.caption, memesToSendToPlayer[player.index], player.index, receiveCaption);
       });
 
       this.setState({startTimer:true});
@@ -33,6 +54,7 @@ export default class Caption extends Component {
     this.props.playVoice('caption/0', openRound);
   }
 
+
   timeOut() {
     const {switchScreen, room, players} = this.props;
     players.forEach(player=>{
@@ -42,6 +64,6 @@ export default class Caption extends Component {
   }
 
   render() {
-    return <Timer seconds={120} startTimer={this.state.startTimer} onFinish={this.timeOut} code={this.props.room.code} />;
+    return <Timer seconds={90} startTimer={this.state.startTimer} onFinish={this.timeOut} code={this.props.room.code} />;
   }
 }

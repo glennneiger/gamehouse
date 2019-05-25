@@ -59,6 +59,8 @@ export default class Artist extends Component {
     if (screen===screens.intro) {
       this.init();
       return;
+    } else if (screen===screens.rounds) {
+      this.props.playVideo('back');
     }
     this.setState({screen});
   }

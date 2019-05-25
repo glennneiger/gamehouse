@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
-import {screens} from './helpers';
+import {screens, assignCaptionersToMemes} from './helpers';
 
 import Final from './Final';
 
-import {incrementGame} from '../../../../actions';
+import {incrementGame, inputRequest} from '../../../../actions';
 import {games} from '../../../../helpers/games';
 import {testing} from '../../../../helpers/testing';
 import Title from './Title';
-import Upload from './Upload';
 import Caption from './Caption';
-//import { requests } from '../../../../actions/requestTypes';
+import { requests } from '../../../../actions/requestTypes';
 
 
 
@@ -49,17 +48,53 @@ export default class Meme extends Component {
     incrementGame(title);
   }
 
+  
+  startUploadRound =()=> {
 
-  receiveUpload = (image, playerIndex) => {
+    const receiveUpload = (input, playerIndex) => {
+      let memes = this.state.memes.slice();
+      const image = input.message;
+      const numPlayers = this.state.players.length;
+      memes.push({uploader: playerIndex, image, caption: null, captioner: null});
+      this.setState({memes});
+      if (memes.length === numPlayers *2) {
+        const {players} = this.state;
+        memes = assignCaptionersToMemes(memes, players);
+        this.setState({memes});
+        this.switchScreen(screens.caption);
+      }
+    }
+
+    const openRound = ()=> {
+      const {room} = this.props;
+      const {players} = this.state;
+  
+      players.forEach(player => {
+        inputRequest(room.code, requests.meme.upload, null, player.index, receiveUpload);
+      });
+    }
+
+    this.props.playAudio('music', '1');
+    this.props.playVideo('upload');
+    this.playVoice('upload/0', openRound);
+  }
+
+
+  receiveCaption = (input) => {
     let memes = this.state.memes.slice();
-    memes.push({uploader: playerIndex, image, caption: null, captioner: null});
+    const memeReceived = input.message;
+    memes[memeReceived.index].caption = memeReceived.caption;
     this.setState({memes});
   }
+
+
 
   switchScreen = screen=> {
     if (screen===screens.intro) {
       this.init();
       return;
+    } else if (screen===screens.upload) {
+      this.startUploadRound();
     }
     this.setState({screen});
   }
@@ -69,9 +104,9 @@ export default class Meme extends Component {
   }
 
   render() {
-    const {screen, players} = this.state;
+    const {screen, players, memes} = this.state;
     const {playAudio, playVideo, room} = this.props;
-    const {switchScreen, playVoice, receiveUpload} = this;
+    const {switchScreen, playVoice, receiveCaption} = this;
 
     if (!room.players.length) room.players=testing.players;
 
@@ -87,21 +122,26 @@ export default class Meme extends Component {
     switch (screen) {
       case screens.intro:
         return (
-          <Title lines={['Meme U']} />
+          <Title lines={['Dank U']} />
         )
       case screens.upload:
         return (
-          <div>
-            <Upload {...props} receiveUpload={receiveUpload} />
+          <div id="upload">
             <Title lines={['Round One:','Upload']} />
           </div>
         )
       case screens.caption:
         return (
-          <div>
-            <Caption {...props} />
-            <Title lines={['Round Two:','Caption']} />
+          <div id="caption">
+            <Caption {...props} memes={memes} receiveCaption={receiveCaption} />
+            <div>
+              <Title lines={['Round Two:','Caption']} />
+            </div>
           </div>
+        )
+      case screens.vote:
+        return (
+          <Title lines={['Round Three:','Vote']} />
         )
       case screens.final:
         return (
