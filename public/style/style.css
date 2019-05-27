@@ -622,7 +622,7 @@ div.GameDisplay div.stats i {
 .Timer {
   display: none;
   position: fixed;
-  top: 1vh;
+  top: 2vh;
   left: 0;
   width: 100%;
   height: 4vh;
@@ -1235,15 +1235,18 @@ div.StoryTime .WriterCard .speech-bubble:after {
   opacity: 1;
 }
 
-.game-display .Meme.Vote #memes {
+.game-display .Meme.Vote #memes, .game-display .Meme.Vote #stats {
   width: 100vw;
-  height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  height: 100vh;
+}
+
+.game-display .Meme.Vote #memes {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
@@ -1260,7 +1263,7 @@ div.StoryTime .WriterCard .speech-bubble:after {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 39vw;
+  width: 38vw;
   -webkit-box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
           box-shadow: 10px 10px 4px rgba(0, 0, 0, 0.5);
   opacity: 0;
@@ -1271,15 +1274,46 @@ div.StoryTime .WriterCard .speech-bubble:after {
 }
 
 .game-display .Meme.Vote #memes .meme .caption {
-  font-size: 3vw;
-  line-height: 3.5vw;
+  font-size: 2.7vw;
+  line-height: 2.8vw;
   padding: 1vw 1.7vw;
 }
 
 .game-display .Meme.Vote #memes .meme img {
-  width: 36vw;
-  height: 33vw;
+  width: 35vw;
+  height: 30vw;
   margin: 0 auto 1.2vw;
+}
+
+.game-display .Meme.Vote #stats {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.game-display .Meme.Vote #stats .stat {
+  width: 35vw;
+  text-align: center;
+  font-size: 4vw;
+  text-shadow: .4vw .3vw .7vw black;
+}
+
+.game-display .Meme.Vote #stats .stat div {
+  padding: 1vh 0;
+}
+
+.game-display .Meme.Vote #stats .stat .percent {
+  color: #fff0bb;
+  font-size: 10vw;
+  font-weight: 900;
+  text-shadow: 1vw 1vw 1vw black;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.game-display .Meme.Vote #stats .stat .points {
+  font-size: 5vw;
+  font-family: impact;
+  color: #33bb33;
 }
 
 a {
@@ -2457,5 +2491,18 @@ div.v-100 {
 .device .Artist .picker .swatch.selected {
   border: 3px solid black;
   border-radius: 0;
+}
+
+.device .Meme .option {
+  width: 120px;
+  background-color: #334f77;
+  color: white;
+  height: 120px;
+  font-size: 50pt;
+  line-height: 113px;
+  border-radius: 30px;
+  margin: 7px;
+  cursor: pointer;
+  border: 4px solid;
 }
 /*# sourceMappingURL=style.css.map */

@@ -18,11 +18,12 @@
         &.cross-zoom-in 
           opacity: 1
   .Meme.Vote
-    #memes
+    #memes, #stats
       width: 100vw
-      height: 100vh
       display: flex
       align-items: center
+      height: 100vh
+    #memes
       justify-content: space-evenly
       .meme
         background-color: white
@@ -30,17 +31,35 @@
         text-align: center
         display: flex
         flex-direction: column
-        width: 39vw
+        width: 38vw
         box-shadow: 10px 10px 4px rgba(0, 0, 0, .5)
         opacity: 0 
         &.cross-zoom-in 
           opacity: 1
         .caption
-          font-size: 3vw
-          line-height: 3.5vw
+          font-size: 2.7vw
+          line-height: 2.8vw
           padding: 1vw 1.7vw
         img
-          width: 36vw
-          height: 33vw
+          width: 35vw
+          height: 30vw
           margin: 0 auto 1.2vw
- 
+    #stats 
+      justify-content: center
+      .stat 
+        width: 35vw
+        text-align: center
+        font-size: 4vw
+        text-shadow: .4vw .3vw .7vw black
+        div 
+          padding: 1vh 0
+        .percent 
+          color: #fff0bb
+          font-size: 10vw
+          font-weight: 900
+          text-shadow: 1vw 1vw 1vw black
+          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+        .points 
+          font-size: 5vw
+          font-family: impact
+          color: #33bb33

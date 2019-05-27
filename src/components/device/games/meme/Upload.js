@@ -1,7 +1,6 @@
 
 import  React, {Component} from 'react';
 
-import Timer from '../../other/Timer';
 
 import {sendInput} from '../../../../actions';
 
@@ -74,9 +73,6 @@ export default class Upload extends Component {
 
     return <div className="Meme">
       {currentImg ? <Crop img={currentImg} returnImage={this.handleNewImage} /> : null}
-      <div className="row">
-        <Timer code={this.props.code} />
-      </div>
       <div className="row">
         <div className="font-large header">{`Upload ${this.state.uploads.length+1} / 2`}</div>
       </div>

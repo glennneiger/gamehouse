@@ -22,7 +22,7 @@ class MyEditor extends React.Component {
             ref={this.setEditorRef}
             image={this.props.img}
             width={280}
-            height={252}
+            height={240}
             border={10}
             color={[0, 0, 0, 0.6]} // RGBA
             scale={1}

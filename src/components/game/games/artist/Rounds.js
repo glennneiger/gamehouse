@@ -104,12 +104,12 @@ export default class Draw extends Component {
     const {players} = this.props;
 
     let concludeRound = true;
-    for (let i = 0; i<players.length; i++) {
-      if (!(content[players[i].index] || content[players[i].index] === '')) {
+    players.forEach(player=>{
+      if (!(content[player.index] || content[players.index] === '')) {
         concludeRound=false;
-        break;
+        return;
       };
-    }
+    });
     if (concludeRound) this.concludeRound();
   }
 

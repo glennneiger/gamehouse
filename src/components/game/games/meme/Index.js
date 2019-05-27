@@ -23,7 +23,8 @@ export default class Meme extends Component {
     this.state={
       players: [],
       screen: screens.intro,
-      memes: []
+      memes: [],
+      points: {} // playerIndex => points
     }
   }
 
@@ -39,11 +40,16 @@ export default class Meme extends Component {
 
     this.playVoice('intro/0', next);
 
+    let points = {};
     const players = this.props.room.players.slice();
+    players.forEach(player=>{
+      points[player.index] = 0;
+    })
 
     this.setState({
       screen: screens.intro,
-      players
+      players,
+      points
     });
 
     incrementGame(title);
@@ -57,7 +63,7 @@ export default class Meme extends Component {
       const images = input.message;
       const numPlayers = this.state.players.length;
       for (let i=0; i<2; i++) {
-        let meme = {uploader: playerIndex, image: images[i], caption: null, captioner: null}
+        let meme = {uploader: playerIndex, image: images[i], caption: null, captioner: null, votes: 0}
         memes.push(meme);
       }
       this.setState({memes});
@@ -95,7 +101,17 @@ export default class Meme extends Component {
     }
   }
 
+  recordVote = memeIndex => {
+    let memes = this.state.memes.slice();
+    memes[memeIndex].votes++;
+    this.setState({memes});
+  }
 
+  addPoints = (playerIndex, pointsToAdd) => {
+    let {points} = this.state;
+    points[playerIndex] += pointsToAdd;
+    this.setState({points});
+  }
 
   switchScreen = screen=> {
     if (screen===screens.intro) {
@@ -114,7 +130,7 @@ export default class Meme extends Component {
   render() {
     const {screen, players, memes} = this.state;
     const {playAudio, playVideo, room} = this.props;
-    const {switchScreen, playVoice, receiveCaption} = this;
+    const {switchScreen, playVoice, receiveCaption, recordVote, addPoints} = this;
 
     if (!room.players.length) room.players=testing.players;
 
@@ -150,7 +166,7 @@ export default class Meme extends Component {
         )
       case screens.vote:
         return (
-          <Vote {...props} />
+          <Vote {...props} recordVote={recordVote} addPoints={addPoints} />
         )
       case screens.final:
         return (

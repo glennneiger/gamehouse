@@ -5,6 +5,7 @@ import PlayAgain from '../PlayAgain';
 
 import Upload from './Upload';
 import Caption from './Caption';
+import Vote from './Vote';
 
 import Ad from '../../other/Ad';
 
@@ -22,6 +23,9 @@ export default class Meme extends Component {
 
         case requests.meme.caption:
           return <Caption {...this.props} />
+        
+        case requests.meme.vote:
+          return <Vote {...this.props} />
 
 
         case requests.playAgain:
