@@ -6,9 +6,9 @@ import {games} from '../../../helpers/games';
 export default class PlayAgain extends Component {
 
   respond = playAgain=> {
-    const {code, playerIndex, handleSubmit} = this.props;
+    const {code, playerIndex, handleSubmit, request} = this.props;
     handleSubmit();
-    sendInput(code, playerIndex, playAgain, true);
+    sendInput(code, playerIndex, request.type, playAgain, true);
     if (!playAgain) {
       selectGame(code, games.gameRoom);
     }

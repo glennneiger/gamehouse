@@ -8,8 +8,8 @@ import {sendInput} from '../../../../actions';
 export default class Vote extends Component {
 
   handleSubmit = selection => {
-    const {code, playerIndex} = this.props;
-    sendInput(code, playerIndex, selection, true);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, selection, true);
     this.props.handleSubmit();
   }
 
@@ -20,7 +20,7 @@ export default class Vote extends Component {
   render() {
 
     return <div className="Meme column">
-      <Timer code={this.props.code} onFinish={this.handleSubmit} />
+      <Timer code={this.props.code} onFinish={()=>this.handleSubmit(null)} />
       <div className="row">
         <div className="option" onClick={()=>this.handleSubmit(0)}>
           A

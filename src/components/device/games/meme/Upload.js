@@ -14,13 +14,29 @@ function buildFileSelector(){
   return fileSelector;
 }
 
+//select four indices for images
+function selectIntegers(amount, max) {
+  let res = [];
+  while (res.length < amount) {
+    const rndX = Math.floor(Math.random()*(max+1));
+    if (!res.includes(rndX)) {
+      res.push(rndX);
+    }
+  }
+  return res;
+}
+
 export default class Upload extends Component {
 
   constructor(props) {
     super(props);
+
+    const imageIndices = selectIntegers(8, 33);
+
     this.state = {
       uploads: [],
-      currentImg: null
+      currentImg: null,
+      imageIndices
     }
   }
 
@@ -50,12 +66,12 @@ export default class Upload extends Component {
 
 
   handleSubmit = image => {
-    const {code, playerIndex} = this.props;
+    const {code, playerIndex, request} = this.props;
     let {uploads} = this.state;
     uploads.push(image);
     this.setState({uploads});
     if (uploads.length===2) {
-      sendInput(code, playerIndex, uploads, true);
+      sendInput(code, playerIndex, request.type, uploads, true);
       this.props.handleSubmit();
     }
   }
@@ -67,17 +83,30 @@ export default class Upload extends Component {
     }
   }
 
+  renderImages = ()=> {
+    const uploadCount = this.state.uploads.length;
+    const start = !uploadCount ? 0 : 4;
+    const end = !uploadCount ? 4 : 8;
+    const imageIndices = this.state.imageIndices.slice(start, end);
+    return imageIndices.map(index=> <img alt="meme" key={index} src={`assets/img/meme/${index}.png`} onClick={()=>this.setState({currentImg:index})} />);
+  };
   
   render() {
     const {currentImg} = this.state;
 
     return <div className="Meme">
-      {currentImg ? <Crop img={currentImg} returnImage={this.handleNewImage} /> : null}
+      {(currentImg || currentImg===0) ? <Crop img={currentImg} returnImage={this.handleNewImage} /> : null}
       <div className="row">
-        <div className="font-large header">{`Upload ${this.state.uploads.length+1} / 2`}</div>
+        <div className="font-large header">{`Image ${this.state.uploads.length+1} / 2`}</div>
       </div>
       <div className="row">
-        <div className="btn" onClick={this.handleFileSelect}>Select Image</div>
+        <div className="btn" onClick={this.handleFileSelect}>Upload Image</div>
+      </div>
+      <div className="row font-large header">
+        Or select:
+      </div>
+      <div className="images">
+        {this.renderImages()}
       </div>
     </div>
   }

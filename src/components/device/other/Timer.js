@@ -34,8 +34,14 @@ export default class Timer extends Component {
   render() {
 
     const seconds = this.state.seconds;
+    let color = '#00a000';
+    if (seconds <= 12 && seconds > 7) {
+      color = '#c9c300'
+    } else if (seconds && seconds <= 7) {
+      color = '#aa3300';
+    }
 
-    return <div className="DeviceTimer row"><div className="circle">{seconds}</div></div>
+    return <div className="DeviceTimer row"><div className="circle" style={{'backgroundColor':color}}>{(seconds && seconds > 0) ? seconds-1 : 0}</div></div>
 
   }
 }

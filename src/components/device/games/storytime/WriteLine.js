@@ -7,12 +7,14 @@ import Timer from '../../other/Timer';
 export default class StoryTimeWriteLine extends Component {
 
   updateText = e=> {
-    sendInput(this.props.code, this.props.playerIndex, e.target.value, false);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, e.target.value, false);
   }
 
   handleSubmit = ()=> {
     const text = document.getElementById('write-line').value;
-    sendInput(this.props.code, this.props.playerIndex, text, true);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, text, true);
     this.props.handleSubmit();
   }
 

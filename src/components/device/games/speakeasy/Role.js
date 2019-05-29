@@ -8,8 +8,8 @@ import {sendInput} from '../../../../actions';
 export default class Speakeasy extends Component {
 
   handleAcknowledge = () => {
-    const {code, playerIndex} = this.props;
-    sendInput(code, playerIndex, playerIndex, true);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, playerIndex, true);
     this.props.handleSubmit();
   }
 

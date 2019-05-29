@@ -11,23 +11,25 @@ export default class Caption extends Component {
     super(props);
     this.state = {
       completed: 0,
-      caption: ''
+      caption: '',
+      captionedMemes: [null, null]
     }
   }
 
-  handleSubmit = () => {
+  handleSubmit = timeout => {
     const memes = this.props.request.message;
-    let {completed} = this.state;
+    let {completed, captionedMemes} = this.state;
 
     const index = memes[completed].index;
     const caption = document.getElementById('write-caption').value;
     const meme = {index, caption};
-    const {code, playerIndex} = this.props;
+    captionedMemes[completed] = meme;
+    const {code, playerIndex, request} = this.props;
     completed++;
-    this.setState({completed, caption: ''});
+    this.setState({completed, caption: '', captionedMemes});
     const done = completed === 2;
-    sendInput(code, playerIndex, meme, done);
-    if (done) {
+    sendInput(code, playerIndex, request.type, captionedMemes, done);
+    if (done || timeout) {
       this.props.handleSubmit();
     }
   }
@@ -41,13 +43,16 @@ export default class Caption extends Component {
     const {completed, caption} = this.state;
 
     return <div className="Meme column">
-      <Timer code={this.props.code} onFinish={this.handleSubmit} />
+      <Timer code={this.props.code} onFinish={()=>this.handleSubmit(true)} />
+      <div className="row">
+        <div className="font-large header">{`Caption ${completed+1} / 2`}</div>
+      </div>
       <div>
-        <img alt="meme" src={memes[completed].image} />
+        <img alt="meme" src={memes[completed ? 1 : 0].image} />
       </div>
       <textarea className="textbox" id="write-caption" maxLength="100" rows="2" onChange={this.updateText} value={caption}></textarea>
       <div className="row">
-        <div className="btn" onClick={this.handleSubmit}>Submit</div>
+        <div className="btn" onClick={()=>this.handleSubmit(false)}>Submit</div>
       </div>
     </div>
   }

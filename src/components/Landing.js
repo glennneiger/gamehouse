@@ -27,7 +27,7 @@ class Landing extends Component {
         </div>
         <Link to="/connect" className="column option">
           <div className="icon"><i className="fas fa-tablet-alt"></i></div>
-          <div>Input</div>
+          <div>Connect</div>
         </Link>
       </div>
     }

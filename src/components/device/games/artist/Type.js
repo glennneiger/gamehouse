@@ -32,8 +32,8 @@ export default class Type extends Component {
   }
 
   handleSubmit = () => {
-    const {code, playerIndex} = this.props;
-    sendInput(code, playerIndex, this.state.caption, true);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, this.state.caption, true);
     this.props.handleSubmit();
   }
 

@@ -5,7 +5,6 @@
       font-size: 12vw
       -webkit-text-stroke: 0.4vw rgba(0,0,0,0.8)
       line-height: 10vw
-      font-family: $font-fun
       display: flex
       font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
       text-transform: uppercase
@@ -18,6 +17,23 @@
         &.cross-zoom-in 
           opacity: 1
   .Meme.Vote
+    #dankest
+      font-size: 15vw
+      -webkit-text-stroke: 0.4vw rgba(0,0,0,0.8)
+      display: flex
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+      text-transform: uppercase
+      position: fixed
+      width: 100vw 
+      height: 100vh
+      align-items: center
+      justify-content: center 
+      top: 0
+      left: 0
+      div 
+        opacity: 0 
+        &.cross-zoom-in 
+          opacity: 1
     #memes, #stats
       width: 100vw
       display: flex
@@ -25,25 +41,25 @@
       height: 100vh
     #memes
       justify-content: space-evenly
-      .meme
-        background-color: white
-        color: black
-        text-align: center
-        display: flex
-        flex-direction: column
-        width: 38vw
-        box-shadow: 10px 10px 4px rgba(0, 0, 0, .5)
-        opacity: 0 
-        &.cross-zoom-in 
-          opacity: 1
-        .caption
-          font-size: 2.7vw
-          line-height: 2.8vw
-          padding: 1vw 1.7vw
-        img
-          width: 35vw
-          height: 30vw
-          margin: 0 auto 1.2vw
+    .meme
+      background-color: white
+      color: black
+      text-align: center
+      display: flex
+      flex-direction: column
+      width: 38vw
+      box-shadow: 10px 10px 4px rgba(0, 0, 0, .5)
+      opacity: 0 
+      &.cross-zoom-in 
+        opacity: 1
+      .caption
+        font-size: 2.7vw
+        line-height: 2.8vw
+        padding: .9vw 1.6vw
+      img
+        width: 35vw
+        height: 30vw
+        margin: 0 auto 1.2vw
     #stats 
       justify-content: center
       .stat 

@@ -1213,7 +1213,6 @@ div.StoryTime .WriterCard .speech-bubble:after {
   font-size: 12vw;
   -webkit-text-stroke: 0.4vw rgba(0, 0, 0, 0.8);
   line-height: 10vw;
-  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1235,6 +1234,35 @@ div.StoryTime .WriterCard .speech-bubble:after {
   opacity: 1;
 }
 
+.game-display .Meme.Vote #dankest {
+  font-size: 15vw;
+  -webkit-text-stroke: 0.4vw rgba(0, 0, 0, 0.8);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  text-transform: uppercase;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  top: 0;
+  left: 0;
+}
+
+.game-display .Meme.Vote #dankest div {
+  opacity: 0;
+}
+
+.game-display .Meme.Vote #dankest div.cross-zoom-in {
+  opacity: 1;
+}
+
 .game-display .Meme.Vote #memes, .game-display .Meme.Vote #stats {
   width: 100vw;
   display: -webkit-box;
@@ -1252,7 +1280,7 @@ div.StoryTime .WriterCard .speech-bubble:after {
           justify-content: space-evenly;
 }
 
-.game-display .Meme.Vote #memes .meme {
+.game-display .Meme.Vote .meme {
   background-color: white;
   color: black;
   text-align: center;
@@ -1269,17 +1297,17 @@ div.StoryTime .WriterCard .speech-bubble:after {
   opacity: 0;
 }
 
-.game-display .Meme.Vote #memes .meme.cross-zoom-in {
+.game-display .Meme.Vote .meme.cross-zoom-in {
   opacity: 1;
 }
 
-.game-display .Meme.Vote #memes .meme .caption {
+.game-display .Meme.Vote .meme .caption {
   font-size: 2.7vw;
   line-height: 2.8vw;
-  padding: 1vw 1.7vw;
+  padding: .9vw 1.6vw;
 }
 
-.game-display .Meme.Vote #memes .meme img {
+.game-display .Meme.Vote .meme img {
   width: 35vw;
   height: 30vw;
   margin: 0 auto 1.2vw;
@@ -2191,14 +2219,15 @@ div.v-100 {
 .device .DeviceTimer .circle {
   width: 70px;
   height: 70px;
-  border: 5px solid #3fa9f5;
-  background-color: white;
+  border: 3px solid black;
   border-radius: 35px;
-  color: #3fa9f5;
-  line-height: 60px;
+  color: white;
+  line-height: 63px;
   font-size: 16pt;
   font-weight: 900;
   margin: 0 0 8px;
+  -webkit-transition: background-color 1000ms;
+  transition: background-color 1000ms;
 }
 
 .device .btn {
@@ -2300,11 +2329,12 @@ div.v-100 {
 
 .device textarea {
   font-family: "Nunito", verdana, arial, sans-serif;
-  font-size: 14pt;
+  font-size: 20pt;
   padding: 0 4pt;
   width: 98vw;
   margin: 10px auto 12px;
   max-width: 300px;
+  border: 1px solid black;
 }
 
 .device div.vote {
@@ -2504,5 +2534,16 @@ div.v-100 {
   margin: 7px;
   cursor: pointer;
   border: 4px solid;
+}
+
+.device .Meme .images {
+  max-width: 500px;
+  margin: auto;
+}
+
+.device .Meme .images img {
+  width: 220px;
+  margin: 0 3px;
+  max-width: 45vw;
 }
 /*# sourceMappingURL=style.css.map */

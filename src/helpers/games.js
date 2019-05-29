@@ -102,6 +102,7 @@ const getAudio = (game) => {
     addFiles('upload', 0);
     addFiles('caption', 0);
     addFiles('vote', 0);
+    addFiles('bonus', 0);
   }
   return audio;
 }

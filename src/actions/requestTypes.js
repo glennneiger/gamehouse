@@ -19,5 +19,6 @@ export const requests = {
     vote: 'meme-vote'
   },
   playAgain: 'play-again',
-  skip: 'skip'
+  skip: 'skip',
+  selectGame: 'select-game'
 }

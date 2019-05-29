@@ -7,8 +7,8 @@ import Timer from '../../other/Timer';
 export default class StoryTimeVote extends Component {
 
   submitVote = vote=> {
-    const {code, playerIndex} = this.props;
-    sendInput(code, playerIndex, vote, true);
+    const {code, playerIndex, request} = this.props;
+    sendInput(code, playerIndex, request.type, vote, true);
     this.props.handleSubmit();
   }
 

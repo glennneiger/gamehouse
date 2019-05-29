@@ -118,9 +118,11 @@ class Computer extends Component {
 
   
   //callback function. Called anytime a new player joins or leaves the room
-  updatePlayers = async (data, type /* 'added' or 'removed' */)=> {
-    const player = await data.toJSON();
-    if (player===null) return;
+  updatePlayers = async (player, type /* 'added' or 'removed' */)=> {
+    const getNewHost = async ()=> {
+      const hostIndex = await getValue(this.state.code, 'host/index');
+      this.setState({hostIndex});
+    }
 
     let {players} = this.state;
 
@@ -132,13 +134,13 @@ class Computer extends Component {
     } else {
       //if the host leaves, who is the new host?
       if (player.index===this.state.hostIndex) {
-        const hostIndex = await getValue(this.state.code, 'host/index');
-        this.setState({hostIndex});
+        getNewHost();
       }
       players = players.filter(el=>el.index !== player.index);
     }
     this.setState({players});
   }
+
 
   playAudio = (type, audio, onSoundFinish)=> {
     //plays music or sound fx

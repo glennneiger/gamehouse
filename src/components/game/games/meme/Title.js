@@ -28,7 +28,8 @@ export default class Title extends Component {
     let j=0;
     const animate = setInterval(()=>{
       const words=this.state.words.slice();
-      document.getElementById(`line-${i}-word-${j}`).classList.add('cross-zoom-in');
+      let el = document.getElementById(`line-${i}-word-${j}`);
+      if (el) el.classList.add('cross-zoom-in');
       j++;
       if (j>words[i].length-1) {
         j=0;

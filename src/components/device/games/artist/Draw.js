@@ -29,9 +29,9 @@ export default class Draw extends Component {
   }
 
   handleSubmit = () => {
-    const {code, playerIndex} = this.props;
+    const {code, playerIndex, request} = this.props;
     const drawing=this.saveableCanvas.getSaveData();
-    sendInput(code, playerIndex, drawing, true);
+    sendInput(code, playerIndex, request.type, drawing, true);
     this.props.handleSubmit();
   }
 

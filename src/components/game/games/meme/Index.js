@@ -15,8 +15,20 @@ import { requests } from '../../../../actions/requestTypes';
 
 const title = games.meme; 
 
+class Meme {
+  constructor(index, uploader, image) {
+    this.index = index;
+    this.uploader = uploader;
+    this.image = image;
+    this.caption = null;
+    this.captioner = null;
+    this.votes = 0;
+    this.bonusVotes = 0;
+  }
+}
 
-export default class Meme extends Component {
+
+export default class MemeGame extends Component {
 
   constructor(props) {
     super(props);
@@ -54,7 +66,6 @@ export default class Meme extends Component {
 
     incrementGame(title);
   }
-
   
   startUploadRound =()=> {
 
@@ -63,7 +74,7 @@ export default class Meme extends Component {
       const images = input.message;
       const numPlayers = this.state.players.length;
       for (let i=0; i<2; i++) {
-        let meme = {uploader: playerIndex, image: images[i], caption: null, captioner: null, votes: 0}
+        let meme = new Meme(memes.length, playerIndex, images[i]);
         memes.push(meme);
       }
       this.setState({memes});
@@ -92,8 +103,12 @@ export default class Meme extends Component {
 
   receiveCaption = (input) => {
     let memes = this.state.memes.slice();
-    const memeReceived = input.message;
-    memes[memeReceived.index].caption = memeReceived.caption;
+    const memesReceived = input.message;
+    for (let i=0; i<2; i++) {
+      if (memesReceived[i]) {
+        memes[memesReceived[i].index].caption = memesReceived[i].caption;
+      }
+    }
     this.setState({memes});
     const captionsReceived = memes.filter(meme=>meme.caption !== null);
     if (captionsReceived.length===this.state.players.length*2) {
@@ -101,9 +116,11 @@ export default class Meme extends Component {
     }
   }
 
-  recordVote = memeIndex => {
+  recordVote = (memeIndex, bonusRound) => {
+    if (!memeIndex && memeIndex!==0) return;
     let memes = this.state.memes.slice();
-    memes[memeIndex].votes++;
+    const increment = bonusRound ? 'bonusVotes' : 'votes';
+    memes[memeIndex][increment]++;
     this.setState({memes});
   }
 

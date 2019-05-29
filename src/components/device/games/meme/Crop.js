@@ -14,13 +14,14 @@ class MyEditor extends React.Component {
 
 
   render() {
+    const {img} = this.props;
+    const image = Number.isInteger(img) ? `assets/img/meme/${img}.png` : img;
     return (
       <div className="ImgCrop cover-screen">
         <div className="column">
-          <div>Upload:</div>
           <AvatarEditor
             ref={this.setEditorRef}
-            image={this.props.img}
+            image={image}
             width={280}
             height={240}
             border={10}

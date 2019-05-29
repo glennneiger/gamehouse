@@ -34,6 +34,7 @@ export function selectGame(roomCode, game) {
 // used by game to request input from device
 export function inputRequest(roomCode, requestType, requestMessage, playersToReceive, callback) {
   const handleInput = (input, index)=> {
+    if (input.type!==requestType) return;
 
     if (input.closeRequest) {
       database.ref(`rooms/${roomCode}/players/${index}/input`).off();
@@ -65,13 +66,13 @@ export function inputRequest(roomCode, requestType, requestMessage, playersToRec
 
 
 // used by device to send input to game. 
-export function sendInput(roomCode, playerIndex, message, closeRequest/*boolean*/) {
+export function sendInput(roomCode, playerIndex, requestType, message, closeRequest/*boolean*/) {
   database.ref(`rooms/${roomCode}`).once('value', async data => {
     const room = await data.toJSON();
     if (!room) return;
     let player = database.ref(`rooms/${roomCode}/players/${playerIndex}`);
     player.update({
-      input: {message, closeRequest}
+      input: {message, closeRequest, type: requestType}
     });
   });
 }
@@ -95,8 +96,16 @@ export async function closeRequest(roomCode, playerIndex) {
 
 // returns players, IFF number of players changes (not if anything else changes within players)
 export function watchForChangeInPlayers(roomCode, callback) {
-  database.ref(`rooms/${roomCode}/players`).on('child_added', data => callback(data, 'added'));
-  database.ref(`rooms/${roomCode}/players`).on('child_removed', data => callback(data, 'removed'));
+  database.ref(`rooms/${roomCode}/players`).on('child_added', async data => {
+    const value = await data.toJSON();
+    if (!value) return;
+    callback(value, 'added');
+  });
+  database.ref(`rooms/${roomCode}/players`).on('child_removed', async data => {
+    const value = await data.toJSON();
+    if (!value) return;
+    callback(value, 'removed');
+  });
 
 }
 

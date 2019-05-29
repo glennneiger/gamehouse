@@ -6,9 +6,9 @@ import Ad from '../other/Ad';
 export default class PlayAgain extends Component {
 
   skip = ()=> {
-    const {code, playerIndex, handleSubmit} = this.props;
+    const {code, playerIndex, handleSubmit, request} = this.props;
     handleSubmit();
-    sendInput(code, playerIndex, true, true);
+    sendInput(code, playerIndex, request.type, true, true);
   }
 
   render() {

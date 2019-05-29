@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {inputRequest, closeRequest} from '../../../../actions/';
+import {inputRequest} from '../../../../actions/';
 import {requests} from '../../../../actions/requestTypes';
 import {screens} from './helpers';
 
@@ -44,15 +44,15 @@ export default class Caption extends Component {
   }
 
 
-  timeOut =()=> {
-    const {switchScreen, room, players} = this.props;
-    players.forEach(player=>{
-      closeRequest(room.code, player.index);
-    })
-    switchScreen(screens.vote);
-  }
+  // timeOut =()=> {
+  //   const {switchScreen, room, players} = this.props;
+  //   players.forEach(player=>{
+  //     closeRequest(room.code, player.index);
+  //   })
+  //   switchScreen(screens.vote);
+  // }
 
   render() {
-    return <Timer seconds={60} startTimer={this.state.startTimer} onFinish={this.timeOut} code={this.props.room.code} />;
+    return <Timer seconds={60} startTimer={this.state.startTimer} onFinish={()=>this.props.switchScreen(screens.vote)} code={this.props.room.code} />;
   }
 }

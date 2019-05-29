@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Ad from './Ad';
 
 import {sendInput} from '../../../actions';
+import {requests} from '../../../actions/requestTypes';
 
 class SelectGame extends Component {
 
@@ -32,7 +33,7 @@ class SelectGame extends Component {
   handleKeyPress = key=> {
     const {code, playerIndex} = this.props;
     const id = new Date().getTime();
-    sendInput(code, playerIndex, {key, id}, false);
+    sendInput(code, playerIndex, requests.selectGame, {key, id}, false);
   }
 
   render() {

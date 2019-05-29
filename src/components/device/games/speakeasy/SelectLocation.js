@@ -68,11 +68,11 @@ export default class Speakeasy extends Component {
 
     const handleSelectLocation = location => {
       const {type} = this.props.request;
-      const {code, playerIndex} = this.props;
+      const {code, playerIndex, request} = this.props;
   
       if (type===requests.speakeasy.newLocation) { // choose where speakeasy is
   
-        sendInput(code, playerIndex, location, true);
+        sendInput(code, playerIndex, request, location, true);
         this.props.handleSubmit();
   
       } else { // try to find speakeasy
@@ -110,14 +110,14 @@ export default class Speakeasy extends Component {
     const {found} = this.state;
     const {isAgent} = this.props.request.message;
 
-    const {code, playerIndex} = this.props;
+    const {code, playerIndex, request} = this.props;
 
     const handleClickOK = ()=> {  
-      sendInput(code, playerIndex, {found}, true);
+      sendInput(code, playerIndex, request, {found}, true);
       this.props.handleSubmit();
     }
     const handleRaid = raid=> {  
-      sendInput(code, playerIndex, {found, raid}, true);
+      sendInput(code, playerIndex, request.type, {found, raid}, true);
       this.props.handleSubmit();
     }
 
