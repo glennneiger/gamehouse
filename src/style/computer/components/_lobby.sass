@@ -1,35 +1,31 @@
 .Lobby 
-  height: 98vh
+  font-size: 2vw
+  height: 100vh
   .row 
     justify-content: flex-start
-  .left 
-    width: 28%
+  .left, .top-left
+    width: 24vw
   .right
-    width: 72%
-    justify-content: flex-start
-  .left, .right
+    width: 76vw
+  .top-center
+    width: 56vw
+    font-family: $font-fun
+    font-size: 2.5vw
+  .top-right
+    width: 20vw
+  [class^="top"], .right
+    align-items: center
+  .left, .right, [class^="top"] 
     display: flex 
     flex-direction: column 
-    align-items: center
+    justify-content: center
     height: 100%
   img.logo 
-    height: 35vh
-    max-height: 30vw
-    padding: 2vh 0
-  .room-code 
-    margin-left: auto
-    font-size: 5rem
+    height: 10vw
+    margin-top: 1vw
+  .room-code
+    font-size: 5vw
+    line-height: 5vw
     font-family: $font-fun
-    line-height: 5rem
-    padding: 6vh 8vw
-    @media screen and (max-width: $xl)
-      font-size: 4rem
-      line-height: 3.8rem
-    @media screen and (max-width: $lg)
-      font-size: 3.2rem
-      line-height: 3.2rem
-    @media screen and (max-width: $md)
-      font-size: 2.4rem
-      line-height: 2.4rem
   .grid 
     width: 95%

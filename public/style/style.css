@@ -208,54 +208,6 @@ div.page p {
   text-decoration: underline;
 }
 
-.NewRoom div.darken {
-  background-color: rgba(20, 35, 50, 0.3);
-}
-
-.NewRoom div.header {
-  height: 80%;
-  width: 100%;
-}
-
-.NewRoom div.header .room-code {
-  font-size: 24pt;
-}
-
-@media screen and (max-width: 1040px) {
-  .NewRoom div.header .room-code {
-    font-size: 18pt;
-  }
-}
-
-.NewRoom div.header #code {
-  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
-  font-size: 64pt;
-  margin: -28pt 0 -16pt;
-}
-
-@media screen and (max-width: 1040px) {
-  .NewRoom div.header #code {
-    font-size: 42pt;
-    margin: -20pt 0 -14pt;
-  }
-}
-
-.NewRoom div.grid {
-  width: 96%;
-}
-
-.NewRoom div.website {
-  height: 80%;
-  width: 100%;
-  font-size: 24pt;
-}
-
-@media screen and (max-width: 1040px) {
-  .NewRoom div.website {
-    font-size: 17pt;
-  }
-}
-
 .ProfileCard {
   margin: 0;
   padding: 0;
@@ -389,7 +341,8 @@ div.page p {
 }
 
 .Lobby {
-  height: 98vh;
+  font-size: 2vw;
+  height: 100vh;
 }
 
 .Lobby .row {
@@ -398,18 +351,31 @@ div.page p {
           justify-content: flex-start;
 }
 
-.Lobby .left {
-  width: 28%;
+.Lobby .left, .Lobby .top-left {
+  width: 24vw;
 }
 
 .Lobby .right {
-  width: 72%;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  width: 76vw;
 }
 
-.Lobby .left, .Lobby .right {
+.Lobby .top-center {
+  width: 56vw;
+  font-family: "Francois One", impact, arial, sans-serif;
+  font-size: 2.5vw;
+}
+
+.Lobby .top-right {
+  width: 20vw;
+}
+
+.Lobby [class^="top"], .Lobby .right {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Lobby .left, .Lobby .right, .Lobby [class^="top"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -417,45 +383,21 @@ div.page p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 100%;
 }
 
 .Lobby img.logo {
-  height: 35vh;
-  max-height: 30vw;
-  padding: 2vh 0;
+  height: 10vw;
+  margin-top: 1vw;
 }
 
 .Lobby .room-code {
-  margin-left: auto;
-  font-size: 5rem;
-  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
-  line-height: 5rem;
-  padding: 6vh 8vw;
-}
-
-@media screen and (max-width: 1400px) {
-  .Lobby .room-code {
-    font-size: 4rem;
-    line-height: 3.8rem;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  .Lobby .room-code {
-    font-size: 3.2rem;
-    line-height: 3.2rem;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .Lobby .room-code {
-    font-size: 2.4rem;
-    line-height: 2.4rem;
-  }
+  font-size: 5vw;
+  line-height: 5vw;
+  font-family: "Francois One", impact, arial, sans-serif;
 }
 
 .Lobby .grid {
@@ -463,12 +405,12 @@ div.page p {
 }
 
 .GameSelector {
-  width: 20vw;
+  margin: 0 auto;
 }
 
 .GameSelector p {
-  font-size: 2.4rem;
-  line-height: 2.6rem;
+  font-size: 2.4vw;
+  line-height: 2.4vw;
   margin: 1vw 0;
   color: #bba;
   font-weight: 100;
@@ -477,97 +419,23 @@ div.page p {
 
 .GameSelector p.selected {
   font-weight: 900;
-  font-size: 2.7rem;
   color: white;
 }
 
-@media screen and (max-width: 1400px) {
-  .GameSelector p {
-    line-height: 2rem;
-    font-size: 1.8rem;
-  }
-  .GameSelector p.selected {
-    font-size: 2rem;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  .GameSelector p {
-    line-height: 1.8rem;
-    font-size: 1.6rem;
-  }
-  .GameSelector p.selected {
-    font-size: 1.8rem;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .GameSelector p {
-    line-height: 1.6rem;
-    font-size: 1.4rem;
-  }
-  .GameSelector p.selected {
-    font-size: 1.5rem;
-  }
-}
-
-div.GameDisplay {
-  margin: 3vh auto auto auto;
-}
-
 div.GameDisplay img {
-  width: 600px;
-  height: 450px;
+  width: 36vw;
+  height: 27vw;
   -webkit-box-shadow: 1vw 1vw 1.5vw rgba(0, 0, 0, 0.6);
           box-shadow: 1vw 1vw 1.5vw rgba(0, 0, 0, 0.6);
 }
 
-@media screen and (max-width: 1400px) {
-  div.GameDisplay img {
-    width: 440px;
-    height: 330px;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.GameDisplay img {
-    width: 360px;
-    height: 270px;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  div.GameDisplay img {
-    width: 320px;
-    height: 240px;
-  }
-}
-
 div.GameDisplay div.details {
-  width: 40%;
-  padding: 2% 0 0 4%;
+  width: 40vw;
+  padding: 2vw 3vw 0;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  font-size: 2.2rem;
-}
-
-@media screen and (max-width: 1400px) {
-  div.GameDisplay div.details {
-    font-size: 1.6rem;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.GameDisplay div.details {
-    font-size: 1.2rem;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  div.GameDisplay div.details {
-    font-size: 1rem;
-  }
+  font-size: 2vw;
 }
 
 div.GameDisplay div.stats {
@@ -589,9 +457,9 @@ div.GameDisplay div.stats div {
 }
 
 div.GameDisplay div.stats div.red {
-  color: #ff4422;
-  -webkit-transform: scale(1.3);
-          transform: scale(1.3);
+  color: #ff3a20;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 div.GameDisplay div.stats div.fade {
@@ -602,26 +470,8 @@ div.GameDisplay div.stats div.fade {
 }
 
 div.GameDisplay div.stats i {
-  padding-bottom: 3px;
-  font-size: 5rem;
-}
-
-@media screen and (max-width: 1400px) {
-  div.GameDisplay div.stats i {
-    font-size: 4rem;
-  }
-}
-
-@media screen and (max-width: 1040px) {
-  div.GameDisplay div.stats i {
-    font-size: 3rem;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  div.GameDisplay div.stats i {
-    font-size: 2.2rem;
-  }
+  padding-bottom: 0.5vw;
+  font-size: 5vw;
 }
 
 .Timer {
@@ -2057,7 +1907,6 @@ div.v-100 {
   max-width: 300px;
   height: 64px;
   text-align: center;
-  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
   color: #303544;
   margin: 8px 0 20px;
 }
@@ -2167,7 +2016,7 @@ div.v-100 {
   max-width: 300px;
   height: 64px;
   text-align: center;
-  font-family: "Gloria Hallelujah", verdana, arial, sans-serif;
+  font-family: "Francois One", impact, arial, sans-serif;
   color: #303544;
   margin: 8px 0 20px;
 }

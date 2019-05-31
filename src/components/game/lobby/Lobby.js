@@ -93,16 +93,31 @@ export default class Lobby extends Component {
     const {players, code} = this.props.room;
     return (
       <div className="Lobby">
-        <div className="row v-85">
+
+        <div className="row v-20">
+          <div className="top-left">
+            <div>Room Code:</div>
+            <div className="room-code">{code}</div>
+          </div>
+          <div className="top-center">
+            Join at partyhouse.tv!
+          </div>
+          <div className="top-right">
+            <img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
+          </div>
+        </div>
+
+        <div className="row v-55">
+
           <div className="left">
-          <img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
             <GameSelector games={games} selection={selection} previewGame={selectGame} selectGame={this.attemptToOpenGame}/>
           </div>
           <div className="right">
-            <div className="room-code">{code}</div>
             <GameDisplay games={games} selection={selection} />
           </div>
+
         </div>
+        <div className="v-5"></div>
         <div className="row v-15 grid">
           <PlayerGrid players={players} rows={1} hideNames={true}/>
         </div>
@@ -110,3 +125,17 @@ export default class Lobby extends Component {
     )    
   }
 } 
+
+
+/*
+
+<div className="left">
+<img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
+  <GameSelector games={games} selection={selection} previewGame={selectGame} selectGame={this.attemptToOpenGame}/>
+</div>
+<div className="right">
+  <div className="room-code">{code}</div>
+  <GameDisplay games={games} selection={selection} />
+</div>
+
+*/

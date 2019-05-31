@@ -1,29 +1,13 @@
 div.GameDisplay
-  margin: 3vh auto auto auto 
   img 
-    width: 600px 
-    height: 450px
+    width: 36vw 
+    height: 27vw
     box-shadow: 1vw 1vw 1.5vw rgba(0, 0, 0, .6)
-    @media screen and (max-width: $xl)
-      width: 440px
-      height: 330px
-    @media screen and (max-width: $lg)
-      width: 360px
-      height: 270px
-    @media screen and (max-width: $md)
-      width: 320px
-      height: 240px
   div.details
-    width: 40%
-    padding: 2% 0 0 4%
+    width: 40vw
+    padding: 2vw 3vw 0
     justify-content: space-between
-    font-size: 2.2rem
-    @media screen and (max-width: $xl)
-      font-size: 1.6rem
-    @media screen and (max-width: $lg)
-      font-size: 1.2rem
-    @media screen and (max-width: $md)
-      font-size: 1rem
+    font-size: 2vw
   div.stats 
     margin: 0
     display: flex  
@@ -32,16 +16,10 @@ div.GameDisplay
       text-align: center
       transition: transform 500ms
       &.red 
-        color: #ff4422
-        transform: scale(1.3)
+        color: #ff3a20
+        transform: scale(1.1)
       &.fade 
         transition: transform 1500ms, color 1500ms
     i 
-      padding-bottom: 3px
-      font-size: 5rem
-      @media screen and (max-width: $xl)
-        font-size: 4rem
-      @media screen and (max-width: $lg)
-        font-size: 3rem
-      @media screen and (max-width: $md)
-        font-size: 2.2rem
+      padding-bottom: 0.5vw
+      font-size: 5vw
