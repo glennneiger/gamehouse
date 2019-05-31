@@ -21,6 +21,10 @@ body {
   overflow: hidden;
 }
 
+.game-display * {
+  cursor: default;
+}
+
 div.page {
   background-color: white;
   color: black;
@@ -468,6 +472,7 @@ div.page p {
   margin: 1vw 0;
   color: #bba;
   font-weight: 100;
+  cursor: pointer;
 }
 
 .GameSelector p.selected {

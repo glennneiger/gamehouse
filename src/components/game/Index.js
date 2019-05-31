@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Media from './other/Media';
 import Loading from './other/Loading';
 
-import NewRoom from './lobby/NewRoom';
 import Lobby from './lobby/Lobby';
 import StoryTime from './games/storytime/Index';
 import Speakeasy from './games/speakeasy/Index';
@@ -22,7 +21,7 @@ class Computer extends Component {
 
     this.state={
       loading: true,
-      game: games.newRoom,
+      game: games.gameRoom,
       gameSelection: 0,
       players: [],
       code: '',
@@ -201,9 +200,6 @@ class Computer extends Component {
     const props = {room, switchGame, playAudio, playVideo, preloadMusic, preloadVideo}
 
     switch (game) {
-
-      case games.newRoom:
-        return <NewRoom {...props} />
 
       case games.gameRoom:
         return <Lobby {...props} selection={room.gameSelection} selectGame={gameSelection=>this.setState({gameSelection})} />

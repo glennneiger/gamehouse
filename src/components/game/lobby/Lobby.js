@@ -40,6 +40,8 @@ export default class Lobby extends Component {
     closeRequest(code, hostIndex);
   }
 
+  
+
   handleReceiveCommand = input=> {
     if (!input) return;
     const {key} = input.message;
@@ -47,22 +49,7 @@ export default class Lobby extends Component {
     let {selection, selectGame} = this.props;
     
     if (key==='select') {
-      const numPlayers = this.props.room.players.length;
-      const {min, max} = games[selection];
-      if (numPlayers < min || numPlayers > max) {
-        //too few or too many players 
-        let playerCount = document.querySelector('.player-count');
-        if (playerCount) {
-          playerCount.classList.remove('fade');
-          playerCount.classList.add('red');
-          setTimeout(()=>{
-            playerCount.classList.add('fade');
-            playerCount.classList.remove('red');
-          }, 900);
-        }
-      } else {
-        this.openGame();
-      }  
+      this.attemptToOpenGame();
     } else {
       if (key==='down') {
         selection++;
@@ -75,6 +62,28 @@ export default class Lobby extends Component {
     }
   }
 
+  //see if there's enough players, then openGame if there is
+  attemptToOpenGame = ()=> {
+    const numPlayers = this.props.room.players.length;
+    const {games} = this.state;
+    const {selection} = this.props;
+    const {min, max} = games[selection];
+    if (numPlayers < min || numPlayers > max) {
+      //too few or too many players 
+      let playerCount = document.querySelector('.player-count');
+      if (playerCount) {
+        playerCount.classList.remove('fade');
+        playerCount.classList.add('red');
+        setTimeout(()=>{
+          playerCount.classList.add('fade');
+          playerCount.classList.remove('red');
+        }, 900);
+      }
+    } else {
+      this.openGame();
+    }  
+  }
+
   openGame = ()=> {
     const {games} = this.state;
     const {selection} = this.props;
@@ -85,14 +94,14 @@ export default class Lobby extends Component {
 
   render() {
     const {games} = this.state;
-    const {selection} = this.props;
+    const {selection, selectGame} = this.props;
     const {players, code} = this.props.room;
     return (
       <div className="Lobby">
         <div className="row v-85">
           <div className="left">
           <img  className="logo" src="./assets/img/logo.svg" alt="Party House" />
-            <GameSelector games={games} selection={selection} />
+            <GameSelector games={games} selection={selection} previewGame={selectGame} selectGame={this.attemptToOpenGame}/>
           </div>
           <div className="right">
             <div className="room-code">{code}</div>

@@ -1,6 +1,5 @@
 export const games = {
   landing: 'landing',
-  newRoom: 'newroom',
   gameRoom: 'lobby',
   storyTime: 'storytime',
   speakEasy: 'speakeasy',
@@ -108,11 +107,6 @@ const getAudio = (game) => {
 }
 
 export const gameMediaFiles = {
-  [games.newRoom]: {
-    video: ['0'],
-    music: ['0'],
-    audio: []
-  },
   [games.gameRoom]: {
     video: ['0'],
     music: ['0'],

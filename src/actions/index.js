@@ -8,7 +8,7 @@ const maxPlayers = 16;
 export function createNewRoom(roomCode) {
   const host = {index: 0, name: ''};
   database.ref(`rooms/${roomCode}`).set({
-    players: [], game: games.newRoom, nextIndex: 0, full: false, totalPlayers: 0, host
+    players: [], game: games.gameRoom, nextIndex: 0, full: false, totalPlayers: 0, host
   });
 }
 
