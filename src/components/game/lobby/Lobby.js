@@ -23,16 +23,12 @@ export default class Lobby extends Component {
     this.props.playAudio('music','0');
 
     // close any open requests, in case we left a game with requests open
-    const {players, code, hostIndex}= this.props.room;
-    players.forEach(async player=>{
-      if (player.index===hostIndex) {
-        await closeRequest(code, player.index);
-        watchForChange(code, `players/${hostIndex}/input`, input=>this.handleReceiveCommand(input));
-      } else {
-        closeRequest(code, player.index);
-      }
+    const {players, code}= this.props.room;
+    players.forEach(player=>{
+      closeRequest(code, player.index);
     });
 
+    watchForChange(code, 'menu', input=>this.handleReceiveCommand(input));
   }
 
   componentWillUnmount() {
@@ -40,11 +36,10 @@ export default class Lobby extends Component {
     closeRequest(code, hostIndex);
   }
 
-  
 
   handleReceiveCommand = input=> {
     if (!input) return;
-    const {key} = input.message;
+    const {key} = input;
     let {games} = this.state;
     let {selection, selectGame} = this.props;
     

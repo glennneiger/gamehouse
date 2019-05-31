@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 
 import Ad from './Ad';
 
-import {sendInput} from '../../../actions';
-import {requests} from '../../../actions/requestTypes';
+import {sendMenuSelection} from '../../../actions';
 
 class SelectGame extends Component {
 
@@ -31,9 +30,8 @@ class SelectGame extends Component {
   }
 
   handleKeyPress = key=> {
-    const {code, playerIndex} = this.props;
-    const id = new Date().getTime();
-    sendInput(code, playerIndex, requests.selectGame, {key, id}, false);
+    const {code} = this.props;
+    sendMenuSelection(code, key);
   }
 
   render() {

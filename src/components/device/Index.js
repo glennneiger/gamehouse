@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import JoinRoom from './joinroom/JoinRoom';
-import Joined from './joinroom/Joined';
 import SelectGame from './other/SelectGame';
 
 import StoryTime from './games/storytime/Index';
@@ -26,7 +25,6 @@ class Device extends Component {
     this.state = {
       host: false,  // are you the host 
       hostName: '',
-      entered: false, // have you entered room 
       code: '',  //room code
       playerIndex: 0,
       request: null,
@@ -42,7 +40,7 @@ class Device extends Component {
     if (roomCode) {
       this.refreshGame(roomCode);
     } else {
-      this.setState({game: games.newRoom});
+      this.setState({game: null});
     }
   }
 
@@ -51,7 +49,7 @@ class Device extends Component {
     const exists = await roomExists(code);
     if (!exists) { // room no longer exists
       localStorage.clear();
-      this.setState({game: games.newRoom});
+      this.setState({game: null});
       return;
     }
 
@@ -91,7 +89,7 @@ class Device extends Component {
 
     if (!host) host=0;
     let isHost = host.index === playerIndex;
-    this.setState({code, playerIndex, entered: true, host: isHost, hostName: host.name});
+    this.setState({code, playerIndex, host: isHost, hostName: host.name});
     watchForChange(code, 'game', this.updateGame, true);
     watchForChange(code, 'host', this.updateHost);
     watchForChange(code, `players/${playerIndex}/request`, this.updateRequest);
@@ -124,7 +122,6 @@ class Device extends Component {
     this.setState({
       host: false,
       hostName: '',
-      entered: false,
       code: '', 
       playerIndex: 0,
       request: null,
@@ -150,26 +147,25 @@ class Device extends Component {
 
   render() {
 
-    const {host, entered, game, showMenu} = this.state;
+    const {host, game, showMenu} = this.state;
 
     let menu = null;
 
-    if (entered) {
 
-      if (game===games.gameRoom || game===games.newRoom) {
-        menu = [];
+    if (game===games.gameRoom) {
+      menu = [];
+      menu.push(
+        <MenuLink handleClick={showMenu=>this.handleClickMenu('leave', showMenu)} handleAction={this.handleLeaveRoom} clicked={showMenu==='leave'} text='Are you sure you want to leave the party?' caption='Leave Party' key={0} />
+      )
+      if (host) {
         menu.push(
-          <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('leave', showMenu)} handleAction={this.handleLeaveRoom} clicked={showMenu==='leave'} text='Are you sure you want to leave the party?' caption='Leave Party' key={0} />
+          <MenuLink handleClick={showMenu=>this.handleClickMenu('close', showMenu)} handleAction={this.handleCloseParty} clicked={showMenu==='close'} text='Are you sure? This will close the party for all players.' caption='Close Party' key={1} />
         )
-        if (host) {
-          menu.push(
-            <MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('close', showMenu)} handleAction={this.handleCloseParty} clicked={showMenu==='close'} text='Are you sure? This will close the party for all players.' caption='Close Party' key={1} />
-          )
-        }
-      } else if (host) {
-        menu=<MenuLink entered = {entered} handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='Exit the current game and return to the lobby?' caption='Return to Lobby' />
       }
+    } else if (host) {
+      menu=<MenuLink handleClick={showMenu=>this.handleClickMenu('exit', showMenu)} handleAction={this.handleExitGame} clicked={showMenu==='exit'} text='Exit the current game and return to the lobby?' caption='Return to Lobby' />
     }
+    
 
     return (
       <div className="device">
@@ -184,17 +180,14 @@ class Device extends Component {
 
 
   renderContent = ()=> {
-    const {host, code, entered, hostName, request, playerIndex, game} = this.state;
+    const {host, code, hostName, request, playerIndex, game} = this.state;
 
     const gameProps = {request, code, playerIndex, handleSubmit: ()=>this.setState({request: null})}
 
     switch (game) {
 
       case games.gameRoom:
-        return <SelectGame host={host} hostName={hostName} code={code} playerIndex={playerIndex} />
-
-      case games.newRoom:
-        return entered ? <Joined hostName={hostName} host={host} code={code} /> : <JoinRoom setRoom = {this.setRoom} user={this.props.user} /> 
+        return <SelectGame host={host} hostName={hostName} code={code} />
 
       case games.storyTime:
         return <StoryTime {...gameProps} />
@@ -214,12 +207,12 @@ class Device extends Component {
           <div className="column">
             <p>Thank you for playing!</p>
             <Ad />
-            <div className="btn" onClick={()=>this.setState({game: games.newRoom})}>Join New Game</div>
+            <div className="btn" onClick={()=>this.setState({game: null})}>Join New Game</div>
           </div>
         )
 
       default: 
-        return null;
+        return <JoinRoom setRoom = {this.setRoom} user={this.props.user} /> 
     }
   }
 }

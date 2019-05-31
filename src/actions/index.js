@@ -77,6 +77,20 @@ export function sendInput(roomCode, playerIndex, requestType, message, closeRequ
   });
 }
 
+
+//used by game host to select 'up' 'down' or 'select' on lobby menu
+export function sendMenuSelection(roomCode, key) {
+  database.ref(`rooms/${roomCode}`).once('value', async data => {
+    const room = await data.toJSON();
+    if (!room) return;
+    const id = new Date().getTime();
+    database.ref(`rooms/${roomCode}/menu`).update({
+      key, id
+    });
+  });
+}
+
+
 // used by game to close an open request, if for example, time runs out to submit
 export async function closeRequest(roomCode, playerIndex) {
   await database.ref(`rooms/${roomCode}/players/${playerIndex}`).once('value', async data => {
